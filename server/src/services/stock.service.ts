@@ -1,4 +1,4 @@
-import { FinnhubService } from './finnhub.service';
+import { YahooService } from './yahoo.service';
 import { CacheService } from './cache.service';
 import { StockModel } from '../models/stock.model';
 import { Stock } from '../../../shared/types/stock';
@@ -18,10 +18,10 @@ export class StockService {
       return cachedStock;
     }
 
-    // 2. Fetch from Finnhub API
+    // 2. Fetch from Yahoo Finance API
     const [quote, profile] = await Promise.all([
-      FinnhubService.getQuote(symbolUpper),
-      FinnhubService.getProfile(symbolUpper)
+      YahooService.getQuote(symbolUpper),
+      YahooService.getProfile(symbolUpper)
     ]);
 
     if (!quote && !profile) {
