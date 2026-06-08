@@ -1,26 +1,46 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-background: #0a0a0b;
+  --color-surface: #141416;
+  --color-elevated: #1f1f22;
+  --color-border: #27272a;
+  
+  --color-bullish: #00d09c;
+  --color-bullish-hover: #00e6ad;
+  
+  --color-bearish: #ff6b6b;
+  --color-bearish-hover: #ff8787;
+
+  --color-text-primary: #f4f4f5;
+  --color-text-secondary: #a1a1aa;
+  --color-text-disabled: #52525b;
+
+  --font-sans: "Inter", "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", "Roboto Mono", monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0a0a0b;
+    --foreground: #f4f4f5;
+  }
+  
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: "Inter", "Outfit", sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .glass {
+    backdrop-filter: blur(12px);
+    background-color: rgba(10, 10, 11, 0.8);
+  }
+  
+  .card-shadow {
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+  }
 }
