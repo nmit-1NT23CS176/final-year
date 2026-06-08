@@ -1,0 +1,8 @@
+metric,value
+baseline_avg_turnover,0.4286606709586333
+baseline_rebalance_sharpe,-4.0361268969079
+baseline_hold_sharpe,4.728513315706799
+baseline_next_day_after_rebalance_mean_return,0.0021212564749987376
+avg_pct_names_replaced_rebalance_days,0.756224747066135
+avg_abs_weight_change_rebalance_days,1.280754443717868
+avg_unnecessary_close_frac,0.051717963608207504

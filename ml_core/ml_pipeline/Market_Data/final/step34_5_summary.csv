@@ -1,0 +1,14 @@
+metric,value
+True alpha half-life (days),1.0
+Effective positive-IC horizon,20.0
+Optimal holding period (days),5.0
+Optimal rebalance frequency (days),5.0
+Alpha asymmetry,long_biased
+Most deployable regime,HIGH
+Economically unviable after-cost horizon (days),1.0
+Recommended production style,long-only or long-short with reduced short budget
+Step-28 Sharpe,2.6279884279188703
+Step-34.5 Best Sharpe,1.1897744527612713
+Final Verdict,PASS
+decile_spread_h3,0.0025841118205731455
+base_hold_for_rebalance_study,5.0

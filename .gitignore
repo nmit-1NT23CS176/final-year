@@ -1,0 +1,9 @@
+venv/
+.env
+# ignore processed data
+ml_core/ml_pipeline/Market_Data/processed/*.csv
+ml_core/ml_pipeline/Market_Data/processed/*.parquet
+ml_core/ml_pipeline/Market_Data/processed/*.csv
+ml_core/ml_pipeline/Market_Data/processed/*.parquet 
+
+.agents
