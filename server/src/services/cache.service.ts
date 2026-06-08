@@ -3,9 +3,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+if (!process.env.REDIS_URL) {
+  throw new Error('REDIS_URL environment variable is missing');
+}
+
 // Create Redis client instance
 const redisClient = createClient({
-  url: process.env.REDIS_URL || 'redis://localhost:6379'
+  url: process.env.REDIS_URL
 });
 
 redisClient.on('error', (err) => console.error('Redis Client Error', err));

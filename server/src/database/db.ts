@@ -3,9 +3,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL environment variable is missing');
+}
+
 const pool = new Pool({
-  // Use connection string from env or fallback for local development
-  connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/stock',
+  connectionString: process.env.DATABASE_URL,
   max: 20, // Max number of clients in the pool
   idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
   connectionTimeoutMillis: 2000, // Return an error if connection takes >2 seconds
