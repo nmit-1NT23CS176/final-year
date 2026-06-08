@@ -1,4 +1,4 @@
-import WebSocket from 'ws';
+import { WebSocketServer as WSServer, WebSocket } from 'ws';
 import { verifyToken } from '../utils/jwt';
 import redisClient from '../services/cache.service';
 import { Server } from 'http';
@@ -10,15 +10,15 @@ interface ExtWebSocket extends WebSocket {
 }
 
 export class WebSocketServer {
-  private wss: WebSocket.Server;
+  private wss: WSServer;
 
   constructor(server: Server) {
-    this.wss = new WebSocket.Server({ server, path: '/ws' });
+    this.wss = new WSServer({ server, path: '/ws' });
     this.init();
   }
 
   private init() {
-    this.wss.on('connection', (ws: ExtWebSocket, req) => {
+    this.wss.on('connection', (ws: ExtWebSocket, req: any) => {
       ws.isAlive = true;
       ws.rooms = new Set();
 

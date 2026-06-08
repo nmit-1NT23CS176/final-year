@@ -28,7 +28,7 @@ export class StocksController {
 
   static async getStockDetails(req: Request, res: Response) {
     try {
-      const { symbol } = req.params;
+      const symbol = req.params.symbol as string;
       const stock = await StockService.getStock(symbol);
 
       if (!stock) {

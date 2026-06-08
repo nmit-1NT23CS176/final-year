@@ -63,7 +63,7 @@ export class WatchlistController {
   static async removeStock(req: AuthRequest, res: Response) {
     try {
       const userId = req.user!.userId;
-      const { id } = req.params;
+      const id = req.params.id as string;
 
       const deleted = await WatchlistModel.delete(id, userId);
       

@@ -11,7 +11,7 @@ export const validate = (schema: ZodSchema) => (req: Request, res: Response, nex
         success: false,
         error: 'Validation failed',
         code: 'VALIDATION_ERROR',
-        details: error.errors
+        details: (error as any).errors
       });
     } else {
       next(error);

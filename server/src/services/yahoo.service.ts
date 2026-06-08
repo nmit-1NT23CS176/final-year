@@ -16,7 +16,7 @@ export class YahooService {
   static async getQuote(symbol: string): Promise<StockQuote | null> {
     try {
       const formattedSymbol = this.formatSymbol(symbol);
-      const quote = await yahooFinance.quote(formattedSymbol);
+      const quote: any = await yahooFinance.quote(formattedSymbol);
       
       if (!quote || !quote.regularMarketPrice) return null;
 
@@ -43,7 +43,7 @@ export class YahooService {
   static async getProfile(symbol: string): Promise<StockProfile | null> {
     try {
       const formattedSymbol = this.formatSymbol(symbol);
-      const profile = await yahooFinance.quoteSummary(formattedSymbol, { modules: ['assetProfile', 'summaryProfile'] });
+      const profile: any = await yahooFinance.quoteSummary(formattedSymbol, { modules: ['assetProfile', 'summaryProfile'] });
       
       const assetProfile = profile.assetProfile || profile.summaryProfile;
       if (!assetProfile) return null;
