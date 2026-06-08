@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Stock } from '../../../shared/types/stock'
+import { Stock } from '../../shared/types/stock'
 
 interface StockState {
   trendingStocks: Stock[]

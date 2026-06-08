@@ -57,6 +57,7 @@ export class StocksController {
         data: stocks.filter(Boolean)
       });
     } catch (err) {
+      console.error('getTrending error:', err);
       res.status(500).json({ success: false, error: 'Internal server error' });
     }
   }

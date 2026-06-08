@@ -1,4 +1,6 @@
-import yahooFinance from 'yahoo-finance2';
+import YahooFinance from 'yahoo-finance2';
+const yahooFinance = new YahooFinance();
+
 import { StockQuote, StockProfile } from '../../../shared/types/stock';
 
 export class YahooService {
