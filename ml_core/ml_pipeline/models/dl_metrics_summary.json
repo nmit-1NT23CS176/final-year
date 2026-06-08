@@ -1,0 +1,114 @@
+{
+  "Baseline": {
+    "RandomForest": {
+      "Accuracy": 0.5051663306451613,
+      "Precision": 0.5032891507118311,
+      "Recall": 0.4326468602295746,
+      "F1": 0.4653020469296056,
+      "ROC_AUC": 0.507065048021878
+    },
+    "XGBoost": {
+      "Accuracy": 0.4994959677419355,
+      "Precision": 0.4969230769230769,
+      "Recall": 0.46345374746792706,
+      "F1": 0.4796052056948205,
+      "ROC_AUC": 0.5057569620714106
+    },
+    "RandomForest_Reduced": {
+      "Accuracy": 0.5079805107526881,
+      "Precision": 0.5071019715921137,
+      "Recall": 0.4037812288993923,
+      "F1": 0.4495818062212198,
+      "ROC_AUC": 0.5059591503526271
+    }
+  },
+  "LSTM": {
+    "Accuracy": 0.5062591374269005,
+    "Precision": 0.5097740840454174,
+    "Recall": 0.3968470931292145,
+    "F1": 0.4462776041399805,
+    "ROC_AUC": 0.5121098283550181
+  },
+  "Transformer": {
+    "Accuracy": 0.5087719298245614,
+    "Precision": 0.5085437192118226,
+    "Recall": 0.6020594131583743,
+    "F1": 0.5513644329466745,
+    "ROC_AUC": 0.5122929414616834
+  },
+  "Regime_Analysis": [
+    {
+      "Model": "LSTM",
+      "Regime": "HIGH",
+      "Samples": 5201,
+      "Accuracy": 0.5310517208229186,
+      "Precision": 0.562200956937799,
+      "Recall": 0.43534642460170436,
+      "F1": 0.49070787220714135,
+      "ROC_AUC": 0.5438427324091079,
+      "Error_Rate": 0.4689482791770813
+    },
+    {
+      "Model": "LSTM",
+      "Regime": "LOW",
+      "Samples": 11375,
+      "Accuracy": 0.49336263736263736,
+      "Precision": 0.48110271231658513,
+      "Recall": 0.3869122116931879,
+      "F1": 0.42889703696363096,
+      "ROC_AUC": 0.4917339044215904,
+      "Error_Rate": 0.5066373626373626
+    },
+    {
+      "Model": "LSTM",
+      "Regime": "MEDIUM",
+      "Samples": 5312,
+      "Accuracy": 0.5096009036144579,
+      "Precision": 0.519693094629156,
+      "Recall": 0.3788217747949292,
+      "F1": 0.43821436273452663,
+      "ROC_AUC": 0.5202687682706567,
+      "Error_Rate": 0.4903990963855422
+    },
+    {
+      "Model": "Transformer",
+      "Regime": "HIGH",
+      "Samples": 5201,
+      "Accuracy": 0.5143241684291482,
+      "Precision": 0.5224035224035224,
+      "Recall": 0.7473138199333086,
+      "F1": 0.614939024390244,
+      "ROC_AUC": 0.5175730478973619,
+      "Error_Rate": 0.48567583157085176
+    },
+    {
+      "Model": "Transformer",
+      "Regime": "LOW",
+      "Samples": 11375,
+      "Accuracy": 0.5093626373626373,
+      "Precision": 0.5010530010530011,
+      "Recall": 0.5104595029501162,
+      "F1": 0.5057125143919936,
+      "ROC_AUC": 0.5126406649414699,
+      "Error_Rate": 0.49063736263736263
+    },
+    {
+      "Model": "Transformer",
+      "Regime": "MEDIUM",
+      "Samples": 5312,
+      "Accuracy": 0.5020707831325302,
+      "Precision": 0.505388872706088,
+      "Recall": 0.6469052945563013,
+      "F1": 0.5674570727718724,
+      "ROC_AUC": 0.5004121264705131,
+      "Error_Rate": 0.4979292168674699
+    }
+  ],
+  "Leakage_Checks": {
+    "train_max_date_lt_test_min_date": true,
+    "train_order_preserved": true,
+    "test_order_preserved": true,
+    "scaler_fit_only_on_train": true,
+    "sequence_window": 20
+  }
+}

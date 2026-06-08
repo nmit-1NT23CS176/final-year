@@ -1,0 +1,227 @@
+{
+  "comparison": [
+    {
+      "Model": "Threshold-Optimized Transformer",
+      "Accuracy": 0.5013249269005848,
+      "Precision": 0.5013484481418842,
+      "Recall": 0.9994532531437944,
+      "F1": 0.6677422300690998,
+      "ROC_AUC": 0.5199516806496065
+    },
+    {
+      "Model": "Ensemble Model",
+      "Accuracy": 0.5039290935672515,
+      "Precision": 0.5026869267117576,
+      "Recall": 0.9887916894477857,
+      "F1": 0.6665233415233415,
+      "ROC_AUC": 0.5187782296763613
+    },
+    {
+      "Model": "Regime-Based Model",
+      "Accuracy": 0.5065332602339181,
+      "Precision": 0.5044617527208954,
+      "Recall": 0.8911973756150902,
+      "F1": 0.6442475544283786,
+      "ROC_AUC": 0.5050475687465457
+    },
+    {
+      "Model": "Transformer",
+      "Accuracy": 0.5174981725146199,
+      "Precision": 0.5181251645747389,
+      "Recall": 0.5379077820302534,
+      "F1": 0.5278311798631913,
+      "ROC_AUC": 0.5199516806496065
+    },
+    {
+      "Model": "Calibrated Transformer",
+      "Accuracy": 0.4986293859649123,
+      "Precision": 0.0,
+      "Recall": 0.0,
+      "F1": 0.0,
+      "ROC_AUC": 0.48004831935039355
+    }
+  ],
+  "error_analysis": [
+    {
+      "Model": "Calibrated Transformer",
+      "FalsePositives": 0,
+      "FalseNegatives": 10974,
+      "FP_minus_FN": -10974
+    },
+    {
+      "Model": "Transformer",
+      "FalsePositives": 5490,
+      "FalseNegatives": 5071,
+      "FP_minus_FN": 419
+    },
+    {
+      "Model": "Regime-Based Model",
+      "FalsePositives": 9607,
+      "FalseNegatives": 1194,
+      "FP_minus_FN": 8413
+    },
+    {
+      "Model": "Ensemble Model",
+      "FalsePositives": 10735,
+      "FalseNegatives": 123,
+      "FP_minus_FN": 10612
+    },
+    {
+      "Model": "Threshold-Optimized Transformer",
+      "FalsePositives": 10909,
+      "FalseNegatives": 6,
+      "FP_minus_FN": 10903
+    }
+  ],
+  "regime_metrics": [
+    {
+      "Model": "Transformer",
+      "Regime": "HIGH",
+      "Accuracy": 0.5268217650451836,
+      "Precision": 0.5371875,
+      "Recall": 0.6369025565024083,
+      "F1": 0.5828106458721817,
+      "ROC_AUC": 0.5262508777712916
+    },
+    {
+      "Model": "Transformer",
+      "Regime": "LOW",
+      "Accuracy": 0.5172747252747253,
+      "Precision": 0.5098379629629629,
+      "Recall": 0.47255497943858393,
+      "F1": 0.49048900436113946,
+      "ROC_AUC": 0.5148878777723032
+    },
+    {
+      "Model": "Transformer",
+      "Regime": "MEDIUM",
+      "Accuracy": 0.5088478915662651,
+      "Precision": 0.5121302758391493,
+      "Recall": 0.5745712155108128,
+      "F1": 0.5415568441398699,
+      "ROC_AUC": 0.5161027750132556
+    },
+    {
+      "Model": "Threshold-Optimized Transformer",
+      "Regime": "HIGH",
+      "Accuracy": 0.5191309363583926,
+      "Precision": 0.5190384615384616,
+      "Recall": 1.0,
+      "F1": 0.6833776427395873,
+      "ROC_AUC": 0.5262508777712916
+    },
+    {
+      "Model": "Threshold-Optimized Transformer",
+      "Regime": "LOW",
+      "Accuracy": 0.49142857142857144,
+      "Precision": 0.4915537568185817,
+      "Recall": 0.9989272304666548,
+      "F1": 0.6588831888672682,
+      "ROC_AUC": 0.5148878777723032
+    },
+    {
+      "Model": "Threshold-Optimized Transformer",
+      "Regime": "MEDIUM",
+      "Accuracy": 0.5050828313253012,
+      "Precision": 0.5049896441348145,
+      "Recall": 1.0,
+      "F1": 0.6710872013011385,
+      "ROC_AUC": 0.5161027750132556
+    },
+    {
+      "Model": "Calibrated Transformer",
+      "Regime": "HIGH",
+      "Accuracy": 0.4810613343587772,
+      "Precision": 0.0,
+      "Recall": 0.0,
+      "F1": 0.0,
+      "ROC_AUC": 0.47374912222870835
+    },
+    {
+      "Model": "Calibrated Transformer",
+      "Regime": "LOW",
+      "Accuracy": 0.5083076923076923,
+      "Precision": 0.0,
+      "Recall": 0.0,
+      "F1": 0.0,
+      "ROC_AUC": 0.48511212222769684
+    },
+    {
+      "Model": "Calibrated Transformer",
+      "Regime": "MEDIUM",
+      "Accuracy": 0.495105421686747,
+      "Precision": 0.0,
+      "Recall": 0.0,
+      "F1": 0.0,
+      "ROC_AUC": 0.4838972249867444
+    },
+    {
+      "Model": "Regime-Based Model",
+      "Regime": "HIGH",
+      "Accuracy": 0.5191309363583926,
+      "Precision": 0.5190384615384616,
+      "Recall": 1.0,
+      "F1": 0.6833776427395873,
+      "ROC_AUC": 0.5262508777712916
+    },
+    {
+      "Model": "Regime-Based Model",
+      "Regime": "LOW",
+      "Accuracy": 0.5014505494505495,
+      "Precision": 0.495606128886886,
+      "Recall": 0.7865188628642946,
+      "F1": 0.608058608058608,
+      "ROC_AUC": 0.5041892033718335
+    },
+    {
+      "Model": "Regime-Based Model",
+      "Regime": "MEDIUM",
+      "Accuracy": 0.5050828313253012,
+      "Precision": 0.5049896441348145,
+      "Recall": 1.0,
+      "F1": 0.6710872013011385,
+      "ROC_AUC": 0.5161027750132556
+    },
+    {
+      "Model": "Ensemble Model",
+      "Regime": "HIGH",
+      "Accuracy": 0.5175927706210344,
+      "Precision": 0.5184037194885703,
+      "Recall": 0.9914783253056688,
+      "F1": 0.6808294110164101,
+      "ROC_AUC": 0.5376082979485253
+    },
+    {
+      "Model": "Ensemble Model",
+      "Regime": "LOW",
+      "Accuracy": 0.496,
+      "Precision": 0.4937376990517087,
+      "Recall": 0.9867691757554086,
+      "F1": 0.6581599189076381,
+      "ROC_AUC": 0.507635860485042
+    },
+    {
+      "Model": "Ensemble Model",
+      "Regime": "MEDIUM",
+      "Accuracy": 0.5075301204819277,
+      "Precision": 0.5062905070529927,
+      "Recall": 0.9903057419835943,
+      "F1": 0.6700302724520686,
+      "ROC_AUC": 0.5228675609541713
+    }
+  ],
+  "pruned_metrics_validation": {
+    "Accuracy": 0.4850792091366818,
+    "Precision": 0.4690721649484536,
+    "Recall": 0.6350478159731197,
+    "F1": 0.5395849346656418,
+    "ROC_AUC": 0.49443318154830407
+  },
+  "pruned_metrics_test": {
+    "Accuracy": 0.5130208333333334,
+    "Precision": 0.511690046760187,
+    "Recall": 0.6282121377802078,
+    "F1": 0.5639955822800343,
+    "ROC_AUC": 0.518849741600242
+  }
+}

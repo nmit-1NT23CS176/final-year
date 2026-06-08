@@ -1,0 +1,1962 @@
+{
+  "items": "50",
+  "sentiment_score_definition": "x <= -0.35: Bearish; -0.35 < x <= -0.15: Somewhat-Bearish; -0.15 < x < 0.15: Neutral; 0.15 <= x < 0.35: Somewhat_Bullish; x >= 0.35: Bullish",
+  "relevance_score_definition": "0 < x <= 1, with a higher score indicating higher relevance.",
+  "feed": [
+    {
+      "title": "Infosys Shares Rise 1% on First Day of New Year 2026 After Five-Day Losing Streak",
+      "url": "https://www.lokmattimes.com/business/infosys-shares-rise-1-on-first-day-of-new-year-2026-after-five-day-losing-streak-a475/",
+      "time_published": "20260101T070906",
+      "authors": [
+        "Lokmat Times Desk"
+      ],
+      "summary": "Infosys Ltd shares saw a 1% rise on the first trading day of 2026, breaking a five-day losing streak, as investors anticipate the company's December-quarter earnings scheduled for January 13 and 14, 2026. The stock gained \u20b922.40, with a 1.39% increase, trading at \u20b91,637.80 on the NSE. The Bengaluru-based software exporter closed its trading window on December 16, 2025, in line with SEBI regulations, and it will reopen on January 19, 2026, after the financial results are declared.",
+      "banner_image": "https://d3pc1xvrcw35tl.cloudfront.net/ln/images/420x315/infosys-share-price-stock-market_2026011068373.jpg",
+      "source": "Lokmat Times",
+      "category_within_source": "General",
+      "source_domain": "Lokmat Times",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.917067"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.803286"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.711039"
+        }
+      ],
+      "overall_sentiment_score": 0.10535,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "0.314764",
+          "ticker_sentiment_score": "0.037679",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "CTSH",
+          "relevance_score": "0.539812",
+          "ticker_sentiment_score": "0.186561",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Ltd eases for fifth straight session",
+      "url": "https://www.capitalmarket.com/markets/news/hot-pursuit/infosys-ltd-eases-for-fifth-straight-session/1662421",
+      "time_published": "20260101T040946",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Infosys Ltd shares declined for a fifth consecutive trading session, quoting at Rs 1635.9, down 0.54% on the NSE. This drop contrasts with a 9.53% rally in the NIFTY over the last year, while the Nifty IT index, including Infosys, fell by 12% in the same period. Despite a recent 4.6% gain over the last month, the stock's current volume is significantly lower than its monthly average.",
+      "banner_image": "NULL",
+      "source": "Capital Market",
+      "category_within_source": "General",
+      "source_domain": "Capital Market",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.943213"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.736402"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.608139"
+        }
+      ],
+      "overall_sentiment_score": -0.42431,
+      "overall_sentiment_label": "Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.397174",
+          "ticker_sentiment_label": "Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Ltd Sees Robust Trading Activity Amid Positive Momentum and Institutional Interest",
+      "url": "https://www.marketsmojo.com/news/stocks-in-action/infosys-ltd-sees-robust-trading-activity-amid-positive-momentum-and-institutional-interest-3777722",
+      "time_published": "20260101T030000",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Infosys Ltd (INFY) experienced significant trading activity on January 1, 2026, with high turnover and renewed investor interest, outperforming its sector and the broader Sensex. The stock displayed a positive momentum shift after a prolonged decline, supported by strong delivery volumes indicating increased investor confidence. MarketsMOJO upgraded Infosys' Mojo Score to a Buy grade, reflecting improved fundamentals and technical outlook.",
+      "banner_image": "NULL",
+      "source": "Markets Mojo",
+      "category_within_source": "General",
+      "source_domain": "Markets Mojo",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.904902"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.826298"
+        }
+      ],
+      "overall_sentiment_score": 0.876676,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.873469",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "TCS, HCLTech, Infosys, Coforge To Announce Quarterly Earnings On These Dates \u2014 IT Q3 Results Calendar",
+      "url": "https://www.ndtvprofit.com/quarterly-earnings/tcs-hcltech-infosys-coforge-to-announce-quarterly-earnings-on-these-dates-it-q3-results-calendar",
+      "time_published": "20260101T020946",
+      "authors": [
+        "NDTV Profit News"
+      ],
+      "summary": "Leading Indian IT companies including TCS, HCL Technologies, Infosys, and Coforge are set to announce their Q3FY26 financial results during January 2026. These announcements will feature audited standalone financial results for the quarter and nine-month period ended December 31, and some companies are expected to consider interim dividend payouts. The article provides specific dates for Board meetings, trading window closures, and investor calls for each mentioned company.",
+      "banner_image": "https://media.assettype.com/bloombergquint%2F2025-12-31%2Fqbpz1myo%2FLavender.jpg?auto=format%2Ccompress&fmt=avif&mode=crop&ar=16%3A9&q=60&w=1200",
+      "source": "NDTV Profit",
+      "category_within_source": "General",
+      "source_domain": "NDTV Profit",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.848296"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.738597"
+        }
+      ],
+      "overall_sentiment_score": 0.039349,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.048208",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "ACN",
+          "relevance_score": "0.618459",
+          "ticker_sentiment_score": "0.021709",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "IBM",
+          "relevance_score": "0.628182",
+          "ticker_sentiment_score": "0.012484",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "CTSH",
+          "relevance_score": "0.602969",
+          "ticker_sentiment_score": "0.015437",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "The Truth About Infosys Ltd: Why Wall Street Can\u2019t Ignore This Quiet Tech Beast",
+      "url": "https://www.ad-hoc-news.de/boerse/ueberblick/the-truth-about-infosys-ltd-why-wall-street-can-t-ignore-this-quiet/68443438",
+      "time_published": "20251231T065424",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Infosys Ltd, an Indian IT giant, is presented as a stable, long-term investment rather than a volatile meme stock. The article highlights its deep involvement in crucial tech services like AI, cloud migrations, and its strong global client base, suggesting it's a solid, quiet performer in the tech sector. It positions Infosys as a reliable player for investors seeking exposure to global IT services and AI consulting without extreme risks.",
+      "banner_image": "NULL",
+      "source": "AD HOC NEWS",
+      "category_within_source": "General",
+      "source_domain": "AD HOC NEWS",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "0.932613"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.815439"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.740789"
+        },
+        {
+          "topic": "economy_macro",
+          "relevance_score": "0.604189"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.616908"
+        }
+      ],
+      "overall_sentiment_score": 0.294741,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.436013",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "ACN",
+          "relevance_score": "0.611702",
+          "ticker_sentiment_score": "0.121938",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Key facts: Infosys announces \u20b918,000 crore buyback; faces \u20b974.9M tax penalty",
+      "url": "https://www.tradingview.com/news/tradingview:934de8e57d924:0-key-facts-infosys-announces-18-000-crore-buyback-faces-74-9m-tax-penalty/",
+      "time_published": "20251231T050946",
+      "authors": [],
+      "summary": "Infosys has announced an \u20b918,000 crore share buyback program, offering \u20b91,800 per share, while its current trading price is between \u20b91,635 and \u20b91,656. The company is also facing a tax penalty of \u20b974.9 million.",
+      "banner_image": null,
+      "source": "TradingView \u2014 Track All Markets",
+      "category_within_source": "General",
+      "source_domain": "TradingView \u2014 Track All Markets",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.910065"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.720930"
+        },
+        {
+          "topic": "economy_fiscal",
+          "relevance_score": "0.648606"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.643989"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.611212"
+        }
+      ],
+      "overall_sentiment_score": 0.243293,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.239530",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys raises fresher pay up to \u20b921 lakh for select AI roles",
+      "url": "https://newskarnataka.com/education/infosys-raises-fresher-pay-up-to-%E2%82%B921-lakh-for-select-ai-roles/30122025",
+      "time_published": "20251230T150855",
+      "authors": [
+        "News Karnataka"
+      ],
+      "summary": "Infosys has significantly revised its entry-level salary structure, offering up to \u20b921 lakh per annum for specialist AI roles, a substantial increase from its previous \u20b93.5 lakh packages. This move aims to attract skilled AI talent as the company adopts an \"AI-first\" strategy, though the widespread applicability of the highest salary has sparked debate. The company plans to hire around 20,000 graduates in 2025.",
+      "banner_image": "https://newskarnataka.com/_next/image?url=https%3A%2F%2Fblr1.digitaloceanspaces.com%2Fnewskarnataka.com%2Fwp-content%2Fuploads%2F2025%2F12%2FInfosys-raises-fresher-pay-up-to-%25E2%2582%25B921-lakh-for-select-AI-roles.webp&w=3840&q=100",
+      "source": "newskarnataka.com",
+      "category_within_source": "General",
+      "source_domain": "newskarnataka.com",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "0.938173"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.609290"
+        },
+        {
+          "topic": "economy_macro",
+          "relevance_score": "0.632057"
+        }
+      ],
+      "overall_sentiment_score": 0.242251,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.207386",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Ltd eases for fifth straight session",
+      "url": "https://www.capitalmarket.com/markets/news/hot-pursuit/Infosys-Ltd-eases-for-fifth-straight-session/1662421",
+      "time_published": "20251230T080855",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Infosys Ltd experienced its fifth consecutive session of decline, trading down 0.54% at Rs 1635.9 on the NSE. Over the last year, the stock tumbled 12.98%, significantly underperforming the NIFTY's 9.53% rally and the Nifty IT index's 12% fall. However, Infosys Ltd has seen a 4.6% gain in the past month.",
+      "banner_image": "NULL",
+      "source": "Capital Market",
+      "category_within_source": "General",
+      "source_domain": "Capital Market",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.837000"
+        }
+      ],
+      "overall_sentiment_score": -0.400088,
+      "overall_sentiment_label": "Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.399699",
+          "ticker_sentiment_label": "Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys says sold land in Karnataka was not government-allotted amid scrutiny over land meant for job creation",
+      "url": "https://thesouthfirst.com/karnataka/infosys-says-sold-land-in-karnataka-was-not-government-allotted-amid-scrutiny-over-land-meant-for-job-creation/",
+      "time_published": "20251230T050855",
+      "authors": [
+        "Anisha Reddy"
+      ],
+      "summary": "Infosys clarified that a 53.5-acre land parcel recently sold to Puravankara Ltd in Attibele, Karnataka, was acquired at market value as \"non-commercial\" and \"non-industrial land,\" not through government allotment. This statement came amidst scrutiny and criticism from politicians and the media who questioned the sale of land presumed to be allocated for job creation. The company stated the divestment was part of its asset optimisation program and fully compliant with all regulations.",
+      "banner_image": "https://images.thesouthfirst.com/wp-content/uploads/2024/07/Southfirst-Watermark_V_jpg--816x480-5g.webp",
+      "source": "The South First",
+      "category_within_source": "General",
+      "source_domain": "The South First",
+      "topics": [
+        {
+          "topic": "real_estate",
+          "relevance_score": "0.941198"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.820807"
+        },
+        {
+          "topic": "economy_fiscal",
+          "relevance_score": "0.622710"
+        }
+      ],
+      "overall_sentiment_score": 0.008954,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "0.318082",
+          "ticker_sentiment_score": "0.035461",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Bengaluru land Infosys sold to real estate company not allotted by govt, says Industries Department",
+      "url": "https://indianexpress.com/article/cities/bangalore/bengaluru-land-infosys-real-estate-company-govt-industries-department-10445246/",
+      "time_published": "20251230T050843",
+      "authors": [
+        "Akram M"
+      ],
+      "summary": "Infosys sold a 53.56-acre land parcel to real estate company Puravankara for Rs 250 crore, sparking debate. The Industries Department clarified that this particular land was acquired by Infosys in the open market from Sobha Developers and was not part of any government allotment. This statement came after social media discussions, including comments from Congress leader Karti P Chidambaram, questioned the sale of potentially government-allotted land.",
+      "banner_image": "https://images.indianexpress.com/2025/12/Infosys.jpg?w=1600",
+      "source": "The Indian Express",
+      "category_within_source": "General",
+      "source_domain": "The Indian Express",
+      "topics": [
+        {
+          "topic": "real_estate",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.819210"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.731621"
+        }
+      ],
+      "overall_sentiment_score": 0.112366,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "0.927233",
+          "ticker_sentiment_score": "0.114233",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Infosys revises wages: Freshers can get Rs 21-lakh salary; internet gives 'reality' check",
+      "url": "https://www.msn.com/en-in/money/news/infosys-revises-wages-freshers-can-get-rs-21-lakh-salary-internet-gives-reality-check/ar-AA1TdHTB?ocid=finance-verthp-feeds",
+      "time_published": "20251229T160843",
+      "authors": [],
+      "summary": "Infosys has revised its wage model, offering freshers with specialized skills up to Rs 21 lakh per annum, a significant increase from the previous Rs 3.6 lakh. This new salary structure targets graduates from premium institutes possessing niche capabilities. While the move aims to attract top talent, some on social media have expressed skepticism about the actual number of freshers who will achieve this higher pay scale.",
+      "banner_image": null,
+      "source": "MSN",
+      "category_within_source": "General",
+      "source_domain": "MSN",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "0.812016"
+        }
+      ],
+      "overall_sentiment_score": -0.107058,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.112089",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Undervalued: Key factors why Infosys share might be undervalued and a good buy",
+      "url": "https://tradebrains.in/undervalued-key-factors-why-infosys-share-might-be-undervalued-and-a-good-buy/",
+      "time_published": "20251229T020855",
+      "authors": [
+        "Adithya Menon"
+      ],
+      "summary": "Infosys' shares appear undervalued despite soft revenue guidance, driven by $3.1 billion in new deals, resilient margins, and deep AI integration across its workforce. The company's profits are improving, and analyst expectations are seeing a slight uptick, suggesting it could be a good buy. Infosys also announced a large share buyback at a premium to the current market price, increasing its appeal to investors.",
+      "banner_image": "https://tradebrains.in/wp-content/uploads/2024/10/infosys-1080x675.jpg",
+      "source": "Trade Brains",
+      "category_within_source": "General",
+      "source_domain": "Trade Brains",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.928466"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.900291"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.806859"
+        },
+        {
+          "topic": "economy_macro",
+          "relevance_score": "0.641098"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.639352"
+        }
+      ],
+      "overall_sentiment_score": 0.422701,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.428983",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Limited Stock Before Open (29 Dec 2025): AI Strategy as Key Catalyst",
+      "url": "https://meyka.com/blog/infosys-limited-stock-before-open-29-dec-2025-ai-strategy-as-key-catalyst-2812/",
+      "time_published": "20251229T010855",
+      "authors": [
+        "Huzaifa Zahoor"
+      ],
+      "summary": "Infosys Limited (NSE:INFY) is drawing attention in pre-market sessions due to its strong AI strategy and robust financial health, despite flat price movement. The company, trading at INR 1663.4, shows solid financial metrics and strong technical indicators suggesting an upward trend. Meyka AI gives INFY.NS a \"HOLD\" rating with a projected price increase to INR 1756.62 within a year, driven by its AI-centric initiatives.",
+      "banner_image": "NULL",
+      "source": "Meyka",
+      "category_within_source": "General",
+      "source_domain": "Meyka",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.849940"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.728733"
+        }
+      ],
+      "overall_sentiment_score": 0.531992,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.523262",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Denies Sale of Government-Allotted Land Near Bengaluru",
+      "url": "https://www.deccanherald.com/business/infosys-clarifies-land-near-bengaluru-was-market-bought-not-govt-allotted-3845106",
+      "time_published": "20251228T220400",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Infosys has denied a media report claiming it sold a 53.5-acre land parcel near Bengaluru, stating the land was market-bought and not government-allotted. The report had suggested the sale was to real estate developer Puravankara Ltd for an estimated Rs 250 crore. The article clarifies this misconception about the land's origin and transaction.",
+      "banner_image": "NULL",
+      "source": "Deccan Herald",
+      "category_within_source": "General",
+      "source_domain": "Deccan Herald",
+      "topics": [
+        {
+          "topic": "real_estate",
+          "relevance_score": "0.947137"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.735580"
+        }
+      ],
+      "overall_sentiment_score": 0.10635,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.105907",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Sees Heavy Call Option Activity Ahead of December Expiry",
+      "url": "https://www.marketsmojo.com/news/stocks-in-action/infosys-sees-robust-call-option-activity-amid-mixed-price-action-3768034",
+      "time_published": "20251228T160855",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Infosys is experiencing significant call option activity for the December 2025 expiry, particularly at the \u20b91680 strike price, indicating market interest in bullish positioning despite recent price declines. This suggests traders anticipate an upward movement in the stock to surpass \u20b91680, supported by the stock trading above its key moving averages. Investors should closely monitor price action and market dynamics as expiry approaches due to potential volatility.",
+      "banner_image": "NULL",
+      "source": "Markets Mojo",
+      "category_within_source": "General",
+      "source_domain": "Markets Mojo",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.944848"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.801316"
+        }
+      ],
+      "overall_sentiment_score": 0.107657,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.273945",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "ACN",
+          "relevance_score": "0.633551",
+          "ticker_sentiment_score": "0.037924",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "CTSH",
+          "relevance_score": "0.629054",
+          "ticker_sentiment_score": "0.035138",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Infosys accused of land sale to private real estate firm",
+      "url": "https://www.thehansindia.com/karnataka/infosys-accused-of-land-sale-to-private-real-estate-firm-1034324",
+      "time_published": "20251228T054749",
+      "authors": [
+        "The Hans India"
+      ],
+      "summary": "Infosys is facing criticism after allegedly selling a 53.5-acre land parcel in Anekal, originally acquired from KIADB for business purposes, to Puravankara Real Estate Pvt Ltd for Rs 250 crore. This transaction has sparked outrage on social media, with many accusing Infosys of unethical practices and contributing to Bengaluru's housing crisis. Puravankara plans to develop the land, with a potential Gross Development Value exceeding Rs 4,800 crore, but Infosys has remained silent on the controversy.",
+      "banner_image": "https://assets.thehansindia.com/h-upload/2025/12/28/1612253-infosys.webp",
+      "source": "The Hans India",
+      "category_within_source": "General",
+      "source_domain": "The Hans India",
+      "topics": [
+        {
+          "topic": "real_estate",
+          "relevance_score": "0.941461"
+        },
+        {
+          "topic": "mergers_and_acquisitions",
+          "relevance_score": "0.846573"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.709003"
+        }
+      ],
+      "overall_sentiment_score": -0.345509,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "0.973904",
+          "ticker_sentiment_score": "-0.311111",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys raises entry-level pay to \u20b921 lakh for some roles, internet reacts | Trending",
+      "url": "https://www.hindustantimes.com/trending/infosys-raises-entry-level-pay-to-rs-21-lakh-for-some-roles-internet-reacts-101766897006854.html",
+      "time_published": "20251228T050849",
+      "authors": [
+        "Sanya Jain"
+      ],
+      "summary": "Indian IT giant Infosys has increased entry-level salaries to \u20b921 lakh for specific roles, aiming to attract digitally native talent and enhance its AI capabilities. This update, while seen positively by some, also sparked debate online, with many users pointing out that this higher pay is only for a select few specialized positions and not for all entry-level roles. The move addresses long-standing criticism regarding stagnating fresher pay at the company.",
+      "banner_image": "https://www.hindustantimes.com/ht-img/img/2025/12/28/550x309/INFOSYS-RESULTS--0_1741326265439_1766897281742.JPG",
+      "source": "Hindustan Times",
+      "category_within_source": "General",
+      "source_domain": "Hindustan Times",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "0.942964"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.726662"
+        }
+      ],
+      "overall_sentiment_score": 0.111828,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.143930",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Sees Heavy Put Option Activity Ahead of December Expiry",
+      "url": "https://www.marketsmojo.com/news/stocks-in-action/infosys-sees-heavy-put-option-activity-ahead-of-december-expiry-amid-bearish-sentiment-3768031",
+      "time_published": "20251227T220849",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Infosys is experiencing significant put option trading activity ahead of its December 30, 2025 expiry, particularly at strike prices of \u20b91,620, \u20b91,640, and \u20b91,660. This indicates a cautious investor sentiment, possibly driven by hedging strategies or bearish speculation, despite the stock trading above its key moving averages. The concentration of put options reflects a focus on downside protection amidst recent narrow price movements and declining delivery volumes.",
+      "banner_image": "NULL",
+      "source": "Markets Mojo",
+      "category_within_source": "General",
+      "source_domain": "Markets Mojo",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.939709"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.731762"
+        }
+      ],
+      "overall_sentiment_score": -0.266304,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.272460",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Kisha Gupta appointed Global Head of Brand at Infosys",
+      "url": "https://www.medianews4u.com/kisha-gupta-appointed-global-head-of-brand-at-infosys/",
+      "time_published": "20251226T052359",
+      "authors": [
+        "MN4U Bureau"
+      ],
+      "summary": "Infosys has elevated Kisha Gupta to Global Head of Brand, a significant move in the company's marketing and brand stewardship function. Gupta, who joined Infosys in 2012, previously served as Associate Vice President and has over 18 years of diverse experience in corporate marketing, academic relations, and business analysis. In her new role, she will shape Infosys' brand strategy globally, strengthening its positioning with clients, talent, and partners amid an increasingly competitive and evolving tech landscape.",
+      "banner_image": "https://www.medianews4u.com/wp-content/themes/jnews/assets/img/jeg-empty.png",
+      "source": "MediaNews4U",
+      "category_within_source": "General",
+      "source_domain": "MediaNews4U",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "0.824484"
+        }
+      ],
+      "overall_sentiment_score": 0.342101,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.303250",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Limited Stock Before Open (24 Dec 2025): All Eyes on AI Developments",
+      "url": "https://meyka.com/blog/infosys-limited-stock-before-open-24-dec-2025-all-eyes-on-ai-developments-2312/",
+      "time_published": "20251224T000930",
+      "authors": [
+        "Huzaifa Zahoor"
+      ],
+      "summary": "Infosys Limited is drawing investor attention due to its aggressive expansion in artificial intelligence through platforms like Infosys Nia and strategic partnerships. The stock (INFY.NS) is currently trading at INR 1668.3, having shown a 1.81% increase today, though it reflects mixed technical signals and a \"HOLD\" recommendation from Meyka AI. Meyka AI forecasts a potential rise to INR 1756.62 within a year, driven by Infosys's continued commitment to AI innovation despite market volatility.",
+      "banner_image": "NULL",
+      "source": "Meyka",
+      "category_within_source": "General",
+      "source_domain": "Meyka",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.917097"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.834469"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.712737"
+        },
+        {
+          "topic": "economy_macro",
+          "relevance_score": "0.610003"
+        }
+      ],
+      "overall_sentiment_score": 0.413749,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.389398",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys (INFY) Ends 5% Lower After 52-Week High",
+      "url": "https://finviz.com/news/261208/infosys-infy-ends-5-lower-after-52-week-high",
+      "time_published": "20251223T125400",
+      "authors": [
+        "Angelica Ballesteros"
+      ],
+      "summary": "Infosys Limited (NYSE:INFY) saw its stock drop by 5.24% to $19.16 after reaching a 52-week high, attributed to profit-taking and a lack of new catalysts. The company recently reported an 8% increase in net income to $839 million and a 3.7% rise in revenues to $5.076 billion in Q2 FY2025. While acknowledging INFY's potential, the article suggests other AI stocks might offer greater returns with less risk.",
+      "banner_image": "https://d2gr5kl7dt2z3t.cloudfront.net/blog/wp-content/uploads/2025/12/21080714/pexels-artempodrez-5716009.jpg",
+      "source": "Finviz",
+      "category_within_source": "General",
+      "source_domain": "Finviz",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.909054"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.942223"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.830601"
+        }
+      ],
+      "overall_sentiment_score": 0.074539,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.235743",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "CTSH",
+          "relevance_score": "0.601152",
+          "ticker_sentiment_score": "0.121625",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "CSGP",
+          "relevance_score": "0.607857",
+          "ticker_sentiment_score": "0.137461",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "EPAM",
+          "relevance_score": "0.605954",
+          "ticker_sentiment_score": "0.137167",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "IBM",
+          "relevance_score": "0.606826",
+          "ticker_sentiment_score": "0.129134",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Key facts: Infosys ADR hits record high; falls 6% after surge",
+      "url": "https://www.tradingview.com/news/tradingview:9095f51f10bba:0-key-facts-infosys-adr-hits-record-high-falls-6-after-surge/",
+      "time_published": "20251223T050950",
+      "authors": [],
+      "summary": "Infosys Ltd's ADR reached a record high on December 2, 2025, surging nearly 40% due to short-covering. However, it subsequently fell 6% on December 22. HDFC Securities analyst Unmesh Sharma maintains a positive outlook for Infosys, anticipating the company to lead AI initiatives as concerns about AI's impact diminish, further supported by a weaker currency.",
+      "banner_image": null,
+      "source": "TradingView \u2014 Track All Markets",
+      "category_within_source": "General",
+      "source_domain": "TradingView \u2014 Track All Markets",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.940040"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.731672"
+        }
+      ],
+      "overall_sentiment_score": 0.122772,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.141245",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Sees Robust Call Option Activity Amid Mixed Market Performance",
+      "url": "https://www.marketsmojo.com/news/stocks-in-action/infosys-sees-heavy-call-option-activity-ahead-of-december-expiry-amid-mixed-price-action-3766840",
+      "time_published": "20251223T050950",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Infosys Ltd. is experiencing significant call option activity for the December 30, 2025 expiry, particularly at strike prices of \u20b91660, \u20b91680, and \u20b91700, indicating bullish sentiment despite a recent stock price dip. The company's shares are trading above key moving averages, and a surge in delivery volume suggests growing investor confidence. This strong derivatives interest, coupled with its technical resilience, positions Infosys as a key stock to watch as the expiry date approaches.",
+      "banner_image": "NULL",
+      "source": "Markets Mojo",
+      "category_within_source": "General",
+      "source_domain": "Markets Mojo",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.932843"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.816280"
+        }
+      ],
+      "overall_sentiment_score": 0.158968,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.313281",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "CSCO",
+          "relevance_score": "0.582878",
+          "ticker_sentiment_score": "0.141993",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "CTSH",
+          "relevance_score": "0.569050",
+          "ticker_sentiment_score": "0.111423",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "IBM",
+          "relevance_score": "0.571167",
+          "ticker_sentiment_score": "0.116937",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "ACN",
+          "relevance_score": "0.595286",
+          "ticker_sentiment_score": "0.133904",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Infosys (INFY) Shares Decline by 5.3% Amidst Market Fluctuations",
+      "url": "https://www.gurufocus.com/news/4079981/infosys-infy-shares-decline-by-53-amidst-market-fluctuations",
+      "time_published": "20251222T160950",
+      "authors": [
+        "GuruFocus News"
+      ],
+      "summary": "Infosys (INFY) stock declined by 5.3%, reflecting broader market volatility despite the company's strong financial health and consistent revenue growth. While the IT services provider maintains robust profitability and a low debt-to-equity ratio, warning signs include declining gross and operating margins, and the stock's RSI suggests it is currently overbought. Overall, Infosys is well-positioned for future opportunities due to its strong financial foundation, although it faces challenges within the dynamic technology landscape.",
+      "banner_image": "https://static.gurufocus.com/cdn-cgi/image/width=600,quality=100/logos/0C00000BGU.png?20",
+      "source": "GuruFocus",
+      "category_within_source": "General",
+      "source_domain": "GuruFocus",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.935952"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.830764"
+        }
+      ],
+      "overall_sentiment_score": -0.200612,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.229233",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys shares rise 3% today. Why is the IT giant's stock price rising?",
+      "url": "https://www.indiatoday.in/business/market/story/infosys-share-price-why-is-it-rising-today-adrs-explained-2839678-2025-12-22",
+      "time_published": "20251222T050952",
+      "authors": [
+        "India Today Business Desk"
+      ],
+      "summary": "Infosys shares surged over 3% in intraday trading after the IT major clarified unusual price action in its American Depositary Receipts (ADRs) on the NYSE. The company stated there were no material events triggering the spike, attributing it to market-structure factors like short squeezes and low liquidity, which helped calm domestic investor nerves and boost stock prices.",
+      "banner_image": "https://akm-img-a-in.tosshub.com/indiatoday/images/story/202512/tinfosys-informed-the-nse-and-bse-that-a-us-court-granted-final-approval-to-the-mccamish-settlement-221023873-16x9.jpg?VersionId=kikZtniTHBk.XK0K6O_DQkUzpOpUTVxu&size=690:388",
+      "source": "India Today",
+      "category_within_source": "General",
+      "source_domain": "India Today",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.943678"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.849935"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.702480"
+        }
+      ],
+      "overall_sentiment_score": 0.488718,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.475181",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Why Are Infosys Shares Buzzing In Trade Today?",
+      "url": "https://www.ndtvprofit.com/markets/infosys-share-price-in-focus-after-adr-spike-at-nyse-on-friday",
+      "time_published": "20251222T040951",
+      "authors": [
+        "Anas Ali"
+      ],
+      "summary": "Infosys's shares are buzzing today following a significant anomaly on Friday where its American Depositary Receipts (ADRs) spiked by up to 40% on NYSE. Despite the ADRs returning to normal levels and the company clarifying no fundamental news drove the surge, the stock saw gains of over 2% today and hit a nine-month high before retreating slightly. Out of 51 analysts, 37 maintain a 'buy' rating, and the average 12-month consensus price target implies a 5.4% upside.",
+      "banner_image": "https://media.assettype.com/bloombergquint%2F2025-12-22%2Fvychwmg8%2FInfosys-namesign-Vijay-S-120419.jpeg.jpg?auto=format%2Ccompress&fmt=avif&mode=crop&ar=16%3A9&q=60&w=1200",
+      "source": "NDTV Profit",
+      "category_within_source": "General",
+      "source_domain": "NDTV Profit",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.927778"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.813458"
+        }
+      ],
+      "overall_sentiment_score": -0.122316,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.121261",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Ltd Spikes 2.55%",
+      "url": "https://www.business-standard.com/markets/capital-market-news/infosys-ltd-spikes-2-55-125122200132_1.html",
+      "time_published": "20251222T040951",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Infosys Ltd saw a 2.55% increase in its stock price, trading at Rs 1681.45, outpacing the BSE Teck index which rose 0.95%. Over the last month, Infosys Ltd has gained 8.86%, significantly outperforming the BSE Teck index's 3.5% gain and the SENSEX's 0.1% drop. The company's stock has shown strong performance despite the BSE Teck index declining over the past year.",
+      "banner_image": "NULL",
+      "source": "Business Standard",
+      "category_within_source": "General",
+      "source_domain": "Business Standard",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.934047"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.823906"
+        }
+      ],
+      "overall_sentiment_score": 0.542662,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.544982",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys shares in focus after ADRs jump 40%, Company clarifies no material events behind the surge",
+      "url": "https://m.economictimes.com/markets/stocks/news/infosys-shares-in-focus-after-adrs-jump-40-company-clarifies-no-material-events-behind-the-surge/articleshow/126113250.cms",
+      "time_published": "20251222T030951",
+      "authors": [
+        "Nishtha Awasthi"
+      ],
+      "summary": "Infosys's shares rose by 3% on the BSE after its American Depositary Receipts (ADRs) experienced a 40% surge on the NYSE, which the company clarified was not due to any material events. This volatility, including two trading halts, comes amid a broader rally in Indian IT stocks following strong Accenture results. Infosys reiterated its fiscal 2026 revenue growth guidance of 2% to 5% in local currency terms.",
+      "banner_image": "https://img.etimg.com/thumb/msid-126113242,width-210,height-158,imgsize-50386,resizemode-75/infosys-shares-in-focus-after-adrs-jump-40-company-clarifies-no-material-events-behind-the-surge.jpg",
+      "source": "The Economic Times",
+      "category_within_source": "General",
+      "source_domain": "The Economic Times",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.823693"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.931402"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.733210"
+        }
+      ],
+      "overall_sentiment_score": 0.318953,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "0.965921",
+          "ticker_sentiment_score": "0.278282",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "ACN",
+          "relevance_score": "0.722637",
+          "ticker_sentiment_score": "0.330254",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Stock News Today (Dec 21, 2025): INFY\u2019s \u201cMystery\u201d ADR Spike, Company Clarification, and Analyst Forecasts Ahead of Q3 Results",
+      "url": "https://ts2.tech/en/infosys-stock-news-today-dec-21-2025-infys-mystery-adr-spike-company-clarification-and-analyst-forecasts-ahead-of-q3-results/",
+      "time_published": "20251221T110951",
+      "authors": [
+        "Shan Ahmed Khan"
+      ],
+      "summary": "Infosys Limited's U.S.-listed ADRs experienced an unexplained surge and subsequent trading halts on December 19, 2025, which the company clarified was not due to any material events requiring disclosure. Analysts and commentators attribute the volatility to market-structure issues like short squeezes, thin liquidity, or data-feed errors rather than fundamental changes. The article also provides a comprehensive update on Infosys' recent fundamentals, corporate actions, and analyst forecasts ahead of its Q3 FY22 results on January 14, 2026.",
+      "banner_image": "NULL",
+      "source": "ts2.tech",
+      "category_within_source": "General",
+      "source_domain": "ts2.tech",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.939689"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.912255"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.849088"
+        }
+      ],
+      "overall_sentiment_score": 0.267102,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.226897",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "ACN",
+          "relevance_score": "0.749818",
+          "ticker_sentiment_score": "0.348901",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "MSFT",
+          "relevance_score": "0.628545",
+          "ticker_sentiment_score": "0.326885",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Limited Stock (NSE: INFY, NYSE: INFY): What Triggered the Sudden ADR Spike, Latest News, Analyst Targets, and the Road to Q3 FY26",
+      "url": "https://ts2.tech/en/infosys-limited-stock-nse-infy-nyse-infy-what-triggered-the-sudden-adr-spike-latest-news-analyst-targets-and-the-road-to-q3-fy26/",
+      "time_published": "20251220T110940",
+      "authors": [
+        "Shan Ahmed Khan"
+      ],
+      "summary": "Infosys Limited's U.S.-listed American Depositary Receipts (ADRs) experienced a sudden, unexplained spike of up to 56% on the NYSE on December 19, 2025, before trading was halted and the stock cooled. The company issued a clarification stating there were no undisclosed material developments, suggesting the event was technical or positional rather than fundamental. Analysts maintain a \"Buy\" rating for Infosys, with a focus on its long-term growth, resilient margins, and shareholder returns through dividends and buybacks, especially as it approaches its Q3 FY26 earnings.",
+      "banner_image": "NULL",
+      "source": "ts2.tech",
+      "category_within_source": "General",
+      "source_domain": "ts2.tech",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.803729"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.735398"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.626663"
+        }
+      ],
+      "overall_sentiment_score": 0.210958,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.147857",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "ACN",
+          "relevance_score": "0.600237",
+          "ticker_sentiment_score": "0.270894",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Stock Leaps: Is it a Buy Now?",
+      "url": "https://stockstotrade.com/news/infosys-limited-infy-news-2025_12_19/",
+      "time_published": "20251220T020921",
+      "authors": [
+        "Tim Bohen",
+        "Ben Sturgill",
+        "Ellis Hobbs"
+      ],
+      "summary": "Infosys Limited's stock has risen by 5.32% following a significant AI partnership announcement with Microsoft, involving the deployment of over 200,000 AI Copilot licenses. The company's strong financial health, strategic AI initiatives, and robust balance sheet suggest a promising outlook, leading analysts to express a bullish sentiment on the stock. While current market movements show short-term volatility, the long-term prospects, driven by technological foresight and financial discipline, make it an attractive proposition for investors.",
+      "banner_image": "https://content.stockstotrade.com/wp-content/uploads/2025/12/ai-driven-stock-market-trends-3.png",
+      "source": "StocksToTrade",
+      "category_within_source": "General",
+      "source_domain": "StocksToTrade",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.957540"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.921007"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.742281"
+        }
+      ],
+      "overall_sentiment_score": 0.216152,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.439662",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "MSFT",
+          "relevance_score": "0.719894",
+          "ticker_sentiment_score": "0.283218",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "CTSH",
+          "relevance_score": "0.613344",
+          "ticker_sentiment_score": "0.115612",
+          "ticker_sentiment_label": "Neutral"
+        },
+        {
+          "ticker": "WBD",
+          "relevance_score": "0.557160",
+          "ticker_sentiment_score": "0.085672",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Buy, Sell Or Hold: Kaynes Tech, Infosys, Indegene, Power Grid, Varun Beverages \u2014 Ask Profit",
+      "url": "https://www.ndtvprofit.com/markets/buy-sell-or-hold-kaynes-tech-infosys-indegene-power-grid-varun-beverages-ask-profit",
+      "time_published": "20251219T160921",
+      "authors": [
+        "Ann Jacob"
+      ],
+      "summary": "Analysts offered their views on several stocks including Kaynes Tech, Infosys, Indegene, Power Grid, and Varun Beverages on NDTV Profit's Ask Profit show. Recommendations varied from \"Buy\" for Infosys, Indegene, and Power Grid, to \"Sell\" for Kaynes Tech and Techno Electric Engineering, and \"Hold\" for Varun Beverages, based on financial performance, market position, and growth prospects.",
+      "banner_image": "https://media.assettype.com/bloombergquint%2F2025-11-03%2F6rudvwgi%2FGeminiGeneratedImagei3n1u9i3n1u9i3n1.png?rect=0%2C0%2C1024%2C576&auto=format%2Ccompress&fmt=avif&mode=crop&ar=16%3A9&q=60&w=1200",
+      "source": "NDTV Profit",
+      "category_within_source": "General",
+      "source_domain": "NDTV Profit",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.837291"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.730916"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.605982"
+        }
+      ],
+      "overall_sentiment_score": 0.522231,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "0.903740",
+          "ticker_sentiment_score": "0.510873",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "The $25 Billion Phantom: Inside the Mystery Surge and Trading Halt of Infosys ADRs",
+      "url": "https://markets.financialcontent.com/stocks/article/marketminute-2025-12-19-the-25-billion-phantom-inside-the-mystery-surge-and-trading-halt-of-infosys-adrs",
+      "time_published": "20251219T114000",
+      "authors": [
+        "MarketMinute"
+      ],
+      "summary": "Infosys Ltd. (NYSE: INFY) ADRs experienced an unexplained surge of nearly 50% on December 19, 2025, leading to trading halts and adding billions to its market cap before retreating. This \"phantom\" surge was attributed to a technical glitch where data providers mistakenly identified the INFY ticker as \"American Noble Gas Inc.,\" confusing automated trading algorithms. The event highlights the risks of algorithmic trading, data integrity failures, and the fragility of ADRs, prompting calls for increased scrutiny and regulatory changes in financial data verification.",
+      "banner_image": "https://marketminute.ghost.io/content/images/size/w1200/2025/12/80c594ae-72d1-4291-8800-88a684a50d14.png",
+      "source": "FinancialContent",
+      "category_within_source": "General",
+      "source_domain": "FinancialContent",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.805959"
+        }
+      ],
+      "overall_sentiment_score": -0.211395,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.234502",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        }
+      ]
+    },
+    {
+      "title": "The $25 Billion Phantom: Inside the Mystery Surge and Trading Halt of Infosys ADRs",
+      "url": "https://markets.financialcontent.com/wral/article/marketminute-2025-12-19-the-25-billion-phantom-inside-the-mystery-surge-and-trading-halt-of-infosys-adrs",
+      "time_published": "20251219T114000",
+      "authors": [
+        "MarketMinute"
+      ],
+      "summary": "Infosys Ltd. (NYSE: INFY) ADRs experienced an unexplained nearly 50% surge on December 19, 2025, triggering multiple trading halts on the NYSE before prices retreated. This phantom surge, which added billions to the company's market cap, is attributed to a technical glitch where data providers erroneously identified the \"INFY\" ticker as \"American Noble Gas Inc.,\" confusing automated trading algorithms. The event highlights the integrity risks of financial data feeds and the growing influence of algorithmic trading, leading to calls for increased scrutiny and regulation.",
+      "banner_image": "https://marketminute.ghost.io/content/images/size/w1200/2025/12/80c594ae-72d1-4291-8800-88a684a50d14.png",
+      "source": "FinancialContent",
+      "category_within_source": "General",
+      "source_domain": "FinancialContent",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "0.800494"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.915627"
+        }
+      ],
+      "overall_sentiment_score": -0.204309,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.233270",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys stock hits 52-week high at 23.28 USD",
+      "url": "https://www.investing.com/news/company-news/infosys-stock-hits-52week-high-at-2328-usd-93CH-4417608",
+      "time_published": "20251219T100800",
+      "authors": [
+        "Investing.com"
+      ],
+      "summary": "Infosys Ltd ADR reached a 52-week high of $23.28, defying a 1-year decline of 16.06%. The company, with a market capitalization of $75.91 billion, maintains a P/E ratio of 22.91 and a low volatility profile, consistently paying dividends for 26 years. Infosys continues to focus on AI projects and strategic partnerships, evidenced by strong Q2 FY26 results and a planned share buyback.",
+      "banner_image": "https://i-invdn-com.investing.com/news/world_news_2_69x52._800x533_L_1419494365.jpg",
+      "source": "Investing.com",
+      "category_within_source": "General",
+      "source_domain": "Investing.com",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.948884"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.816922"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.729863"
+        }
+      ],
+      "overall_sentiment_score": 0.350674,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.462956",
+          "ticker_sentiment_label": "Bullish"
+        },
+        {
+          "ticker": "AVGO",
+          "relevance_score": "0.645003",
+          "ticker_sentiment_score": "0.337131",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "MU",
+          "relevance_score": "0.644524",
+          "ticker_sentiment_score": "0.301993",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "ORCL",
+          "relevance_score": "0.639128",
+          "ticker_sentiment_score": "0.300524",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        },
+        {
+          "ticker": "NVDA",
+          "relevance_score": "0.628004",
+          "ticker_sentiment_score": "0.309452",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Sees Robust Call Option Activity Ahead of December Expiry",
+      "url": "https://www.marketsmojo.com/news/stocks-in-action/infosys-sees-robust-call-option-activity-signalling-bullish-market-sentiment-3763610",
+      "time_published": "20251219T050912",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Infosys Ltd is experiencing significant call option trading activity with substantial volumes concentrated around strike prices of \u20b91,640, \u20b91,660, and \u20b91,700, all set to expire on December 30, 2025. This robust activity reflects a predominantly bullish sentiment among investors who are anticipating upward price movements or hedging against potential scenarios. The company's strong technical indicators, including trading above all major moving averages and recent outperformance, support this bullish outlook and suggest favorable near-term prospects.",
+      "banner_image": "NULL",
+      "source": "Markets Mojo",
+      "category_within_source": "General",
+      "source_domain": "Markets Mojo",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.923751"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.740292"
+        }
+      ],
+      "overall_sentiment_score": 0.012825,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "0.340060",
+          "ticker_sentiment_score": "0.019206",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Stocks To Watch Today: Bharti Airtel, Infosys, Wipro, Ola Electric, IndiGo, Vodafone Idea",
+      "url": "https://www.ndtvprofit.com/markets/stocks-to-watch-today-bharti-airtel-infosys-wipro-ola-electric-indigo-vodafone-idea",
+      "time_published": "20251219T010912",
+      "authors": [
+        "NDTV Profit Research"
+      ],
+      "summary": "Investors should watch shares of Ola Electric Mobility, Bharti Airtel, Infosys, and Wipro on Friday following several corporate announcements made after Thursday's market hours. Key movements include Bharti Airtel's final call for partly paid shares, Ola Electric's promoter repaying a loan and releasing pledged shares, and Accenture reporting a 6% revenue rise. Additionally, IndiGo is replacing Tata Motors PV in Sensex rejig, and ICICI Prudential AMC shares are set to debut.",
+      "banner_image": "https://media.assettype.com/bloombergquint%2F2025-08-08%2F0p41pd1l%2Fforex-trade-graph-chart-concept.jpg?rect=0%2C311%2C4924%2C2770&auto=format%2Ccompress&fmt=avif&mode=crop&ar=16%3A9&q=60&w=1200",
+      "source": "NDTV Profit",
+      "category_within_source": "General",
+      "source_domain": "NDTV Profit",
+      "topics": [
+        {
+          "topic": "mergers_and_acquisitions",
+          "relevance_score": "0.838264"
+        },
+        {
+          "topic": "ipo",
+          "relevance_score": "0.946129"
+        },
+        {
+          "topic": "earnings",
+          "relevance_score": "0.724217"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.629833"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "1.000000"
+        }
+      ],
+      "overall_sentiment_score": 0.221301,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "0.806346",
+          "ticker_sentiment_score": "0.196075",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Ltd. ADR rises Thursday, outperforms market",
+      "url": "https://www.marketwatch.com/data-news/infosys-ltd-adr-rises-thursday-outperforms-market-34df96e4-878d0625a37f?gaa_at=eafs&gaa_n=AWEtsqdxEc51utNLPI964N3Vm33BchIvmN_gfPIl67f89vczct93fjfGxKNc&gaa_ts=6947a016&gaa_sig=qm4biDFyZCDIduHMZ5yWTqJYW-xtc9stdoj7zzwX9O57CsJDrdItLlGTZXsAFtQOZUQzTh1dprkRrjSAQCscAg%3D%3D",
+      "time_published": "20251218T172600",
+      "authors": [
+        "MarketWatch Automation"
+      ],
+      "summary": "Infosys Ltd. ADR (INFY) saw a significant rise of 5.27% on Thursday, reaching $19.18, outperforming the broader market. This marked the second consecutive day of gains for the ADR, occurring on a favorable trading day where the S&P 500 Index and the Dow Jones Industrial Average also rose. The article highlights INFY's strong performance relative to market benchmarks.",
+      "banner_image": "https://images.mktw.net/im-220105?width=700&height=466",
+      "source": "MarketWatch",
+      "category_within_source": "General",
+      "source_domain": "MarketWatch",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.933698"
+        }
+      ],
+      "overall_sentiment_score": 0.405374,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.423726",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Tata, Infosys To Bear Brunt Of Trump's $1,00,000 H-1B Worker Fee",
+      "url": "https://www.ndtv.com/world-news/tata-infosys-to-bear-brunt-of-trumps-1-00-000-h-1b-worker-fee-9830569",
+      "time_published": "20251218T070921",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Former President Donald Trump's proposed $100,000 fee for new H-1B workers hired from outside the US could significantly impact IT outsourcing and staffing industries. Companies like Tata Consultancy Services, Infosys, and Cognizant Technology Solutions would have faced hundreds of millions in additional costs had this fee been in effect for new hires between May 2020 and May 2024. Industry experts anticipate a steep drop in visa demand and increased offshoring of jobs, despite potential legal challenges against the fee.",
+      "banner_image": "https://c.ndtvimg.com/2025-12/a57asmc8_h1b-visa-norms_625x300_07_December_25.jpeg?im=FeatureCrop,algorithm=dnn,width=773,height=435",
+      "source": "NDTV",
+      "category_within_source": "General",
+      "source_domain": "NDTV",
+      "topics": [
+        {
+          "topic": "economy_fiscal",
+          "relevance_score": "0.905220"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.847378"
+        },
+        {
+          "topic": "economy_macro",
+          "relevance_score": "0.715454"
+        }
+      ],
+      "overall_sentiment_score": -0.314516,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.411313",
+          "ticker_sentiment_label": "Bearish"
+        },
+        {
+          "ticker": "CTSH",
+          "relevance_score": "0.998266",
+          "ticker_sentiment_score": "-0.320133",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "IBM",
+          "relevance_score": "0.648235",
+          "ticker_sentiment_score": "-0.141343",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Ltd. ADR Outperforms Competitors On Strong Trading Day",
+      "url": "https://news.futunn.com/en/post/66335196/infosys-ltd-adr-outperforms-competitors-on-strong-trading-day",
+      "time_published": "20251218T070912",
+      "authors": [
+        "MarketWatch"
+      ],
+      "summary": "Infosys Ltd. ADR (INFY) showed strong performance, increasing by 5.27% on a strong trading day. This coincided with Unity Software (U.US) reporting better-than-expected fourth-quarter revenue of $609 million, although the company incurred a loss of 66 cents per share. The article suggests readers log in or create an account to view further details due to copyright restrictions.",
+      "banner_image": "NULL",
+      "source": "\u5bcc\u9014\u725b\u725b",
+      "category_within_source": "General",
+      "source_domain": "\u5bcc\u9014\u725b\u725b",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.939255"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.812437"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.741743"
+        }
+      ],
+      "overall_sentiment_score": 0.53072,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.531373",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Sees Heavy Put Option Activity Ahead of December Expiry",
+      "url": "https://www.marketsmojo.com/news/stocks-in-action/infosys-sees-heavy-put-option-activity-ahead-of-december-expiry-3762370",
+      "time_published": "20251218T050839",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Infosys Ltd is experiencing significant put option trading activity, particularly at strike prices near its current trading value, ahead of the 30 December 2025 expiry. This indicates a cautious stance among investors who are either hedging existing positions or speculating on a potential price correction, despite the stock's recent outperformance in its sector. The heavy put option volume and open interest suggest market participants are preparing for potential downside or volatility, making monitoring these options crucial for understanding Infosys's near-term outlook.",
+      "banner_image": "NULL",
+      "source": "Markets Mojo",
+      "category_within_source": "General",
+      "source_domain": "Markets Mojo",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.933128"
+        }
+      ],
+      "overall_sentiment_score": -0.261941,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.250509",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Says Tax Department Imposed Penalty Of 82.8 Million Rupees",
+      "url": "https://www.tradingview.com/news/reuters.com,2025:newsml_FWN3XM0ZZ:0-infosys-says-tax-department-imposed-penalty-of-82-8-million-rupees/",
+      "time_published": "20251217T130839",
+      "authors": [
+        "Reuters"
+      ],
+      "summary": "Infosys announced that the tax department has imposed a penalty of 82.8 million rupees. This short news item from Reuters indicates a financial impact on the company.",
+      "banner_image": null,
+      "source": "TradingView \u2014 Track All Markets",
+      "category_within_source": "General",
+      "source_domain": "TradingView \u2014 Track All Markets",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.942163"
+        },
+        {
+          "topic": "economy_fiscal",
+          "relevance_score": "0.842856"
+        }
+      ],
+      "overall_sentiment_score": -0.239925,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.227720",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Why Trump\u2019s $100,000 H-1B visa fees would hit TCS, Infosys the most",
+      "url": "https://www.firstpost.com/explainers/us-donald-trump-100000-h-1b-visa-fees-tcs-infosys-impact-13960699.html",
+      "time_published": "20251217T130839",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Donald Trump's proposed $100,000 H-1B visa fees are expected to significantly impact multinational staffing firms like Tata Consultancy Services, Infosys, and Cognizant, as well as young Indian women seeking employment in the US. This substantial increase from the previous $2,000 fee could deter companies from hiring new H-1B workers, particularly from India, and lead to more jobs being moved overseas. The move could also disproportionately affect young professional women from India, who make up a growing share of new H-1B applicants.",
+      "banner_image": "https://images.firstpost.com/uploads/2025/12/1-2025-12-d354147e6a732ae08e0f5fd9c26e540f.jpg?im=FitAndFill=(596,336)",
+      "source": "Firstpost",
+      "category_within_source": "General",
+      "source_domain": "Firstpost",
+      "topics": [
+        {
+          "topic": "economy_fiscal",
+          "relevance_score": "0.913723"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.841056"
+        },
+        {
+          "topic": "economy_macro",
+          "relevance_score": "0.709217"
+        }
+      ],
+      "overall_sentiment_score": 0.005266,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "0.336062",
+          "ticker_sentiment_score": "0.044198",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Trump\u2019s H-1B visa crackdown: Why $100,000 fee will hit TCS, Infosys - explained",
+      "url": "https://timesofindia.indiatimes.com/business/india-business/trumps-h-1b-visa-crackdown-why-100000-fee-will-hit-tcs-infosys-explained/articleshow/126032067.cms",
+      "time_published": "20251217T070947",
+      "authors": [
+        "TOI Business Desk",
+        "TIMESOFINDIA.COM"
+      ],
+      "summary": "US President Donald Trump's proposed $100,000 fee for H-1B visas is expected to significantly impact Indian IT giants like TCS and Infosys, potentially costing them hundreds of millions of dollars. The substantial levy aims to reduce reliance on foreign workers and could lead to a shift towards offshore recruitment and fewer visa applications. Analysts anticipate a significant reduction in visa applications and increased overseas staff deployment as companies adapt to these new regulations.",
+      "banner_image": "https://static.toiimg.com/thumb/msid-126032910,imgsize-115620,width-400,resizemode-4/h-1b-visa-fee-hike.jpg",
+      "source": "Times of India",
+      "category_within_source": "General",
+      "source_domain": "Times of India",
+      "topics": [
+        {
+          "topic": "economy_fiscal",
+          "relevance_score": "0.940615"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.812331"
+        },
+        {
+          "topic": "economy_macro",
+          "relevance_score": "0.745242"
+        }
+      ],
+      "overall_sentiment_score": -0.273629,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "0.956948",
+          "ticker_sentiment_score": "-0.448830",
+          "ticker_sentiment_label": "Bearish"
+        },
+        {
+          "ticker": "CTSH",
+          "relevance_score": "0.911777",
+          "ticker_sentiment_score": "-0.347591",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        },
+        {
+          "ticker": "IBM",
+          "relevance_score": "0.608754",
+          "ticker_sentiment_score": "-0.116859",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Sees Heavy Put Option Activity Ahead of December Expiry",
+      "url": "https://www.marketsmojo.com/news/stocks-in-action/infosys-sees-heavy-put-option-activity-ahead-of-december-expiry-amid-bearish-sentiment-3759857",
+      "time_published": "20251216T200947",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Infosys Ltd. is experiencing significant put option activity, particularly at strike prices of \u20b91,580 and \u20b91,600, signaling a cautious investor outlook and potential bearish bets as the December 30, 2025 expiry approaches. This activity comes as the stock underperformed its sector and the broader Sensex, despite remaining above key long-term moving averages. Investors are likely using these options for hedging or anticipating further price corrections.",
+      "banner_image": "NULL",
+      "source": "Markets Mojo",
+      "category_within_source": "General",
+      "source_domain": "Markets Mojo",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.912820"
+        }
+      ],
+      "overall_sentiment_score": -0.278537,
+      "overall_sentiment_label": "Somewhat-Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.252433",
+          "ticker_sentiment_label": "Somewhat-Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys (NYSE: INFY) finds 83% say psychological safety drives AI gains",
+      "url": "https://www.stocktitan.net/news/INFY/infosys-and-mit-technology-review-insights-report-reveals-the-f902sipyrv7u.html",
+      "time_published": "20251216T160947",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "A new global report by Infosys and MIT Technology Review Insights reveals that 83% of business leaders believe psychological safety significantly impacts the success of enterprise AI initiatives, yet only 39% report high psychological safety in their workplaces. The report emphasizes that fear of failure, unclear communication, and lack of leadership openness are major barriers to AI adoption, recommending clear messaging on AI capabilities and fostering a culture of trust and transparency. Infosys aims to equip leaders with strategies for responsible AI adoption, leveraging its Topaz platform alongside cultural guidance.",
+      "banner_image": "https://mma.prnewswire.com/media/633365/5460444/Infosys_Logo.jpg",
+      "source": "Stock Titan",
+      "category_within_source": "General",
+      "source_domain": "Stock Titan",
+      "topics": [
+        {
+          "topic": "technology",
+          "relevance_score": "0.922085"
+        },
+        {
+          "topic": "finance",
+          "relevance_score": "0.704375"
+        }
+      ],
+      "overall_sentiment_score": 0.335124,
+      "overall_sentiment_label": "Somewhat-Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.312777",
+          "ticker_sentiment_label": "Somewhat-Bullish"
+        }
+      ]
+    },
+    {
+      "title": "Tata and Infosys to bear brunt of Trump\u2019s $100,000 H-1B worker fee",
+      "url": "https://www.msn.com/en-us/money/other/tata-and-infosys-to-bear-brunt-of-trump-s-100-000-h-1b-worker-fee/ar-AA1SncPR?ocid=finance-verthp-feeds",
+      "time_published": "20251216T080839",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "The article suggests that Indian IT giants, particularly Tata Consultancy Services and Infosys, will be significantly impacted by proposed changes to the H-1B visa program under the Trump administration. A potential fee of $100,000 per H-1B worker would drastically increase their operational costs and could force a shift in their business models or a reduction in their reliance on H-1B visas. This policy aims to prioritize American workers and curb the use of foreign labor at lower wages.",
+      "banner_image": "NULL",
+      "source": "MSN",
+      "category_within_source": "General",
+      "source_domain": "MSN",
+      "topics": [
+        {
+          "topic": "economy_fiscal",
+          "relevance_score": "0.925807"
+        }
+      ],
+      "overall_sentiment_score": -0.426326,
+      "overall_sentiment_label": "Bearish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "-0.447670",
+          "ticker_sentiment_label": "Bearish"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Q3 Results: Board Meeting Dates, Earnings Call Details Announced \u2014 Know More",
+      "url": "https://www.ndtvprofit.com/quarterly-earnings/infosys-q3-results-board-meeting-dates-earnings-call-details-announced-know-more",
+      "time_published": "20251216T060858",
+      "authors": [
+        "NDTV Profit News"
+      ],
+      "summary": "Infosys Ltd. has announced that its Board of Directors will meet on January 13 and 14, 2026, to approve the financial results for the quarter and nine-month period ended December 31, 2025. The company will also hold an earnings call on January 14, 2026, to discuss the Q3 results with investors and analysts. The trading window for designated persons will be closed from December 16 and will re-open on January 19, 2026, in compliance with SEBI insider trading rules.",
+      "banner_image": "https://media.assettype.com/bloombergquint%2F2025-12-16%2Fcuhvf7ra%2FWhatsApp-Image-2025-12-16-at-11.53.47-1.jpeg?auto=format%2Ccompress&fmt=avif&mode=crop&ar=16%3A9&q=60&w=1200",
+      "source": "NDTV Profit",
+      "category_within_source": "General",
+      "source_domain": "NDTV Profit",
+      "topics": [
+        {
+          "topic": "earnings",
+          "relevance_score": "0.907956"
+        },
+        {
+          "topic": "financial_markets",
+          "relevance_score": "0.818592"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.730719"
+        }
+      ],
+      "overall_sentiment_score": 0.129309,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.137166",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "H-1B Fee Impact: US President Trump\u2019s USD 100,000 charge to hit IT firms, staffing sector; TCS, Infosys on the list",
+      "url": "https://www.etnownews.com/news/h-1b-fee-impact-us-president-trumps-usd-100000-charge-likely-to-hit-indian-it-firms-and-staffing-sector-tcs-infosys-on-the-list-article-153298519",
+      "time_published": "20251216T010858",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "President Donald Trump's proposed $100,000 fee on new H-1B workers is expected to significantly impact the IT outsourcing and staffing industries, particularly major Indian IT exporters like TCS, Infosys, and Cognizant. This fee, considered the most restrictive measure by the Trump administration on skilled foreign workers, would disproportionately affect companies that rely heavily on the H-1B visa program for talent. The move has led to legal challenges and adjustments in hiring strategies, with some experts predicting an increase in investments in India for accessing talent.",
+      "banner_image": "https://images.etnownews.com/thumb/msid-153298519,updatedat-1765848755035,width-800,height-450,resizemode-4/153298519.jpg",
+      "source": "ET Now",
+      "category_within_source": "General",
+      "source_domain": "ET Now",
+      "topics": [
+        {
+          "topic": "economy_fiscal",
+          "relevance_score": "0.902683"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.827436"
+        }
+      ],
+      "overall_sentiment_score": 0.011588,
+      "overall_sentiment_label": "Neutral",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "0.339142",
+          "ticker_sentiment_score": "0.025029",
+          "ticker_sentiment_label": "Neutral"
+        }
+      ]
+    },
+    {
+      "title": "Infosys Sees Robust Call Option Activity as Market Eyes December Expiry",
+      "url": "https://www.marketsmojo.com/news/stocks-in-action/infosys-sees-robust-call-option-activity-amid-bullish-market-sentiment-3758683",
+      "time_published": "20251215T061057",
+      "authors": [
+        "NULL"
+      ],
+      "summary": "Infosys is experiencing significant call option activity for its 1600 strike price contracts expiring on December 30, 2025, signaling strong investor interest and bullish sentiment. This activity is supported by the company's steady price performance, sector outperformance, and positive technical indicators. Despite a decline in delivery volume suggesting a shift towards derivative instruments, the overall outlook for Infosys remains positive in the near term.",
+      "banner_image": "NULL",
+      "source": "Markets Mojo",
+      "category_within_source": "General",
+      "source_domain": "Markets Mojo",
+      "topics": [
+        {
+          "topic": "financial_markets",
+          "relevance_score": "1.000000"
+        },
+        {
+          "topic": "technology",
+          "relevance_score": "0.844593"
+        }
+      ],
+      "overall_sentiment_score": 0.499972,
+      "overall_sentiment_label": "Bullish",
+      "ticker_sentiment": [
+        {
+          "ticker": "INFY",
+          "relevance_score": "1.000000",
+          "ticker_sentiment_score": "0.489902",
+          "ticker_sentiment_label": "Bullish"
+        }
+      ]
+    }
+  ]
+}
