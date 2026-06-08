@@ -43,7 +43,7 @@ function TabsList({ className, children, ...props }: React.HTMLAttributes<HTMLDi
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-1 rounded-lg bg-[var(--color-surface)] p-1 border border-[var(--color-border)]",
+        "inline-flex items-center gap-0.5 rounded-lg bg-[var(--color-elevated)] p-1",
         className
       )}
       role="tablist"
@@ -67,10 +67,10 @@ function TabsTrigger({ value, className, children, ...props }: TabsTriggerProps)
       role="tab"
       aria-selected={isActive}
       className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-all",
+        "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-[13px] font-medium transition-colors duration-150 cursor-pointer",
         isActive
-          ? "bg-[var(--color-elevated)] text-[var(--color-text-primary)] shadow-sm"
-          : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-elevated)]/50",
+          ? "bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-sm"
+          : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]",
         className
       )}
       onClick={() => setActiveTab(value)}
@@ -92,7 +92,7 @@ function TabsContent({ value, className, children, ...props }: TabsContentProps)
   return (
     <div
       role="tabpanel"
-      className={cn("mt-4 animate-fade-in", className)}
+      className={cn("mt-3 animate-fade-in", className)}
       {...props}
     >
       {children}

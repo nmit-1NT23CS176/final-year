@@ -36,7 +36,7 @@ function Avatar({ name, src, size = "default", className, ...props }: AvatarProp
   return (
     <div
       className={cn(
-        "relative rounded-full flex items-center justify-center font-semibold bg-gradient-to-br from-[var(--color-bullish)] to-[var(--color-accent)] text-white",
+        "relative rounded-full flex items-center justify-center font-semibold bg-[var(--color-accent)] text-white",
         sizeClasses[size],
         className
       )}

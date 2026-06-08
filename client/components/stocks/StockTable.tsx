@@ -23,7 +23,7 @@ export function StockTable({ stocks, className, showRank = false }: StockTablePr
 
   if (stocks.length === 0) {
     return (
-      <div className={cn("text-center py-8 text-[var(--color-text-secondary)]", className)}>
+      <div className={cn("text-center py-8 text-sm text-[var(--color-text-secondary)]", className)}>
         No stocks to display
       </div>
     );
@@ -35,20 +35,20 @@ export function StockTable({ stocks, className, showRank = false }: StockTablePr
         <thead>
           <tr className="border-b border-[var(--color-border)]">
             {showRank && (
-              <th className="text-left py-3 px-4 text-xs font-medium text-[var(--color-text-disabled)] uppercase tracking-wider w-8">
+              <th className="text-left py-2.5 px-4 text-[11px] font-semibold text-[var(--color-text-disabled)] uppercase tracking-wider w-8">
                 #
               </th>
             )}
-            <th className="text-left py-3 px-4 text-xs font-medium text-[var(--color-text-disabled)] uppercase tracking-wider">
+            <th className="text-left py-2.5 px-4 text-[11px] font-semibold text-[var(--color-text-disabled)] uppercase tracking-wider">
               Symbol
             </th>
-            <th className="text-right py-3 px-4 text-xs font-medium text-[var(--color-text-disabled)] uppercase tracking-wider">
+            <th className="text-right py-2.5 px-4 text-[11px] font-semibold text-[var(--color-text-disabled)] uppercase tracking-wider">
               Price
             </th>
-            <th className="text-right py-3 px-4 text-xs font-medium text-[var(--color-text-disabled)] uppercase tracking-wider">
+            <th className="text-right py-2.5 px-4 text-[11px] font-semibold text-[var(--color-text-disabled)] uppercase tracking-wider">
               Change
             </th>
-            <th className="text-right py-3 px-4 text-xs font-medium text-[var(--color-text-disabled)] uppercase tracking-wider">
+            <th className="text-right py-2.5 px-4 text-[11px] font-semibold text-[var(--color-text-disabled)] uppercase tracking-wider">
               % Change
             </th>
           </tr>
@@ -60,33 +60,33 @@ export function StockTable({ stocks, className, showRank = false }: StockTablePr
               <tr
                 key={stock.symbol}
                 onClick={() => router.push(`/stocks/${encodeURIComponent(stock.symbol)}`)}
-                className="border-b border-[var(--color-border)]/50 hover:bg-[var(--color-elevated)]/50 cursor-pointer transition-colors group"
+                className="border-b border-[var(--color-border)]/50 hover:bg-[var(--color-elevated)] cursor-pointer transition-colors duration-100"
               >
                 {showRank && (
-                  <td className="py-3 px-4 text-sm text-[var(--color-text-disabled)] tabular-nums">
+                  <td className="py-2.5 px-4 text-sm text-[var(--color-text-disabled)] tabular-nums">
                     {i + 1}
                   </td>
                 )}
-                <td className="py-3 px-4">
-                  <div className="font-semibold text-sm group-hover:text-[var(--color-bullish)] transition-colors">
+                <td className="py-2.5 px-4">
+                  <div className="font-semibold text-sm text-[var(--color-text-primary)]">
                     {stock.symbol}
                   </div>
                   {stock.companyName && (
-                    <div className="text-xs text-[var(--color-text-disabled)] truncate max-w-[160px]">
+                    <div className="text-[11px] text-[var(--color-text-disabled)] truncate max-w-[160px]">
                       {stock.companyName}
                     </div>
                   )}
                 </td>
-                <td className="py-3 px-4 text-right text-sm font-medium tabular-nums">
+                <td className="py-2.5 px-4 text-right text-sm font-medium tabular-nums text-[var(--color-text-primary)]">
                   ₹{stock.currentPrice.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </td>
-                <td className={cn("py-3 px-4 text-right text-sm font-medium tabular-nums", isUp ? "text-bullish" : "text-bearish")}>
+                <td className={cn("py-2.5 px-4 text-right text-sm font-medium tabular-nums", isUp ? "text-bullish" : "text-bearish")}>
                   <span className="inline-flex items-center gap-0.5">
                     {isUp ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
                     {isUp ? "+" : ""}{stock.change.toFixed(2)}
                   </span>
                 </td>
-                <td className={cn("py-3 px-4 text-right text-sm font-medium tabular-nums", isUp ? "text-bullish" : "text-bearish")}>
+                <td className={cn("py-2.5 px-4 text-right text-sm font-medium tabular-nums", isUp ? "text-bullish" : "text-bearish")}>
                   {isUp ? "+" : ""}{stock.changePercent.toFixed(2)}%
                 </td>
               </tr>

@@ -28,19 +28,19 @@ export function PriceDisplay({
   const sizeClasses = {
     sm: { price: "text-lg font-semibold", change: "text-xs" },
     default: { price: "text-2xl font-bold", change: "text-sm" },
-    lg: { price: "text-4xl font-bold tracking-tight", change: "text-lg" },
+    lg: { price: "text-3xl font-bold tracking-tight", change: "text-base" },
   };
 
   return (
     <div
       className={cn(
-        "transition-colors duration-600",
+        "transition-colors duration-500",
         flashDirection === "up" && "animate-flash-green",
         flashDirection === "down" && "animate-flash-red",
         className
       )}
     >
-      <span className={cn(sizeClasses[size].price, "tabular-nums")}>
+      <span className={cn(sizeClasses[size].price, "tabular-nums text-[var(--color-text-primary)]")}>
         {showCurrency && "₹"}{formattedPrice}
       </span>
       {change !== undefined && changePercent !== undefined && (

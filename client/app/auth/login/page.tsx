@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Eye, EyeOff, Mail, Lock, Activity, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -45,41 +44,32 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex-1 flex items-center justify-center px-4 py-12 relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute top-[-20%] left-[-15%] w-[50%] h-[50%] rounded-full bg-[var(--color-bullish)] opacity-[0.04] blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-20%] right-[-15%] w-[50%] h-[50%] rounded-full bg-[var(--color-accent)] opacity-[0.04] blur-[120px] pointer-events-none" />
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="w-full max-w-md"
-      >
+    <div className="flex-1 flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-4">
-            <Activity className="h-8 w-8 text-[var(--color-bullish)]" />
-            <span className="font-bold text-2xl">StockVista</span>
+            <Activity className="h-6 w-6 text-[var(--color-bullish)]" />
+            <span className="font-bold text-xl text-[var(--color-text-primary)]">StockVista</span>
           </Link>
-          <h1 className="text-2xl font-bold mb-1">Welcome back</h1>
+          <h1 className="text-xl font-bold mb-1 text-[var(--color-text-primary)]">Welcome back</h1>
           <p className="text-sm text-[var(--color-text-secondary)]">
-            Sign in to access your dashboard and watchlist
+            Sign in to access your dashboard
           </p>
         </div>
 
-        <Card className="bg-[var(--color-surface)]/80 backdrop-blur-md border-[var(--color-border)] card-shadow-lg">
-          <CardContent className="p-8">
-            <form onSubmit={handleSubmit} className="space-y-5">
+        <Card>
+          <CardContent className="p-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {/* Error message */}
               {error && (
-                <div className="px-4 py-3 rounded-lg bg-[var(--color-bearish-muted)] border border-[var(--color-bearish)]/20 text-sm text-[var(--color-bearish)] animate-slide-down">
+                <div className="px-3 py-2.5 rounded-lg bg-[var(--color-bearish-muted)] border border-[var(--color-bearish)]/20 text-sm text-[var(--color-bearish)]">
                   {error}
                 </div>
               )}
 
               {/* Email */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-sm font-medium text-[var(--color-text-secondary)]">
                   Email
                 </label>
@@ -90,14 +80,14 @@ export default function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
-                    className="w-full h-11 pl-10 pr-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-elevated)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-disabled)] focus:outline-none focus:ring-2 focus:ring-[var(--color-bullish)] focus:border-transparent transition-all"
+                    className="w-full h-10 pl-10 pr-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-elevated)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-disabled)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] focus:border-[var(--color-accent)] transition-all duration-150"
                     autoComplete="email"
                   />
                 </div>
               </div>
 
               {/* Password */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-sm font-medium text-[var(--color-text-secondary)]">
                   Password
                 </label>
@@ -108,7 +98,7 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
-                    className="w-full h-11 pl-10 pr-11 rounded-lg border border-[var(--color-border)] bg-[var(--color-elevated)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-disabled)] focus:outline-none focus:ring-2 focus:ring-[var(--color-bullish)] focus:border-transparent transition-all"
+                    className="w-full h-10 pl-10 pr-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-elevated)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-disabled)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] focus:border-[var(--color-accent)] transition-all duration-150"
                     autoComplete="current-password"
                   />
                   <button
@@ -125,10 +115,11 @@ export default function LoginPage() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-11 bg-[var(--color-bullish)] hover:bg-[var(--color-bullish-hover)] text-black border-none font-semibold text-sm rounded-lg transition-all disabled:opacity-50"
+                variant="primary"
+                className="w-full h-10"
               >
                 {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <>
                     Sign In
@@ -139,15 +130,15 @@ export default function LoginPage() {
             </form>
 
             {/* Link to register */}
-            <div className="mt-6 text-center text-sm text-[var(--color-text-secondary)]">
+            <div className="mt-5 text-center text-sm text-[var(--color-text-secondary)]">
               Don&apos;t have an account?{" "}
-              <Link href="/auth/register" className="text-[var(--color-bullish)] hover:underline font-medium">
+              <Link href="/auth/register" className="text-[var(--color-accent)] hover:underline font-medium">
                 Create one
               </Link>
             </div>
           </CardContent>
         </Card>
-      </motion.div>
+      </div>
     </div>
   );
 }

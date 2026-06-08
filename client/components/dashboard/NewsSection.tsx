@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Newspaper, ExternalLink, Clock } from "lucide-react";
+import { Newspaper, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface NewsItem {
@@ -50,50 +49,40 @@ const MOCK_NEWS: NewsItem[] = [
 
 export function NewsSection() {
   return (
-    <Card className="bg-[var(--color-surface)] border-[var(--color-border)] h-full overflow-hidden flex flex-col">
-      <div className="p-4 border-b border-[var(--color-border)] flex items-center justify-between bg-[var(--color-elevated)]/30">
-        <h2 className="font-bold flex items-center gap-2">
+    <Card className="h-full overflow-hidden flex flex-col">
+      <div className="p-4 border-b border-[var(--color-border)] flex items-center justify-between">
+        <h2 className="font-semibold text-sm flex items-center gap-2">
           <Newspaper className="w-4 h-4 text-[var(--color-accent)]" />
           Market News
         </h2>
-        <a href="/news" className="text-xs text-[var(--color-accent)] hover:underline font-medium">
+        <a href="/news" className="text-[11px] text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] font-medium transition-colors">
           View All
         </a>
       </div>
       <CardContent className="p-0 flex-1 overflow-y-auto">
         <div className="flex flex-col divide-y divide-[var(--color-border)]">
-          {MOCK_NEWS.map((news, i) => (
-            <motion.a
+          {MOCK_NEWS.map((news) => (
+            <a
               key={news.id}
               href={news.url}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className="p-4 hover:bg-[var(--color-elevated)]/50 transition-colors group block relative"
+              className="px-4 py-3 hover:bg-[var(--color-elevated)] transition-colors duration-100 block"
             >
-              {/* Sentiment Indicator line */}
-              <div 
-                className={`absolute left-0 top-0 bottom-0 w-0.5 opacity-0 group-hover:opacity-100 transition-opacity ${
-                  news.sentiment === "positive" ? "bg-[var(--color-bullish)]" : 
-                  news.sentiment === "negative" ? "bg-[var(--color-bearish)]" : "bg-[var(--color-text-secondary)]"
-                }`} 
-              />
-              
-              <h3 className="text-sm font-semibold text-[var(--color-text-primary)] group-hover:text-[var(--color-accent-hover)] transition-colors line-clamp-2 leading-tight mb-2 pr-4">
+              <h3 className="text-sm font-medium text-[var(--color-text-primary)] leading-snug line-clamp-2 mb-1.5">
                 {news.headline}
               </h3>
               
-              <div className="flex items-center justify-between mt-auto">
-                <span className="text-xs font-medium text-[var(--color-text-secondary)]">
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-medium text-[var(--color-text-secondary)]">
                   {news.source}
                 </span>
-                <span className="flex items-center gap-1 text-[10px] text-[var(--color-text-disabled)]">
+                <span className="text-[var(--color-text-disabled)]">·</span>
+                <span className="flex items-center gap-1 text-[11px] text-[var(--color-text-disabled)]">
                   <Clock className="w-3 h-3" /> {news.time}
                 </span>
               </div>
-            </motion.a>
+            </a>
           ))}
         </div>
       </CardContent>

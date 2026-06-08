@@ -1,50 +1,61 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0B1220;
-  --color-surface: #111827;
-  --color-elevated: #1F2937;
-  --color-border: #1E293B;
-  --color-border-hover: #273449;
-  
-  --color-bullish: #22C55E;
-  --color-bullish-hover: #4ADE80;
-  --color-bullish-muted: rgba(34, 197, 94, 0.12);
-  
-  --color-bearish: #EF4444;
-  --color-bearish-hover: #F87171;
-  --color-bearish-muted: rgba(239, 68, 68, 0.12);
+  /* ── Surface Palette (Premium Dark) ── */
+  --color-background: #0a0b0d;
+  --color-surface: #121418;
+  --color-elevated: #1a1d24;
+  --color-border: #22262f;
+  --color-border-hover: #2e333e;
 
-  --color-accent: #3B82F6;
-  --color-accent-hover: #60A5FA;
-  --color-accent-muted: rgba(59, 130, 246, 0.12);
+  /* ── Functional Colors ── */
+  --color-bullish: #00c853;
+  --color-bullish-hover: #00e676;
+  --color-bullish-muted: rgba(0, 200, 83, 0.1);
 
-  --color-warning: #F59E0B;
-  --color-warning-muted: rgba(245, 158, 11, 0.12);
+  --color-bearish: #ff3b30;
+  --color-bearish-hover: #ff4f45;
+  --color-bearish-muted: rgba(255, 59, 48, 0.1);
 
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #94A3B8;
-  --color-text-disabled: #475569;
+  --color-accent: #ffffff;
+  --color-accent-hover: #f0f0f0;
+  --color-accent-muted: rgba(255, 255, 255, 0.1);
 
-  --font-sans: "Inter", "Manrope", system-ui, -apple-system, "SF Pro Display", sans-serif;
+  --color-warning: #ffcc00;
+  --color-warning-muted: rgba(255, 204, 0, 0.10);
+
+  /* ── Text ── */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a0a5b1;
+  --color-text-disabled: #5a5f6b;
+
+  /* ── Typography ── */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", "Roboto Mono", monospace;
 }
 
 @layer base {
   :root {
-    --background: #0B1220;
-    --foreground: #FFFFFF;
+    --background: #0a0b0d;
+    --foreground: #ffffff;
   }
-  
+
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: "Inter", "Manrope", system-ui, -apple-system, "SF Pro Display", sans-serif;
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
   }
 
-  /* Custom scrollbar */
+  /* Force tabular numbers for numbers */
+  .tabular-data {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -61,9 +72,7 @@
   }
 }
 
-/* =====================
-   Keyframe Animations 
-   ===================== */
+/* ── Keyframes ── */
 
 @keyframes fade-in {
   from { opacity: 0; }
@@ -71,18 +80,13 @@
 }
 
 @keyframes slide-up {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slide-down {
-  from { opacity: 0; transform: translateY(-8px); }
+  from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes scale-in {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes shimmer {
@@ -90,145 +94,41 @@
   100% { background-position: 200% 0; }
 }
 
-@keyframes pulse-bullish {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 208, 156, 0.4); }
-  50% { box-shadow: 0 0 0 8px rgba(0, 208, 156, 0); }
-}
-
-@keyframes pulse-bearish {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4); }
-  50% { box-shadow: 0 0 0 8px rgba(255, 107, 107, 0); }
-}
-
 @keyframes flash-green {
-  0% { background-color: rgba(0, 208, 156, 0.25); }
+  0% { background-color: rgba(0, 208, 156, 0.15); }
   100% { background-color: transparent; }
 }
 
 @keyframes flash-red {
-  0% { background-color: rgba(255, 107, 107, 0.25); }
+  0% { background-color: rgba(255, 82, 82, 0.15); }
   100% { background-color: transparent; }
 }
 
-@keyframes ticker-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-@keyframes glow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
-}
-
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* =====================
-   Utility Classes 
-   ===================== */
+/* ── Utilities ── */
 
 @layer utilities {
-  .glass {
-    backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(10, 10, 11, 0.8);
-  }
-
-  .glass-surface {
-    backdrop-filter: blur(12px) saturate(160%);
-    background-color: rgba(20, 20, 22, 0.7);
-  }
-
-  .card-shadow {
-    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
-  }
-
-  .card-shadow-lg {
-    box-shadow: 0 8px 40px -4px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.03);
-  }
-
-  .text-gradient {
-    background: linear-gradient(135deg, #f4f4f5 0%, #a1a1aa 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .text-gradient-bullish {
-    background: linear-gradient(135deg, #00d09c 0%, #00e6ad 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .gradient-border {
-    position: relative;
-  }
-  .gradient-border::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(0,208,156,0.3), rgba(99,102,241,0.3));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-  }
-
-  /* Animation utilities */
   .animate-fade-in {
-    animation: fade-in 0.3s ease-out;
+    animation: fade-in 0.2s ease-out;
   }
   .animate-slide-up {
-    animation: slide-up 0.4s ease-out;
+    animation: slide-up 0.2s ease-out;
   }
   .animate-slide-down {
-    animation: slide-down 0.3s ease-out;
-  }
-  .animate-scale-in {
-    animation: scale-in 0.2s ease-out;
+    animation: slide-down 0.2s ease-out;
   }
   .animate-shimmer {
-    background: linear-gradient(90deg, var(--color-surface) 0%, var(--color-elevated) 50%, var(--color-surface) 100%);
+    background: linear-gradient(90deg, var(--color-elevated) 0%, var(--color-border) 50%, var(--color-elevated) 100%);
     background-size: 200% 100%;
     animation: shimmer 1.5s ease-in-out infinite;
   }
-  .animate-ticker {
-    animation: ticker-scroll 30s linear infinite;
-  }
-  .animate-glow {
-    animation: glow 3s ease-in-out infinite;
-  }
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient-shift 8s ease infinite;
-  }
   .animate-flash-green {
-    animation: flash-green 0.6s ease-out;
+    animation: flash-green 0.5s ease-out;
   }
   .animate-flash-red {
-    animation: flash-red 0.6s ease-out;
+    animation: flash-red 0.5s ease-out;
   }
 
-  /* Price color helpers */
+  /* Functional color helpers */
   .text-bullish { color: var(--color-bullish); }
   .text-bearish { color: var(--color-bearish); }
   .bg-bullish-muted { background-color: var(--color-bullish-muted); }

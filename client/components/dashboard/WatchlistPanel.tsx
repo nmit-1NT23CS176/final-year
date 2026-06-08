@@ -45,24 +45,24 @@ export function WatchlistPanel({
   };
 
   return (
-    <Card className={cn("bg-[var(--color-surface)] border-[var(--color-border)] flex flex-col h-full", className)}>
+    <Card className={cn("flex flex-col h-full", className)}>
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-[var(--color-border)] bg-[var(--color-elevated)]/30">
+      <div className="flex items-center justify-between p-4 border-b border-[var(--color-border)]">
         <div className="flex items-center gap-2">
           <Bookmark className="w-4 h-4 text-[var(--color-accent)]" />
-          <h3 className="font-bold text-base">Watchlist</h3>
+          <h3 className="font-semibold text-sm">Watchlist</h3>
         </div>
 
         {/* Quick add form */}
-        <form onSubmit={handleAdd} className="flex gap-2">
+        <form onSubmit={handleAdd} className="flex gap-1.5">
           <div className="relative">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--color-text-disabled)]" />
             <input
               type="text"
               value={addSymbol}
               onChange={(e) => setAddSymbol(e.target.value)}
-              placeholder="Search symbol..."
-              className="h-8 w-[160px] pl-8 pr-3 text-xs rounded-md border border-[var(--color-border)] bg-[var(--color-elevated)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-disabled)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] transition-all"
+              placeholder="Add symbol..."
+              className="h-8 w-[140px] pl-8 pr-3 text-xs rounded-lg border border-[var(--color-border)] bg-[var(--color-elevated)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-disabled)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] transition-all duration-150"
             />
           </div>
           <Button
@@ -77,48 +77,48 @@ export function WatchlistPanel({
 
       <CardContent className="p-0 flex-1 overflow-x-auto">
         {/* Table Header */}
-        <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr_auto] gap-4 px-4 py-2 border-b border-[var(--color-border)] bg-[var(--color-elevated)]/10 text-xs font-semibold text-[var(--color-text-secondary)] uppercase tracking-wider min-w-[500px]">
+        <div className="grid grid-cols-[1.5fr_1fr_1fr_1fr_auto] gap-3 px-4 py-2 border-b border-[var(--color-border)] text-[11px] font-semibold text-[var(--color-text-disabled)] uppercase tracking-wider min-w-[500px]">
           <div>Symbol</div>
           <div className="text-right">Last Price</div>
           <div className="text-right">Change</div>
-          <div className="flex justify-center">Chart 1D</div>
-          <div className="w-8"></div>
+          <div className="flex justify-center">Trend</div>
+          <div className="w-7"></div>
         </div>
 
         {/* Content */}
         <div className="min-w-[500px]">
           {isLoading ? (
-            <div className="p-4 space-y-4">
+            <div className="p-4 space-y-3">
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="flex items-center gap-4">
                   <Skeleton className="h-4 w-24" />
                   <Skeleton className="h-4 w-16 ml-auto" />
                   <Skeleton className="h-4 w-16 ml-auto" />
-                  <Skeleton className="h-8 w-24 mx-auto" />
+                  <Skeleton className="h-6 w-20 mx-auto" />
                 </div>
               ))}
             </div>
           ) : stocks.length === 0 ? (
-            <div className="p-10 text-center">
-              <Bookmark className="w-8 h-8 text-[var(--color-text-disabled)] mx-auto mb-3 opacity-50" />
-              <p className="text-sm font-medium text-[var(--color-text-secondary)] mb-1">Watchlist is empty</p>
-              <p className="text-xs text-[var(--color-text-disabled)]">Track your favorite stocks easily.</p>
+            <div className="p-8 text-center">
+              <Bookmark className="w-6 h-6 text-[var(--color-text-disabled)] mx-auto mb-2 opacity-40" />
+              <p className="text-sm text-[var(--color-text-secondary)] mb-1">Watchlist is empty</p>
+              <p className="text-xs text-[var(--color-text-disabled)]">Add stocks to track them here.</p>
             </div>
           ) : (
             <div className="flex flex-col">
               {stocks.map((stock) => {
                 const isUp = stock.change >= 0;
-                const colorHex = isUp ? "#22C55E" : "#EF4444";
+                const colorHex = isUp ? "#00d09c" : "#ff5252";
                 
                 return (
                   <div
                     key={stock.id}
-                    className="grid grid-cols-[1.5fr_1fr_1fr_1fr_auto] gap-4 px-4 py-3 items-center border-b border-[var(--color-border)]/50 hover:bg-[var(--color-elevated)]/40 cursor-pointer transition-colors group"
+                    className="grid grid-cols-[1.5fr_1fr_1fr_1fr_auto] gap-3 px-4 py-2.5 items-center border-b border-[var(--color-border)]/50 hover:bg-[var(--color-elevated)] cursor-pointer transition-colors duration-100 group"
                     onClick={() => router.push(`/stocks/${encodeURIComponent(stock.symbol)}`)}
                   >
                     {/* Symbol & Name */}
                     <div className="min-w-0 flex flex-col">
-                      <span className="font-bold text-sm text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors">
+                      <span className="font-semibold text-sm text-[var(--color-text-primary)]">
                         {stock.symbol}
                       </span>
                       {stock.companyName && (
@@ -129,7 +129,7 @@ export function WatchlistPanel({
                     </div>
 
                     {/* Price */}
-                    <div className="text-right font-medium text-sm tabular-nums">
+                    <div className="text-right font-medium text-sm tabular-nums text-[var(--color-text-primary)]">
                       ₹{stock.price.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </div>
 
@@ -138,22 +138,22 @@ export function WatchlistPanel({
                       <span className={cn("text-sm font-semibold tabular-nums", isUp ? "text-[var(--color-bullish)]" : "text-[var(--color-bearish)]")}>
                         {isUp ? "+" : ""}{stock.change.toFixed(2)}
                       </span>
-                      <span className={cn("text-[11px] font-medium px-1.5 py-0.5 rounded-sm mt-0.5", isUp ? "bg-[var(--color-bullish-muted)] text-[var(--color-bullish)]" : "bg-[var(--color-bearish-muted)] text-[var(--color-bearish)]")}>
+                      <span className={cn("text-[11px] font-semibold tabular-nums", isUp ? "text-[var(--color-bullish)]" : "text-[var(--color-bearish)]")}>
                         {isUp ? "+" : ""}{stock.changePercent.toFixed(2)}%
                       </span>
                     </div>
 
                     {/* Chart */}
-                    <div className="flex justify-center items-center h-8">
+                    <div className="flex justify-center items-center h-7">
                       <SparklineChart 
-                        width={80} 
-                        height={32} 
+                        width={72} 
+                        height={28} 
                         color={colorHex} 
                       />
                     </div>
 
                     {/* Actions */}
-                    <div className="w-8 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="w-7 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-150">
                       <Button
                         variant="ghost"
                         size="icon"

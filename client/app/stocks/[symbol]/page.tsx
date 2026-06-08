@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { ArrowLeft, Globe, Users, BookmarkPlus, BookmarkCheck, ExternalLink, Building2, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
@@ -98,7 +97,6 @@ export default function StockDetailsPage() {
       })
       .catch(() => {
         if (!cancelled) {
-          // Use mock data as fallback
           setStockData({ ...MOCK_DATA, symbol, companyName: symbol });
         }
       })
@@ -111,24 +109,23 @@ export default function StockDetailsPage() {
 
   const toggleWatchlist = () => {
     setInWatchlist(!inWatchlist);
-    // In production: call watchlistStore.addStock(symbol) or deleteStock()
   };
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
-        <Skeleton className="h-4 w-40 mb-6" />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
-            <div className="space-y-3">
-              <Skeleton className="h-10 w-48" />
-              <Skeleton className="h-6 w-32" />
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <Skeleton className="h-4 w-36 mb-6" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-5">
+            <div className="space-y-2">
+              <Skeleton className="h-8 w-48" />
+              <Skeleton className="h-5 w-32" />
             </div>
-            <Skeleton className="h-[460px] w-full rounded-xl" />
+            <Skeleton className="h-[520px] w-full rounded-lg" />
           </div>
-          <div className="space-y-6">
-            <Skeleton className="h-[300px] w-full rounded-xl" />
-            <Skeleton className="h-[200px] w-full rounded-xl" />
+          <div className="space-y-5">
+            <Skeleton className="h-[300px] w-full rounded-lg" />
+            <Skeleton className="h-[200px] w-full rounded-lg" />
           </div>
         </div>
       </div>
@@ -155,45 +152,36 @@ export default function StockDetailsPage() {
   return (
     <>
       <div className="flex-1">
-        <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <div className="max-w-7xl mx-auto px-4 py-6">
           {/* Back button */}
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="mb-6"
-          >
+          <div className="mb-5">
             <Link
               href="/dashboard"
-              className="text-[var(--color-text-secondary)] hover:text-white inline-flex items-center text-sm font-medium transition-colors"
+              className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] inline-flex items-center text-sm font-medium transition-colors"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
+              <ArrowLeft className="w-4 h-4 mr-1.5" /> Dashboard
             </Link>
-          </motion.div>
+          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* ===== Main Content (2 cols) ===== */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="lg:col-span-2 flex flex-col gap-6"
-            >
+            <div className="lg:col-span-2 flex flex-col gap-5">
               {/* Header: Name + Price + Watchlist button */}
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                 <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{symbol}</h1>
+                  <div className="flex items-center gap-2.5 mb-1">
+                    <h1 className="text-2xl font-bold tracking-tight text-[var(--color-text-primary)]">{symbol}</h1>
                     {stockData.exchange && (
                       <Badge variant="outline">{stockData.exchange}</Badge>
                     )}
                   </div>
-                  <p className="text-[var(--color-text-secondary)] flex items-center gap-2">
-                    <Globe className="w-4 h-4" />
+                  <p className="text-sm text-[var(--color-text-secondary)] flex items-center gap-1.5">
                     {stockData.companyName}
-                    {stockData.sector && ` · ${stockData.sector}`}
+                    {stockData.sector && <span className="text-[var(--color-text-disabled)]">· {stockData.sector}</span>}
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:items-end gap-3">
+                <div className="flex flex-col sm:items-end gap-2">
                   <PriceDisplay
                     price={quote.currentPrice}
                     change={quote.change}
@@ -202,54 +190,49 @@ export default function StockDetailsPage() {
                   />
                   <Button
                     onClick={toggleWatchlist}
-                    variant={inWatchlist ? "default" : "outline"}
+                    variant={inWatchlist ? "success" : "outline"}
+                    size="sm"
                     className={inWatchlist
-                      ? "bg-[var(--color-bullish)] text-black hover:bg-[var(--color-bullish-hover)] border-none"
-                      : "border-[var(--color-border)] hover:border-[var(--color-bullish)] hover:text-[var(--color-bullish)]"
+                      ? ""
+                      : "hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
                     }
                   >
                     {inWatchlist ? (
-                      <><BookmarkCheck className="w-4 h-4 mr-2" /> In Watchlist</>
+                      <><BookmarkCheck className="w-4 h-4 mr-1.5" /> In Watchlist</>
                     ) : (
-                      <><BookmarkPlus className="w-4 h-4 mr-2" /> Add to Watchlist</>
+                      <><BookmarkPlus className="w-4 h-4 mr-1.5" /> Add to Watchlist</>
                     )}
                   </Button>
                 </div>
               </div>
 
               {/* Candlestick Chart */}
-              <Card className="bg-[var(--color-surface)] border-[var(--color-border)] overflow-hidden">
+              <Card>
                 <CardContent className="p-4">
                   <CandlestickChart symbol={symbol} />
                 </CardContent>
               </Card>
 
               {/* Stats Grid */}
-              <Card className="bg-[var(--color-surface)] border-[var(--color-border)]">
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-                    <TrendingUp className="w-5 h-5 text-[var(--color-bullish)]" />
+              <Card>
+                <CardContent className="p-5">
+                  <h3 className="font-semibold text-sm mb-4 text-[var(--color-text-primary)]">
                     Market Statistics
                   </h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-3 gap-x-6 gap-y-3">
                     {statsGrid.map((stat) => (
-                      <div key={stat.label} className="p-3 rounded-lg bg-[var(--color-elevated)]/50">
-                        <p className="text-xs text-[var(--color-text-disabled)] mb-1">{stat.label}</p>
-                        <p className="text-sm font-semibold tabular-nums">{stat.value}</p>
+                      <div key={stat.label} className="flex items-center justify-between py-1.5 border-b border-[var(--color-border)]/50">
+                        <span className="text-xs text-[var(--color-text-disabled)]">{stat.label}</span>
+                        <span className="text-sm font-medium tabular-nums text-[var(--color-text-primary)]">{stat.value}</span>
                       </div>
                     ))}
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
 
             {/* ===== Sidebar (1 col) ===== */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15 }}
-              className="flex flex-col gap-6"
-            >
+            <div className="flex flex-col gap-5">
               {/* Order Execution Panel */}
               <TradePanel 
                 symbol={symbol} 
@@ -257,23 +240,22 @@ export default function StockDetailsPage() {
               />
 
               {/* Day Range Visualizer */}
-              <Card className="bg-[var(--color-surface)] border-[var(--color-border)]">
-                <CardContent className="p-6">
-                  <h3 className="font-bold text-sm mb-4 text-[var(--color-text-secondary)]">TODAY&apos;S RANGE</h3>
+              <Card>
+                <CardContent className="p-5">
+                  <h3 className="font-semibold text-xs mb-3 text-[var(--color-text-secondary)] uppercase tracking-wider">Today&apos;s Range</h3>
                   {quote.dayLow && quote.dayHigh && (
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-xs text-[var(--color-text-disabled)]">
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-[11px] text-[var(--color-text-disabled)] tabular-nums">
                         <span>₹{quote.dayLow.toLocaleString("en-IN")}</span>
                         <span>₹{quote.dayHigh.toLocaleString("en-IN")}</span>
                       </div>
-                      <div className="relative h-2 bg-[var(--color-elevated)] rounded-full overflow-hidden">
+                      <div className="relative h-1.5 bg-[var(--color-elevated)] rounded-full overflow-hidden">
                         <div
                           className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[var(--color-bearish)] via-[var(--color-warning)] to-[var(--color-bullish)]"
                           style={{ width: "100%" }}
                         />
-                        {/* Current price marker */}
                         <div
-                          className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white border-2 border-[var(--color-background)] shadow-lg"
+                          className="absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-white border-2 border-[var(--color-background)]"
                           style={{
                             left: `${Math.min(100, Math.max(0, ((quote.currentPrice - quote.dayLow) / (quote.dayHigh - quote.dayLow)) * 100))}%`,
                             transform: "translate(-50%, -50%)",
@@ -284,14 +266,14 @@ export default function StockDetailsPage() {
                   )}
 
                   <div className="mt-4 pt-4 border-t border-[var(--color-border)]">
-                    <h3 className="font-bold text-sm mb-3 text-[var(--color-text-secondary)]">52 WEEK RANGE</h3>
+                    <h3 className="font-semibold text-xs mb-3 text-[var(--color-text-secondary)] uppercase tracking-wider">52 Week Range</h3>
                     {quote.fiftyTwoWeekLow && quote.fiftyTwoWeekHigh && (
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-xs text-[var(--color-text-disabled)]">
+                      <div className="space-y-1.5">
+                        <div className="flex justify-between text-[11px] text-[var(--color-text-disabled)] tabular-nums">
                           <span>₹{quote.fiftyTwoWeekLow.toLocaleString("en-IN")}</span>
                           <span>₹{quote.fiftyTwoWeekHigh.toLocaleString("en-IN")}</span>
                         </div>
-                        <div className="relative h-2 bg-[var(--color-elevated)] rounded-full overflow-hidden">
+                        <div className="relative h-1.5 bg-[var(--color-elevated)] rounded-full overflow-hidden">
                           <div
                             className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[var(--color-bearish)] to-[var(--color-bullish)]"
                             style={{
@@ -307,30 +289,29 @@ export default function StockDetailsPage() {
 
               {/* About Company */}
               {profile && (
-                <Card className="bg-[var(--color-surface)] border-[var(--color-border)]">
-                  <CardContent className="p-6">
-                    <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-                      <Building2 className="w-5 h-5 text-[var(--color-accent)]" />
+                <Card>
+                  <CardContent className="p-5">
+                    <h3 className="font-semibold text-sm mb-3 text-[var(--color-text-primary)]">
                       About
                     </h3>
 
                     {profile.description && (
-                      <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4 line-clamp-6">
+                      <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4 line-clamp-5">
                         {profile.description}
                       </p>
                     )}
 
-                    <div className="space-y-3">
+                    <div className="space-y-2.5">
                       {profile.industry && (
                         <div className="flex items-center gap-2 text-sm">
                           <span className="text-[var(--color-text-disabled)]">Industry:</span>
-                          <span className="font-medium">{profile.industry}</span>
+                          <span className="font-medium text-[var(--color-text-primary)]">{profile.industry}</span>
                         </div>
                       )}
                       {profile.employeeCount && (
                         <div className="flex items-center gap-2 text-sm">
-                          <Users className="w-4 h-4 text-[var(--color-text-disabled)]" />
-                          <span>{profile.employeeCount.toLocaleString()} Employees</span>
+                          <Users className="w-3.5 h-3.5 text-[var(--color-text-disabled)]" />
+                          <span className="text-[var(--color-text-primary)]">{profile.employeeCount.toLocaleString()} Employees</span>
                         </div>
                       )}
                       {profile.website && (
@@ -338,7 +319,7 @@ export default function StockDetailsPage() {
                           href={profile.website}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-sm text-[var(--color-bullish)] hover:underline"
+                          className="inline-flex items-center gap-1 text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
                         >
                           <ExternalLink className="w-3.5 h-3.5" />
                           {profile.website.replace(/^https?:\/\//, "")}
@@ -348,7 +329,7 @@ export default function StockDetailsPage() {
                   </CardContent>
                 </Card>
               )}
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>

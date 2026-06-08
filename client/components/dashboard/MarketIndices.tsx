@@ -1,6 +1,5 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 
 interface IndexData {
@@ -29,36 +28,31 @@ export function MarketIndices({ indices, className }: MarketIndicesProps) {
 
   return (
     <div className={className}>
-      <h2 className="text-sm font-semibold text-[var(--color-text-secondary)] uppercase tracking-wider mb-3 px-1">
-        Market Overview
-      </h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div className="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-none">
         {displayIndices.map((index) => {
           const isUp = index.change >= 0;
           return (
-            <Card
+            <div
               key={index.name}
-              className="bg-[var(--color-surface)] border-[var(--color-border)] hover:bg-[var(--color-elevated)] transition-colors cursor-pointer group"
+              className="flex-shrink-0 flex items-center gap-3 px-4 py-2.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-elevated)] transition-colors duration-150 cursor-pointer shadow-sm"
             >
-              <CardContent className="p-3">
-                <p className="text-[11px] font-semibold text-[var(--color-text-secondary)] uppercase tracking-wider mb-1 truncate group-hover:text-[var(--color-text-primary)] transition-colors">
+              <div>
+                <p className="text-[11px] font-semibold text-[var(--color-text-secondary)] uppercase tracking-wider whitespace-nowrap">
                   {index.name}
                 </p>
-                <div className="text-sm font-bold tracking-tight tabular-nums truncate">
+                <p className="text-sm font-bold tabular-nums text-[var(--color-text-primary)] whitespace-nowrap">
                   {index.value.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
-                </div>
-                <div
-                  className={`flex items-center gap-0.5 text-xs font-medium mt-1 ${
-                    isUp ? "text-[var(--color-bullish)]" : "text-[var(--color-bearish)]"
-                  }`}
-                >
-                  {isUp ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
-                  <span className="truncate">
-                    {isUp ? "+" : ""}{index.changePercent.toFixed(2)}%
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
+                </p>
+              </div>
+              <div
+                className={`flex items-center gap-0.5 text-xs font-semibold whitespace-nowrap ${
+                  isUp ? "text-[var(--color-bullish)]" : "text-[var(--color-bearish)]"
+                }`}
+              >
+                {isUp ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
+                {isUp ? "+" : ""}{index.changePercent.toFixed(2)}%
+              </div>
+            </div>
           );
         })}
       </div>

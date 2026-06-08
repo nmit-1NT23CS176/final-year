@@ -45,39 +45,39 @@ export function CandlestickChart({ symbol, data, className }: CandlestickChartPr
     const chart = createChart(containerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
-        textColor: "#a1a1aa",
+        textColor: "#8b8f98",
         attributionLogo: false,
       },
       grid: {
-        vertLines: { color: "rgba(39, 39, 42, 0.4)" },
-        horzLines: { color: "rgba(39, 39, 42, 0.4)" },
+        vertLines: { color: "rgba(42, 45, 53, 0.5)" },
+        horzLines: { color: "rgba(42, 45, 53, 0.5)" },
       },
       crosshair: {
         mode: CrosshairMode.Normal,
-        vertLine: { color: "rgba(0, 208, 156, 0.3)", labelBackgroundColor: "#1f1f22" },
-        horzLine: { color: "rgba(0, 208, 156, 0.3)", labelBackgroundColor: "#1f1f22" },
+        vertLine: { color: "rgba(83, 103, 255, 0.3)", labelBackgroundColor: "#22252c" },
+        horzLine: { color: "rgba(83, 103, 255, 0.3)", labelBackgroundColor: "#22252c" },
       },
       rightPriceScale: {
-        borderColor: "rgba(39, 39, 42, 0.5)",
+        borderColor: "rgba(42, 45, 53, 0.5)",
         scaleMargins: { top: 0.1, bottom: 0.25 },
       },
       timeScale: {
-        borderColor: "rgba(39, 39, 42, 0.5)",
+        borderColor: "rgba(42, 45, 53, 0.5)",
         timeVisible: selectedTf.days <= 7,
         secondsVisible: false,
       },
       width: containerRef.current.clientWidth,
-      height: 420,
+      height: 480,
     });
 
     // Candlestick series
     const candleSeries = chart.addSeries(CandlestickSeries, {
-      upColor: "#22C55E",
-      downColor: "#EF4444",
-      borderDownColor: "#EF4444",
-      borderUpColor: "#22C55E",
-      wickDownColor: "#EF4444",
-      wickUpColor: "#22C55E",
+      upColor: "#00d09c",
+      downColor: "#ff5252",
+      borderDownColor: "#ff5252",
+      borderUpColor: "#00d09c",
+      wickDownColor: "#ff5252",
+      wickUpColor: "#00d09c",
     });
 
     // Volume histogram
@@ -98,7 +98,7 @@ export function CandlestickChart({ symbol, data, className }: CandlestickChartPr
     const volumeData = candleData.map((d) => ({
       time: d.time,
       value: Math.floor(Math.random() * 10000000) + 1000000,
-      color: d.close >= d.open ? "rgba(34, 197, 94, 0.3)" : "rgba(239, 68, 68, 0.3)",
+      color: d.close >= d.open ? "rgba(0, 208, 156, 0.2)" : "rgba(255, 82, 82, 0.2)",
     }));
     volumeSeries.setData(volumeData as any);
 
@@ -123,14 +123,14 @@ export function CandlestickChart({ symbol, data, className }: CandlestickChartPr
   return (
     <div className={className}>
       {/* Timeframe selectors */}
-      <div className="flex items-center gap-1 mb-4 px-2">
+      <div className="flex items-center gap-0.5 mb-3 px-1">
         {TIMEFRAMES.map((tf) => (
           <button
             key={tf.label}
             onClick={() => setActiveTimeframe(tf.label)}
-            className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors duration-150 ${
               activeTimeframe === tf.label
-                ? "bg-[var(--color-bullish)] text-black"
+                ? "bg-[var(--color-accent)] text-white"
                 : "text-[var(--color-text-secondary)] hover:bg-[var(--color-elevated)] hover:text-[var(--color-text-primary)]"
             }`}
           >

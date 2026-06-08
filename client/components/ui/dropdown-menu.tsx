@@ -42,7 +42,7 @@ function DropdownMenu({ trigger, children, align = "right", className }: Dropdow
       {open && (
         <div
           className={cn(
-            "absolute top-full mt-2 z-50 min-w-[180px] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-1 card-shadow-lg animate-scale-in",
+            "absolute top-full mt-1.5 z-50 min-w-[180px] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-1 shadow-lg animate-fade-in",
             align === "right" ? "right-0" : "left-0"
           )}
           onClick={() => setOpen(false)}
@@ -62,7 +62,7 @@ function DropdownItem({ className, destructive, children, ...props }: DropdownIt
   return (
     <button
       className={cn(
-        "flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm transition-colors text-left",
+        "flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-sm cursor-pointer transition-colors duration-150 text-left",
         destructive
           ? "text-[var(--color-bearish)] hover:bg-[var(--color-bearish-muted)]"
           : "text-[var(--color-text-secondary)] hover:bg-[var(--color-elevated)] hover:text-[var(--color-text-primary)]",
@@ -81,7 +81,7 @@ function DropdownSeparator({ className, ...props }: React.HTMLAttributes<HTMLDiv
 
 function DropdownLabel({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("px-3 py-1.5 text-xs font-medium text-[var(--color-text-disabled)]", className)} {...props}>
+    <div className={cn("px-2.5 py-1.5 text-xs font-medium text-[var(--color-text-disabled)]", className)} {...props}>
       {children}
     </div>
   )

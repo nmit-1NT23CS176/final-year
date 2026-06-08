@@ -3,7 +3,6 @@
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Eye, EyeOff, Mail, Lock, User, Activity, ArrowRight, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -60,41 +59,32 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex-1 flex items-center justify-center px-4 py-12 relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute top-[-20%] right-[-15%] w-[50%] h-[50%] rounded-full bg-[var(--color-accent)] opacity-[0.04] blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-20%] left-[-15%] w-[50%] h-[50%] rounded-full bg-[var(--color-bullish)] opacity-[0.04] blur-[120px] pointer-events-none" />
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="w-full max-w-md"
-      >
+    <div className="flex-1 flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-4">
-            <Activity className="h-8 w-8 text-[var(--color-bullish)]" />
-            <span className="font-bold text-2xl">StockVista</span>
+            <Activity className="h-6 w-6 text-[var(--color-bullish)]" />
+            <span className="font-bold text-xl text-[var(--color-text-primary)]">StockVista</span>
           </Link>
-          <h1 className="text-2xl font-bold mb-1">Create your account</h1>
+          <h1 className="text-xl font-bold mb-1 text-[var(--color-text-primary)]">Create your account</h1>
           <p className="text-sm text-[var(--color-text-secondary)]">
             Start tracking stocks in under 30 seconds
           </p>
         </div>
 
-        <Card className="bg-[var(--color-surface)]/80 backdrop-blur-md border-[var(--color-border)] card-shadow-lg">
-          <CardContent className="p-8">
-            <form onSubmit={handleSubmit} className="space-y-5">
+        <Card>
+          <CardContent className="p-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {/* Error message */}
               {error && (
-                <div className="px-4 py-3 rounded-lg bg-[var(--color-bearish-muted)] border border-[var(--color-bearish)]/20 text-sm text-[var(--color-bearish)] animate-slide-down">
+                <div className="px-3 py-2.5 rounded-lg bg-[var(--color-bearish-muted)] border border-[var(--color-bearish)]/20 text-sm text-[var(--color-bearish)]">
                   {error}
                 </div>
               )}
 
               {/* Name */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-sm font-medium text-[var(--color-text-secondary)]">
                   Full Name
                 </label>
@@ -105,14 +95,14 @@ export default function RegisterPage() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Priyanshu Sharma"
-                    className="w-full h-11 pl-10 pr-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-elevated)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-disabled)] focus:outline-none focus:ring-2 focus:ring-[var(--color-bullish)] focus:border-transparent transition-all"
+                    className="w-full h-10 pl-10 pr-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-elevated)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-disabled)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] focus:border-[var(--color-accent)] transition-all duration-150"
                     autoComplete="name"
                   />
                 </div>
               </div>
 
               {/* Email */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-sm font-medium text-[var(--color-text-secondary)]">
                   Email
                 </label>
@@ -123,14 +113,14 @@ export default function RegisterPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
-                    className="w-full h-11 pl-10 pr-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-elevated)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-disabled)] focus:outline-none focus:ring-2 focus:ring-[var(--color-bullish)] focus:border-transparent transition-all"
+                    className="w-full h-10 pl-10 pr-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-elevated)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-disabled)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] focus:border-[var(--color-accent)] transition-all duration-150"
                     autoComplete="email"
                   />
                 </div>
               </div>
 
               {/* Password */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-sm font-medium text-[var(--color-text-secondary)]">
                   Password
                 </label>
@@ -141,7 +131,7 @@ export default function RegisterPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Create a strong password"
-                    className="w-full h-11 pl-10 pr-11 rounded-lg border border-[var(--color-border)] bg-[var(--color-elevated)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-disabled)] focus:outline-none focus:ring-2 focus:ring-[var(--color-bullish)] focus:border-transparent transition-all"
+                    className="w-full h-10 pl-10 pr-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-elevated)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-disabled)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)] focus:border-[var(--color-accent)] transition-all duration-150"
                     autoComplete="new-password"
                   />
                   <button
@@ -155,12 +145,12 @@ export default function RegisterPage() {
 
                 {/* Password strength indicator */}
                 {password.length > 0 && (
-                  <div className="space-y-2 animate-slide-down">
+                  <div className="space-y-2 pt-1">
                     <div className="flex gap-1">
                       {[1, 2, 3, 4].map((level) => (
                         <div
                           key={level}
-                          className={`h-1 flex-1 rounded-full transition-colors ${
+                          className={`h-1 flex-1 rounded-full transition-colors duration-200 ${
                             passwordStrength >= level
                               ? passwordStrength <= 2 ? "bg-[var(--color-bearish)]"
                                 : passwordStrength === 3 ? "bg-[var(--color-warning)]"
@@ -170,7 +160,7 @@ export default function RegisterPage() {
                         />
                       ))}
                     </div>
-                    <div className="grid grid-cols-2 gap-1.5">
+                    <div className="grid grid-cols-2 gap-1">
                       {[
                         { key: "length", label: "6+ characters" },
                         { key: "uppercase", label: "Uppercase" },
@@ -179,7 +169,7 @@ export default function RegisterPage() {
                       ].map((check) => (
                         <div
                           key={check.key}
-                          className={`flex items-center gap-1 text-xs ${
+                          className={`flex items-center gap-1 text-[11px] ${
                             passwordChecks[check.key as keyof typeof passwordChecks]
                               ? "text-[var(--color-bullish)]"
                               : "text-[var(--color-text-disabled)]"
@@ -202,10 +192,11 @@ export default function RegisterPage() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full h-11 bg-[var(--color-bullish)] hover:bg-[var(--color-bullish-hover)] text-black border-none font-semibold text-sm rounded-lg transition-all disabled:opacity-50"
+                variant="primary"
+                className="w-full h-10"
               >
                 {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <>
                     Create Account
@@ -216,15 +207,15 @@ export default function RegisterPage() {
             </form>
 
             {/* Link to login */}
-            <div className="mt-6 text-center text-sm text-[var(--color-text-secondary)]">
+            <div className="mt-5 text-center text-sm text-[var(--color-text-secondary)]">
               Already have an account?{" "}
-              <Link href="/auth/login" className="text-[var(--color-bullish)] hover:underline font-medium">
+              <Link href="/auth/login" className="text-[var(--color-accent)] hover:underline font-medium">
                 Sign in
               </Link>
             </div>
           </CardContent>
         </Card>
-      </motion.div>
+      </div>
     </div>
   );
 }

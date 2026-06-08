@@ -41,10 +41,10 @@ export function GainersLosers({ gainers, losers, isLoading, className }: Gainers
   const displayLosers = losers || MOCK_LOSERS;
 
   return (
-    <Card className={`bg-[var(--color-surface)] border-[var(--color-border)] ${className}`}>
+    <Card className={className}>
       <CardContent className="p-0">
         <Tabs defaultValue="gainers">
-          <div className="flex items-center justify-between px-5 pt-5 pb-3">
+          <div className="flex items-center px-4 pt-4 pb-2">
             <TabsList>
               <TabsTrigger value="gainers" className="gap-1.5">
                 <TrendingUp className="w-3.5 h-3.5" />

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Info, AlertCircle } from "lucide-react";
+import { Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface TradePanelProps {
@@ -28,13 +28,13 @@ export function TradePanel({ symbol, currentPrice, className }: TradePanelProps)
     : numQuantity * numLimitPrice;
 
   return (
-    <Card className={cn("bg-[var(--color-surface)] border-[var(--color-border)] h-full flex flex-col", className)}>
+    <Card className={cn("h-full flex flex-col", className)}>
       <CardContent className="p-0 flex flex-col h-full">
         {/* Buy / Sell Tabs */}
-        <div className="grid grid-cols-2 p-1 border-b border-[var(--color-border)]">
+        <div className="grid grid-cols-2 border-b border-[var(--color-border)]">
           <button
             className={cn(
-              "py-3 text-sm font-bold uppercase tracking-wider rounded-t-sm transition-all relative overflow-hidden",
+              "py-3 text-sm font-bold uppercase tracking-wider transition-colors duration-150 relative",
               action === "buy" 
                 ? "text-[var(--color-bullish)]" 
                 : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
@@ -43,12 +43,12 @@ export function TradePanel({ symbol, currentPrice, className }: TradePanelProps)
           >
             Buy
             {action === "buy" && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-bullish)] shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-bullish)]" />
             )}
           </button>
           <button
             className={cn(
-              "py-3 text-sm font-bold uppercase tracking-wider rounded-t-sm transition-all relative overflow-hidden",
+              "py-3 text-sm font-bold uppercase tracking-wider transition-colors duration-150 relative",
               action === "sell" 
                 ? "text-[var(--color-bearish)]" 
                 : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
@@ -57,21 +57,21 @@ export function TradePanel({ symbol, currentPrice, className }: TradePanelProps)
           >
             Sell
             {action === "sell" && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-bearish)] shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-bearish)]" />
             )}
           </button>
         </div>
 
         <div className="p-5 flex-1 flex flex-col">
           {/* Order Types */}
-          <div className="flex bg-[var(--color-elevated)] p-1 rounded-md mb-6">
+          <div className="flex bg-[var(--color-elevated)] p-1 rounded-lg mb-5">
             {(["market", "limit", "stop"] as const).map((type) => (
               <button
                 key={type}
                 className={cn(
-                  "flex-1 py-1.5 text-xs font-medium rounded-sm capitalize transition-colors",
+                  "flex-1 py-1.5 text-xs font-medium rounded-md capitalize transition-colors duration-150",
                   orderType === type 
-                    ? "bg-[var(--color-surface)] shadow-sm text-[var(--color-text-primary)] border border-[var(--color-border)]/50" 
+                    ? "bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-sm" 
                     : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
                 )}
                 onClick={() => setOrderType(type)}
@@ -82,12 +82,12 @@ export function TradePanel({ symbol, currentPrice, className }: TradePanelProps)
           </div>
 
           {/* Inputs */}
-          <div className="space-y-4 mb-8">
+          <div className="space-y-3 mb-6">
             {orderType !== "market" && (
-              <div className="flex items-center justify-between border border-[var(--color-border)] rounded-md px-3 py-2 bg-[var(--color-elevated)]/30 focus-within:border-[var(--color-accent)] transition-colors">
+              <div className="flex items-center justify-between border border-[var(--color-border)] rounded-lg px-3 py-2.5 bg-[var(--color-elevated)] focus-within:border-[var(--color-accent)] transition-colors duration-150">
                 <label className="text-xs text-[var(--color-text-secondary)] font-medium">Price</label>
                 <div className="flex items-center">
-                  <span className="text-[var(--color-text-secondary)] mr-1">₹</span>
+                  <span className="text-[var(--color-text-secondary)] mr-1 text-sm">₹</span>
                   <input 
                     type="number"
                     value={limitPrice}
@@ -99,7 +99,7 @@ export function TradePanel({ symbol, currentPrice, className }: TradePanelProps)
               </div>
             )}
             
-            <div className="flex items-center justify-between border border-[var(--color-border)] rounded-md px-3 py-2 bg-[var(--color-elevated)]/30 focus-within:border-[var(--color-accent)] transition-colors">
+            <div className="flex items-center justify-between border border-[var(--color-border)] rounded-lg px-3 py-2.5 bg-[var(--color-elevated)] focus-within:border-[var(--color-accent)] transition-colors duration-150">
               <label className="text-xs text-[var(--color-text-secondary)] font-medium">Quantity</label>
               <input 
                 type="number"
@@ -117,7 +117,7 @@ export function TradePanel({ symbol, currentPrice, className }: TradePanelProps)
               <span className="text-sm text-[var(--color-text-secondary)] flex items-center gap-1">
                 Estimated Cost <Info className="w-3.5 h-3.5" />
               </span>
-              <span className="text-xl font-bold tabular-nums">
+              <span className="text-lg font-bold tabular-nums text-[var(--color-text-primary)]">
                 ₹{estimatedCost.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             </div>
@@ -125,22 +125,22 @@ export function TradePanel({ symbol, currentPrice, className }: TradePanelProps)
             {/* Buying Power */}
             <div className="flex justify-between items-center mb-4 px-1 pb-4 border-b border-[var(--color-border)]">
               <span className="text-xs text-[var(--color-text-secondary)]">Available Funds</span>
-              <span className="text-xs font-semibold">₹1,25,000.00</span>
+              <span className="text-xs font-semibold text-[var(--color-text-primary)]">₹1,25,000.00</span>
             </div>
 
             {/* Action Button */}
             <Button 
               className={cn(
-                "w-full py-6 text-base font-bold uppercase tracking-wider border-none",
+                "w-full py-5 text-sm font-bold uppercase tracking-wider border-none rounded-lg",
                 action === "buy" 
-                  ? "bg-[var(--color-bullish)] hover:bg-[var(--color-bullish-hover)] text-black" 
+                  ? "bg-[var(--color-bullish)] hover:bg-[var(--color-bullish-hover)] text-[#0f1115]" 
                   : "bg-[var(--color-bearish)] hover:bg-[var(--color-bearish-hover)] text-white"
               )}
             >
               {action} {symbol}
             </Button>
-            <p className="text-[10px] text-center text-[var(--color-text-disabled)] mt-3">
-              Brokerage and regulatory fees not included in estimate.
+            <p className="text-[10px] text-center text-[var(--color-text-disabled)] mt-2">
+              Brokerage and regulatory fees not included.
             </p>
           </div>
         </div>

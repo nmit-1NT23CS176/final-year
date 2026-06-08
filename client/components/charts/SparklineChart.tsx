@@ -48,7 +48,7 @@ export function SparklineChart({
 
     const series = chart.addSeries(AreaSeries, {
       lineColor: color,
-      topColor: `${color}40`,
+      topColor: `${color}30`,
       bottomColor: `${color}00`,
       lineWidth: 2,
       priceLineVisible: false,
