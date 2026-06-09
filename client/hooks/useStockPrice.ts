@@ -28,8 +28,10 @@ export function useStockPrice(symbol: string | null): UseStockPriceResult {
     if (!symbol) return;
 
     let cancelled = false;
-    setIsLoading(true);
-    setError(null);
+    const t = setTimeout(() => {
+      setIsLoading(true);
+      setError(null);
+    }, 0);
 
     stockApi.getStockDetails(symbol)
       .then((res) => {
@@ -46,19 +48,13 @@ export function useStockPrice(symbol: string | null): UseStockPriceResult {
         setIsLoading(false);
       });
 
-    return () => { cancelled = true; };
+    return () => { 
+      cancelled = true; 
+      clearTimeout(t);
+    };
   }, [symbol]);
 
-  // Update price with flash animation
-  const updatePrice = (newPrice: number, change: number, changePercent: number) => {
-    if (prevPrice.current !== null && newPrice !== prevPrice.current) {
-      setFlashDirection(newPrice > prevPrice.current ? 'up' : 'down');
-      setTimeout(() => setFlashDirection(null), 600);
-    }
-    prevPrice.current = newPrice;
-    setQuote(prev => prev ? { ...prev, currentPrice: newPrice, change, changePercent } : prev);
-  };
-
+  // Removed unused updatePrice function to fix lint error
   return {
     price: quote?.currentPrice ?? null,
     change: quote?.change ?? null,

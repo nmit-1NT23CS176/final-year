@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { createChart, ColorType, IChartApi, AreaSeries } from "lightweight-charts";
+import { createChart, ColorType, IChartApi, AreaSeries, Time } from "lightweight-charts";
 
 interface SparklineChartProps {
   data?: number[];
@@ -58,7 +58,7 @@ export function SparklineChart({
 
     const now = Math.floor(Date.now() / 1000);
     const seriesData = chartData.map((value, i) => ({
-      time: (now - (chartData.length - i) * 3600) as any,
+      time: (now - (chartData.length - i) * 3600) as Time,
       value,
     }));
 

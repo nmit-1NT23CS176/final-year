@@ -15,7 +15,7 @@ interface WatchlistState {
   deleteStock: (id: string) => Promise<void>
 }
 
-export const useWatchlistStore = create<WatchlistState>((set, get) => ({
+export const useWatchlistStore = create<WatchlistState>((set) => ({
   items: [],
   isLoading: false,
   error: null,
@@ -40,8 +40,8 @@ export const useWatchlistStore = create<WatchlistState>((set, get) => ({
     try {
       const res = await watchlistApi.getWatchlist()
       set({ items: res.data || [], isLoading: false })
-    } catch (err: any) {
-      set({ error: err.message, isLoading: false })
+    } catch (err: unknown) {
+      set({ error: err instanceof Error ? err.message : 'An error occurred', isLoading: false })
     }
   },
 
@@ -51,8 +51,8 @@ export const useWatchlistStore = create<WatchlistState>((set, get) => ({
       if (res.data) {
         set((state) => ({ items: [res.data, ...state.items] }))
       }
-    } catch (err: any) {
-      set({ error: err.message })
+    } catch (err: unknown) {
+      set({ error: err instanceof Error ? err.message : 'An error occurred' })
     }
   },
 
@@ -60,8 +60,8 @@ export const useWatchlistStore = create<WatchlistState>((set, get) => ({
     try {
       await watchlistApi.removeFromWatchlist(id)
       set((state) => ({ items: state.items.filter(i => i.id !== id) }))
-    } catch (err: any) {
-      set({ error: err.message })
+    } catch (err: unknown) {
+      set({ error: err instanceof Error ? err.message : 'An error occurred' })
     }
   },
 }))

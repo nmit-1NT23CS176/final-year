@@ -2,16 +2,16 @@
 
 @theme {
   /* ── Surface Palette (Premium Dark) ── */
-  --color-background: #0a0b0d;
-  --color-surface: #121418;
-  --color-elevated: #1a1d24;
-  --color-border: #22262f;
-  --color-border-hover: #2e333e;
+  --color-background: #050816;
+  --color-surface: #0B1020;
+  --color-elevated: #101827;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-hover: rgba(255, 255, 255, 0.12);
 
   /* ── Functional Colors ── */
-  --color-bullish: #00c853;
-  --color-bullish-hover: #00e676;
-  --color-bullish-muted: rgba(0, 200, 83, 0.1);
+  --color-bullish: #00E676;
+  --color-bullish-hover: #00F58A;
+  --color-bullish-muted: rgba(0, 230, 118, 0.1);
 
   --color-bearish: #ff3b30;
   --color-bearish-hover: #ff4f45;
@@ -34,9 +34,9 @@
   --font-mono: "JetBrains Mono", "Roboto Mono", monospace;
 }
 
-@layer base {
+  @layer base {
   :root {
-    --background: #0a0b0d;
+    --background: #050816;
     --foreground: #ffffff;
   }
 
@@ -133,4 +133,16 @@
   .text-bearish { color: var(--color-bearish); }
   .bg-bullish-muted { background-color: var(--color-bullish-muted); }
   .bg-bearish-muted { background-color: var(--color-bearish-muted); }
+
+  /* Glow effects */
+  .shadow-green-glow {
+    box-shadow: 0 0 20px rgba(0, 230, 118, 0.15);
+  }
+  .shadow-green-glow-hover:hover {
+    box-shadow: 0 0 25px rgba(0, 245, 138, 0.25);
+  }
+  .shadow-soft {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  }
 }
+

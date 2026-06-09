@@ -16,7 +16,6 @@ interface GainersLosersStock {
 interface GainersLosersProps {
   gainers?: GainersLosersStock[];
   losers?: GainersLosersStock[];
-  isLoading?: boolean;
   className?: string;
 }
 
@@ -36,7 +35,7 @@ const MOCK_LOSERS: GainersLosersStock[] = [
   { symbol: "BRITANNIA", companyName: "Britannia Industries", currentPrice: 5120.00, change: -46.30, changePercent: -0.90 },
 ];
 
-export function GainersLosers({ gainers, losers, isLoading, className }: GainersLosersProps) {
+export function GainersLosers({ gainers, losers, className }: GainersLosersProps) {
   const displayGainers = gainers || MOCK_GAINERS;
   const displayLosers = losers || MOCK_LOSERS;
 

@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { createChart, ColorType, IChartApi, CandlestickSeries, HistogramSeries, CrosshairMode } from "lightweight-charts";
+import { createChart, ColorType, IChartApi, CandlestickSeries, HistogramSeries, CrosshairMode, Time, CandlestickData, HistogramData } from "lightweight-charts";
 
 interface CandleData {
-  time: number | string;
+  time: Time;
   open: number;
   high: number;
   low: number;
@@ -93,14 +93,14 @@ export function CandlestickChart({ symbol, data, className }: CandlestickChartPr
     // Use provided data or generate mock
     const candleData = data || generateMockCandles(selectedTf.days);
 
-    candleSeries.setData(candleData as any);
+    candleSeries.setData(candleData as unknown as CandlestickData[]);
 
     const volumeData = candleData.map((d) => ({
       time: d.time,
       value: Math.floor(Math.random() * 10000000) + 1000000,
       color: d.close >= d.open ? "rgba(0, 208, 156, 0.2)" : "rgba(255, 82, 82, 0.2)",
     }));
-    volumeSeries.setData(volumeData as any);
+    volumeSeries.setData(volumeData as unknown as HistogramData[]);
 
     chart.timeScale().fitContent();
     chartRef.current = chart;

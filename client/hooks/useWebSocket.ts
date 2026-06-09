@@ -35,6 +35,7 @@ export function useWebSocket({
   const retryCount = useRef(0);
   const retryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [status, setStatus] = useState<ConnectionStatus>('disconnected');
+  const connectRef = useRef<() => void>();
 
   const connect = useCallback(() => {
     if (wsRef.current?.readyState === WebSocket.OPEN) return;
@@ -80,7 +81,9 @@ export function useWebSocket({
         const baseDelay = Math.min(1000 * Math.pow(2, retryCount.current), 30000);
         const jitter = baseDelay * (0.8 + Math.random() * 0.4);
         retryCount.current++;
-        retryTimer.current = setTimeout(connect, jitter);
+        retryTimer.current = setTimeout(() => {
+          connectRef.current?.();
+        }, jitter);
       };
 
       ws.onerror = () => {
@@ -117,6 +120,10 @@ export function useWebSocket({
       wsRef.current.send(JSON.stringify({ event: 'unsubscribe', data: { symbol } }));
     }
   }, []);
+
+  useEffect(() => {
+    connectRef.current = connect;
+  }, [connect]);
 
   useEffect(() => {
     if (autoConnect) {

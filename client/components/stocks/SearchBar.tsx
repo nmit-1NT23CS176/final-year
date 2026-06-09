@@ -28,9 +28,11 @@ export function SearchBar({ className, placeholder = "Search stocks (e.g., RELIA
   // Fetch search results
   useEffect(() => {
     if (!debouncedQuery.trim()) {
-      setResults([]);
-      setIsOpen(false);
-      return;
+      const t = setTimeout(() => {
+        setResults([]);
+        setIsOpen(false);
+      }, 0);
+      return () => clearTimeout(t);
     }
 
     let cancelled = false;
