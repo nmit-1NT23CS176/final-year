@@ -8,6 +8,7 @@ import { rateLimit } from 'express-rate-limit';
 import authRoutes from './routes/auth.routes';
 import stocksRoutes from './routes/stocks.routes';
 import watchlistRoutes from './routes/watchlist.routes';
+import mlRoutes from './routes/ml.routes';
 import { WebSocketServer } from './websocket/ws-server';
 
 dotenv.config();
@@ -42,6 +43,7 @@ app.use('/api', globalLimiter);
 app.use('/api/auth', authRoutes);
 app.use('/api/stocks', stocksRoutes);
 app.use('/api/watchlist', watchlistRoutes);
+app.use('/api/ml', mlRoutes);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

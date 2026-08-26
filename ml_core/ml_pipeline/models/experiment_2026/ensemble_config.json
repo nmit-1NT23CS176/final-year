@@ -1,0 +1,9 @@
+{
+  "winning_exp": "Exp_C_Recent6M",
+  "weights": {
+    "trf": 0.5,
+    "lstm": 0.5
+  },
+  "threshold": 0.5,
+  "feature_dim": 60
+}

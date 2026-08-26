@@ -146,3 +146,32 @@
   }
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-bullish);
+  animation: pulse-live 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse-live {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px rgba(0, 230, 118, 0.8); }
+  50% { opacity: 0.4; transform: scale(0.85); box-shadow: 0 0 2px rgba(0, 230, 118, 0.2); }
+}
+
+

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
+import { TickerStrip } from "@/components/layout/TickerStrip";
 import { AuthInitializer } from "@/components/layout/AuthInitializer";
 
 const inter = Inter({
@@ -25,6 +26,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable}`}>
       <body className="min-h-screen flex flex-col bg-[var(--color-background)] text-[var(--color-text-primary)] font-sans antialiased">
         <AuthInitializer />
+        <TickerStrip />
         <Navbar />
         <main className="flex-1 flex flex-col">
           {children}

@@ -1,0 +1,28 @@
+Metric,Value
+Total Return,-0.012473286646533022
+Annualized Return,-0.01275968810567607
+Annualized Volatility,0.133566862659329
+Sharpe Ratio,-0.030705175948153786
+Max Drawdown,-0.11096577757464043
+Calmar Ratio,-0.11498759693810415
+Win Rate,0.4122448979591837
+Average Turnover,0.39440470117683596
+Average Gross Leverage,0.8346133307979167
+Average Net Exposure,0.06832005570373191
+Total Transaction Cost,0.241572879470812
+Mean IC Raw,0.02684106488582747
+Mean IC Smoothed,0.014242940202781917
+IC Delta Smoothed-Raw,-0.012598124683045555
+Avg Rank Corr Raw-Smooth,0.6206413994169095
+Step-33 Avg Turnover,0.2884768554882095
+Step-34 Avg Turnover,0.39440470117683596
+Turnover Reduction %,-0.3671970339157967
+Rebalance-day Sharpe,-4.991450813009434
+Hold-day Sharpe,2.1328778461956484
+Did lower turnover preserve alpha better?,NO
+What was turnover reduction?,-0.3671970339157967
+How much tx-cost drag eliminated?,-0.10592784568862645
+Did smoothing help or hurt?,HURT
+Was periodic rebalancing economically superior?,NO
+Is strategy realistically deployable?,NO
+Final Verdict,FAIL

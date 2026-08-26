@@ -1,0 +1,11 @@
+metric,value
+avg_turnover,0.8902064063538948
+target_lt_10pct_met,0.0
+portfolio_overlap_mean,0.33503112986085126
+replacement_rate_mean,0.6649688701391487
+entry_turnover_mean,0.2794305496728424
+exit_turnover_mean,0.3827906197975178
+resize_turnover_mean,0.22798523688353445
+retained_position_mean_pnl_component,0.0003775905589198178
+entry_position_mean_pnl_component,0.0
+average_holding_days,6.3090909090909095

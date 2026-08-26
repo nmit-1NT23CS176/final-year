@@ -1,0 +1,28 @@
+Metric,Value
+Baseline Sharpe,2.0124576529147085
+Threshold Sharpe,-0.13693777338835544
+Baseline Avg Turnover,0.4286606709586333
+Threshold Avg Turnover,0.40909141026820034
+Baseline Tx Cost,0.2625546609621629
+Threshold Tx Cost,0.25056848878927274
+baseline_avg_turnover,0.4286606709586333
+baseline_rebalance_sharpe,-4.0361268969079
+baseline_hold_sharpe,4.728513315706799
+baseline_next_day_after_rebalance_mean_return,0.0021212564749987376
+avg_pct_names_replaced_rebalance_days,0.756224747066135
+avg_abs_weight_change_rebalance_days,1.280754443717868
+avg_unnecessary_close_frac,0.051717963608207504
+baseline_avg_turnover,0.4286606709586333
+threshold_avg_turnover,0.40909141026820034
+turnover_reduction_pct,0.04565210203835435
+threshold_rebalance_sharpe,-0.07084167571399627
+threshold_hold_sharpe,
+target_turnover_lt_10pct,0.0
+Why Step-34 turnover increased?,Dominant component: entry_turnover (avg=0.6206); frequent portfolio reconstruction and low overlap.
+Why rebalance days were strongly negative?,Rebalance-day Sharpe=-4.0361 vs hold-day Sharpe=4.7285; turnover cost + timing/reversal effect (next-day mean=0.002121).
+What caused alpha destruction?,"Execution churn (entry/exit/resize) and cost drag, not signal collapse."
+Which behaviors were inefficient?,"Forced exits despite valid ranks, low portfolio overlap, resizing on small rank noise."
+Did threshold-based trading improve deployability?,NO
+Economically viable turnover level?,< 10% preferred; achieved 0.4091 in redesign.
+Is strategy now realistically deployable?,NO
+Final Verdict,FAIL

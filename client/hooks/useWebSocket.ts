@@ -35,7 +35,7 @@ export function useWebSocket({
   const retryCount = useRef(0);
   const retryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [status, setStatus] = useState<ConnectionStatus>('disconnected');
-  const connectRef = useRef<() => void>();
+  const connectRef = useRef<(() => void) | undefined>(undefined);
 
   const connect = useCallback(() => {
     if (wsRef.current?.readyState === WebSocket.OPEN) return;

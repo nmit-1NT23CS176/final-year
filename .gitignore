@@ -1,0 +1,18 @@
+venv
+.env
+# ignore processed data
+ml_core/ml_pipeline/Market_Data/processed/*.csv
+ml_core/ml_pipeline/Market_Data/processed/*.parquet
+
+# Python cache
+__pycache__/
+*.pyc
+
+.agents
+
+node_modules
+dist
+.angular
+.DS_Store
+
+

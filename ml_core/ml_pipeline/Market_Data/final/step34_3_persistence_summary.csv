@@ -1,0 +1,9 @@
+research_question,answer,verdict,step34_3_net_sharpe,step34_3_avg_turnover,step34_2_reference_turnover
+1. Which regime benefits most from persistence?,HIGH regime (highest alpha-per-turnover).,FAIL,-1.0560814680273563,0.25391698309468635,0.903534374183486
+2. Which regime causes most turnover destruction?,HIGH regime (largest cost drag).,FAIL,-1.0560814680273563,0.25391698309468635,0.903534374183486
+3. Did regime-adaptive execution improve deployability?,YES,FAIL,-1.0560814680273563,0.25391698309468635,0.903534374183486
+4. Did turnover materially decline?,YES (Δturnover=0.6496),FAIL,-1.0560814680273563,0.25391698309468635,0.903534374183486
+5. Is long-short deployment still justified?,"Conditional: longs strong, shorts require tighter filtering.",FAIL,-1.0560814680273563,0.25391698309468635,0.903534374183486
+6. Should LOW regime be retained?,Retain selectively.,FAIL,-1.0560814680273563,0.25391698309468635,0.903534374183486
+7. Which execution profile was most stable?,Uniform profile,FAIL,-1.0560814680273563,0.25391698309468635,0.903534374183486
+8. Is the strategy economically deployable now?,NO,FAIL,-1.0560814680273563,0.25391698309468635,0.903534374183486

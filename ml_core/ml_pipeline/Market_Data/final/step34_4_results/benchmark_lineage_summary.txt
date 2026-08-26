@@ -1,0 +1,10 @@
+
+Benchmark Lineage Summary
+-------------------------
+Historical Long-Only Sharpe : 2.4835
+Current Long-Only Sharpe    : -1.9790
+Drift                       : 4.4625
+Root Cause                  : signal
+Mean IC                     : -0.20296 (Step-28 reference: 0.0268)
+Signal Intact               : NO
+Resolved                    : NO

@@ -1,0 +1,24 @@
+Metric,Value
+Total Return,0.04965932002954365
+Annualized Return,0.05083560191359737
+Annualized Volatility,0.08572132184934216
+Sharpe Ratio,0.6241380764476804
+Max Drawdown,-0.07796767882048106
+Calmar Ratio,0.6520086615717428
+Win Rate,0.47346938775510206
+Average Turnover,0.2884768554882095
+Average Gross Leverage,0.9959183673469387
+Average Net Exposure,0.04095153200070859
+Total Transaction Cost,0.17669207398652834
+Mean IC,0.02684106488582747
+IC Std,0.27308342551046627
+ICIR,0.09828888309736965
+% Positive IC,0.49795918367346936
+Top Decile Mean Return,0.004410561834633861
+Bottom Decile Mean Return,0.0018264500140607156
+Decile Spread Mean,0.0025841118205731455
+Decile Monotonicity (Spearman),0.6969696969696969
+Final Verdict,PARTIAL
+Verdict Reason,Alpha remains positive but weaker after cost-aware constraints; tuning required.
+Step-28 Sharpe,2.62798842791887
+Step-33 Sharpe,0.6241380764476804

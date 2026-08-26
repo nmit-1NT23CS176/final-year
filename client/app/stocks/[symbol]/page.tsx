@@ -1,353 +1,293 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Globe, Users, BookmarkPlus, BookmarkCheck, ExternalLink, Building2, TrendingUp } from "lucide-react";
+import { use } from "react";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { CandlestickChart } from "@/components/charts/CandlestickChart";
-import { PriceDisplay } from "@/components/stocks/PriceDisplay";
-import { TradePanel } from "@/components/stocks/TradePanel";
-import { stockApi } from "@/services/stock-api";
-import { Footer } from "@/components/layout/Footer";
+import { useForecast } from "@/hooks/useSignals";
+import { getSector, getCap, fmtProb, directionIcon } from "@/lib/api";
+import type { PredictionHistory, ReasonBreakdown } from "@/lib/api";
+import { SkeletonStatCard, ErrorBanner } from "@/components/shared/FeedbackUI";
 
-interface StockData {
-  symbol: string;
-  companyName: string;
-  sector?: string;
-  exchange?: string;
-  quote: {
-    currentPrice: number;
-    change: number;
-    changePercent: number;
-    dayHigh?: number;
-    dayLow?: number;
-    open?: number;
-    previousClose?: number;
-    volume?: number;
-    marketCap?: number;
-    peRatio?: number;
-    fiftyTwoWeekHigh?: number;
-    fiftyTwoWeekLow?: number;
-  };
-  profile?: {
-    industry?: string;
-    website?: string;
-    description?: string;
-    employeeCount?: number;
-    ipoDate?: string;
-  };
-}
-
-// Fallback mock data for when backend is unavailable
-const MOCK_DATA: StockData = {
-  symbol: "",
-  companyName: "Loading...",
-  sector: "Technology",
-  exchange: "NSE",
-  quote: {
-    currentPrice: 3000,
-    change: 25.5,
-    changePercent: 0.85,
-    dayHigh: 3050,
-    dayLow: 2980,
-    open: 2990,
-    previousClose: 2974.5,
-    volume: 12500000,
-    marketCap: 20000000000000,
-    peRatio: 28.5,
-    fiftyTwoWeekHigh: 3200,
-    fiftyTwoWeekLow: 2200,
-  },
-  profile: {
-    industry: "Conglomerates",
-    website: "https://www.example.com",
-    description: "A leading Indian company operating across multiple sectors including energy, petrochemicals, textiles, natural resources, retail, and telecommunications.",
-    employeeCount: 389000,
-  },
-};
-
-export default function StockDetailsPage() {
-  const params = useParams();
-  const router = useRouter();
-  const symbol = decodeURIComponent(params.symbol as string).toUpperCase();
-  const [stockData, setStockData] = useState<StockData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [inWatchlist, setInWatchlist] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    setLoading(true);
-
-    stockApi.getStockDetails(symbol)
-      .then((res) => {
-        if (!cancelled && res.data) {
-          setStockData({
-            symbol: res.data.symbol,
-            companyName: res.data.companyName || symbol,
-            sector: res.data.sector,
-            exchange: res.data.exchange,
-            quote: res.data.quote || MOCK_DATA.quote,
-            profile: res.data.profile,
-          });
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setStockData({ ...MOCK_DATA, symbol, companyName: symbol });
-        }
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-
-    return () => { cancelled = true; };
-  }, [symbol]);
-
-  const toggleWatchlist = () => {
-    setInWatchlist(!inWatchlist);
-  };
-
-  if (loading) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <Skeleton className="h-4 w-36 mb-6" />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-5">
-            <div className="space-y-2">
-              <Skeleton className="h-8 w-48" />
-              <Skeleton className="h-5 w-32" />
-            </div>
-            <Skeleton className="h-[520px] w-full rounded-lg" />
-          </div>
-          <div className="space-y-5">
-            <Skeleton className="h-[300px] w-full rounded-lg" />
-            <Skeleton className="h-[200px] w-full rounded-lg" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!stockData) return null;
-
-  const { quote, profile } = stockData;
-  const isUp = quote.change >= 0;
-
-  const statsGrid = [
-    { label: "Open", value: quote.open ? `₹${quote.open.toLocaleString("en-IN")}` : "N/A" },
-    { label: "Prev Close", value: quote.previousClose ? `₹${quote.previousClose.toLocaleString("en-IN")}` : "N/A" },
-    { label: "Day High", value: quote.dayHigh ? `₹${quote.dayHigh.toLocaleString("en-IN")}` : "N/A" },
-    { label: "Day Low", value: quote.dayLow ? `₹${quote.dayLow.toLocaleString("en-IN")}` : "N/A" },
-    { label: "Volume", value: quote.volume ? formatVolume(quote.volume) : "N/A" },
-    { label: "Market Cap", value: quote.marketCap ? formatMarketCap(quote.marketCap) : "N/A" },
-    { label: "P/E Ratio", value: quote.peRatio ? quote.peRatio.toFixed(2) : "N/A" },
-    { label: "52W High", value: quote.fiftyTwoWeekHigh ? `₹${quote.fiftyTwoWeekHigh.toLocaleString("en-IN")}` : "N/A" },
-    { label: "52W Low", value: quote.fiftyTwoWeekLow ? `₹${quote.fiftyTwoWeekLow.toLocaleString("en-IN")}` : "N/A" },
-  ];
-
+// ── Confidence ring ─────────────────────────────────────
+function ConfidenceRing({ score }: { score: number }) {
+  const radius = 42;
+  const circ = 2 * Math.PI * radius;
+  const fill = (score / 100) * circ;
+  const color = score >= 60 ? "#00d26a" : score >= 40 ? "#facc15" : "#ef4444";
   return (
-    <>
-      <div className="flex-1">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          {/* Back button */}
-          <div className="mb-5">
-            <Link
-              href="/dashboard"
-              className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] inline-flex items-center text-sm font-medium transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4 mr-1.5" /> Dashboard
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* ===== Main Content (2 cols) ===== */}
-            <div className="lg:col-span-2 flex flex-col gap-5">
-              {/* Header: Name + Price + Watchlist button */}
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-                <div>
-                  <div className="flex items-center gap-2.5 mb-1">
-                    <h1 className="text-2xl font-bold tracking-tight text-[var(--color-text-primary)]">{symbol}</h1>
-                    {stockData.exchange && (
-                      <Badge variant="outline">{stockData.exchange}</Badge>
-                    )}
-                  </div>
-                  <p className="text-sm text-[var(--color-text-secondary)] flex items-center gap-1.5">
-                    {stockData.companyName}
-                    {stockData.sector && <span className="text-[var(--color-text-disabled)]">· {stockData.sector}</span>}
-                  </p>
-                </div>
-
-                <div className="flex flex-col sm:items-end gap-2">
-                  <PriceDisplay
-                    price={quote.currentPrice}
-                    change={quote.change}
-                    changePercent={quote.changePercent}
-                    size="lg"
-                  />
-                  <Button
-                    onClick={toggleWatchlist}
-                    variant={inWatchlist ? "success" : "outline"}
-                    size="sm"
-                    className={inWatchlist
-                      ? ""
-                      : "hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
-                    }
-                  >
-                    {inWatchlist ? (
-                      <><BookmarkCheck className="w-4 h-4 mr-1.5" /> In Watchlist</>
-                    ) : (
-                      <><BookmarkPlus className="w-4 h-4 mr-1.5" /> Add to Watchlist</>
-                    )}
-                  </Button>
-                </div>
-              </div>
-
-              {/* Candlestick Chart */}
-              <Card>
-                <CardContent className="p-4">
-                  <CandlestickChart symbol={symbol} />
-                </CardContent>
-              </Card>
-
-              {/* Stats Grid */}
-              <Card>
-                <CardContent className="p-5">
-                  <h3 className="font-semibold text-sm mb-4 text-[var(--color-text-primary)]">
-                    Market Statistics
-                  </h3>
-                  <div className="grid grid-cols-3 gap-x-6 gap-y-3">
-                    {statsGrid.map((stat) => (
-                      <div key={stat.label} className="flex items-center justify-between py-1.5 border-b border-[var(--color-border)]/50">
-                        <span className="text-xs text-[var(--color-text-disabled)]">{stat.label}</span>
-                        <span className="text-sm font-medium tabular-nums text-[var(--color-text-primary)]">{stat.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* ===== Sidebar (1 col) ===== */}
-            <div className="flex flex-col gap-5">
-              {/* Order Execution Panel */}
-              <TradePanel 
-                symbol={symbol} 
-                currentPrice={quote.currentPrice} 
-              />
-
-              {/* Day Range Visualizer */}
-              <Card>
-                <CardContent className="p-5">
-                  <h3 className="font-semibold text-xs mb-3 text-[var(--color-text-secondary)] uppercase tracking-wider">Today&apos;s Range</h3>
-                  {quote.dayLow && quote.dayHigh && (
-                    <div className="space-y-1.5">
-                      <div className="flex justify-between text-[11px] text-[var(--color-text-disabled)] tabular-nums">
-                        <span>₹{quote.dayLow.toLocaleString("en-IN")}</span>
-                        <span>₹{quote.dayHigh.toLocaleString("en-IN")}</span>
-                      </div>
-                      <div className="relative h-1.5 bg-[var(--color-elevated)] rounded-full overflow-hidden">
-                        <div
-                          className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[var(--color-bearish)] via-[var(--color-warning)] to-[var(--color-bullish)]"
-                          style={{ width: "100%" }}
-                        />
-                        <div
-                          className="absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-white border-2 border-[var(--color-background)]"
-                          style={{
-                            left: `${Math.min(100, Math.max(0, ((quote.currentPrice - quote.dayLow) / (quote.dayHigh - quote.dayLow)) * 100))}%`,
-                            transform: "translate(-50%, -50%)",
-                          }}
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="mt-4 pt-4 border-t border-[var(--color-border)]">
-                    <h3 className="font-semibold text-xs mb-3 text-[var(--color-text-secondary)] uppercase tracking-wider">52 Week Range</h3>
-                    {quote.fiftyTwoWeekLow && quote.fiftyTwoWeekHigh && (
-                      <div className="space-y-1.5">
-                        <div className="flex justify-between text-[11px] text-[var(--color-text-disabled)] tabular-nums">
-                          <span>₹{quote.fiftyTwoWeekLow.toLocaleString("en-IN")}</span>
-                          <span>₹{quote.fiftyTwoWeekHigh.toLocaleString("en-IN")}</span>
-                        </div>
-                        <div className="relative h-1.5 bg-[var(--color-elevated)] rounded-full overflow-hidden">
-                          <div
-                            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[var(--color-bearish)] to-[var(--color-bullish)]"
-                            style={{
-                              width: `${((quote.currentPrice - quote.fiftyTwoWeekLow) / (quote.fiftyTwoWeekHigh - quote.fiftyTwoWeekLow)) * 100}%`,
-                            }}
-                          />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* About Company */}
-              {profile && (
-                <Card>
-                  <CardContent className="p-5">
-                    <h3 className="font-semibold text-sm mb-3 text-[var(--color-text-primary)]">
-                      About
-                    </h3>
-
-                    {profile.description && (
-                      <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-4 line-clamp-5">
-                        {profile.description}
-                      </p>
-                    )}
-
-                    <div className="space-y-2.5">
-                      {profile.industry && (
-                        <div className="flex items-center gap-2 text-sm">
-                          <span className="text-[var(--color-text-disabled)]">Industry:</span>
-                          <span className="font-medium text-[var(--color-text-primary)]">{profile.industry}</span>
-                        </div>
-                      )}
-                      {profile.employeeCount && (
-                        <div className="flex items-center gap-2 text-sm">
-                          <Users className="w-3.5 h-3.5 text-[var(--color-text-disabled)]" />
-                          <span className="text-[var(--color-text-primary)]">{profile.employeeCount.toLocaleString()} Employees</span>
-                        </div>
-                      )}
-                      {profile.website && (
-                        <a
-                          href={profile.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-sm text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
-                        >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          {profile.website.replace(/^https?:\/\//, "")}
-                        </a>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          </div>
-        </div>
+    <div className="relative w-28 h-28 flex items-center justify-center">
+      <svg width={112} height={112} className="-rotate-90">
+        <circle cx={56} cy={56} r={radius} fill="none" stroke="#1e2535" strokeWidth={8} />
+        <circle
+          cx={56} cy={56} r={radius} fill="none"
+          stroke={color} strokeWidth={8}
+          strokeLinecap="round"
+          strokeDasharray={`${fill} ${circ}`}
+          style={{ transition: "stroke-dasharray 0.7s ease" }}
+        />
+      </svg>
+      <div className="absolute text-center">
+        <div className="text-2xl font-black" style={{ color }}>{score}</div>
+        <div className="text-[10px] text-[#6b7280]">AI Score</div>
       </div>
-      <Footer />
-    </>
+    </div>
   );
 }
 
-function formatVolume(vol: number): string {
-  if (vol >= 10000000) return `${(vol / 10000000).toFixed(2)} Cr`;
-  if (vol >= 100000) return `${(vol / 100000).toFixed(2)} L`;
-  if (vol >= 1000) return `${(vol / 1000).toFixed(1)}K`;
-  return vol.toString();
+// ── Reason breakdown row ────────────────────────────────
+function ReasonRow({ r }: { r: ReasonBreakdown }) {
+  return (
+    <div className="flex items-start gap-3 py-3.5 border-b border-[#1e2535]/60 last:border-b-0">
+      <span className="text-lg shrink-0 mt-0.5">{directionIcon(r.direction)}</span>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-baseline justify-between gap-2 mb-0.5">
+          <p className="text-sm font-semibold text-white truncate">{r.category}</p>
+          <span className={`text-[10px] font-bold shrink-0 ${
+            r.direction === "POSITIVE" ? "text-[#00d26a]" : r.direction === "NEGATIVE" ? "text-[#ef4444]" : "text-yellow-400"
+          }`}>{r.status}</span>
+        </div>
+        <p className="text-xs text-[#8892a4]">{r.value}</p>
+        <p className="text-[11px] text-[#6b7280] mt-1">{r.explanation}</p>
+      </div>
+    </div>
+  );
 }
 
-function formatMarketCap(cap: number): string {
-  if (cap >= 10000000000000) return `₹${(cap / 10000000000000).toFixed(2)} L Cr`;
-  if (cap >= 100000000000) return `₹${(cap / 100000000000).toFixed(2)}K Cr`;
-  if (cap >= 10000000) return `₹${(cap / 10000000).toFixed(2)} Cr`;
-  return `₹${cap.toLocaleString("en-IN")}`;
+// ── Prediction history row ──────────────────────────────
+function HistoryRow({ h }: { h: PredictionHistory }) {
+  const hit = h.result === "HIT";
+  return (
+    <tr className="border-b border-[#1e2535]/50 text-sm hover:bg-[#0d1117]/30 transition-colors">
+      <td className="py-3 px-4 text-[#8892a4] tabular-nums font-mono">{h.date}</td>
+      <td className="py-3 px-4">
+        <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${
+          h.predicted === "UPTREND" ? "text-[#00d26a]" : "text-[#ef4444]"
+        }`}>
+          {h.predicted === "UPTREND" ? "▲ UPTREND" : "▼ DOWNTREND"}
+        </span>
+      </td>
+      <td className="py-3 px-4 text-white font-medium tabular-nums">{Math.round(h.probability * 100)}%</td>
+      <td className="py-3 px-4">
+        <span className={`text-xs font-semibold ${h.actual === "UP" ? "text-[#00d26a]" : "text-[#ef4444]"}`}>
+          {h.actual === "UP" ? "▲ UP" : "▼ DOWN"}
+        </span>
+      </td>
+      <td className="py-3 px-4">
+        <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+          hit ? "bg-[#003d20] text-[#00d26a]" : "bg-[#3d0000] text-[#ef4444]"
+        }`}>{h.result}</span>
+      </td>
+    </tr>
+  );
+}
+
+// ── Stat card ───────────────────────────────────────────
+function StatCard({ label, value, sub, color = "text-white" }: {
+  label: string; value: string; sub?: string; color?: string;
+}) {
+  return (
+    <div className="bg-[#0d1117] border border-[#1e2535] rounded-xl p-4">
+      <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">{label}</p>
+      <p className={`text-xl font-bold tabular-nums ${color}`}>{value}</p>
+      {sub && <p className="text-[11px] text-[#6b7280] mt-0.5">{sub}</p>}
+    </div>
+  );
+}
+
+// ── Main page ───────────────────────────────────────────
+export default function StockDetailPage({ params }: { params: Promise<{ symbol: string }> }) {
+  const { symbol } = use(params);
+  const sym = symbol.toUpperCase();
+  const { data, loading, error } = useForecast(sym);
+
+  const signalColor = data
+    ? data.target_prediction === 1 ? "#00d26a"
+      : data.target_prediction === 0 ? "#ef4444"
+      : "#6b7280"
+    : "#6b7280";
+
+  const signalLabel = data
+    ? data.target_prediction === 1 ? "BULLISH"
+      : data.target_prediction === 0 ? "BEARISH"
+      : "NO SIGNAL"
+    : "LOADING";
+
+  return (
+    <div className="min-h-screen bg-[#0a0e14]">
+
+      {/* ── Sticky top bar ── */}
+      <div className="sticky top-0 z-30 bg-[#06090d]/90 backdrop-blur-md border-b border-[#1e2535] px-6 py-3 flex items-center gap-4">
+        <Link href="/stocks" className="text-[#6b7280] hover:text-white text-sm flex items-center gap-1.5 transition-colors">
+          ← Stocks
+        </Link>
+        <span className="text-[#1e2535]">/</span>
+        <span className="text-white font-bold">{sym}</span>
+        {data && (
+          <>
+            <span className="text-[#1e2535]">·</span>
+            <span className="text-[11px] text-[#6b7280]">{getSector(sym)} · {getCap(sym)}</span>
+          </>
+        )}
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 py-10">
+
+        {error && <ErrorBanner section={`forecast for ${sym}`} />}
+
+        {/* ── Hero row ── */}
+        <div className="flex flex-col md:flex-row md:items-start gap-8 mb-10">
+          {/* Left: ID block */}
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-xs font-medium text-[#6b7280] uppercase tracking-wider">
+                {getSector(sym)} · {getCap(sym)}
+              </span>
+              {loading ? (
+                <div className="h-5 w-20 bg-[#1e2535] rounded-full animate-pulse" />
+              ) : (
+                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full border"
+                  style={{
+                    color: signalColor,
+                    borderColor: `${signalColor}40`,
+                    background: `${signalColor}15`,
+                  }}>
+                  {signalLabel}
+                </span>
+              )}
+            </div>
+            <h1 className="text-5xl font-extrabold text-white mb-1">{sym}</h1>
+            {data && (
+              <p className="text-[#8892a4] text-sm">
+                Prediction as of {data.date} · {data.model_used}
+              </p>
+            )}
+          </div>
+
+          {/* Right: Confidence ring + trend label */}
+          {loading ? (
+            <SkeletonStatCard />
+          ) : data ? (
+            <div className="flex items-center gap-6">
+              <ConfidenceRing score={data.intelligence_score} />
+              <div>
+                <p className="text-[11px] text-[#6b7280] uppercase tracking-wider mb-1">Signal Strength</p>
+                <p className="text-lg font-bold text-white">{data.signal_strength}</p>
+                <p className="text-[11px] text-[#6b7280] mt-1">{data.calibration_status}</p>
+              </div>
+            </div>
+          ) : null}
+        </div>
+
+        {/* ── Stats grid ── */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-10">
+          {loading ? (
+            Array.from({ length: 6 }).map((_, i) => <SkeletonStatCard key={i} />)
+          ) : data ? (
+            <>
+              <StatCard label="UP Probability" value={fmtProb(data.probability_score)} color={data.target_prediction === 1 ? "text-[#00d26a]" : "text-[#ef4444]"} />
+              <StatCard label="Confidence" value={data.confidence_level} sub={`${data.confidence_score.toFixed(0)}%`} />
+              <StatCard label="Volatility" value={data.volatility_regime} />
+              <StatCard label="30d Accuracy" value={`${(data.historical_30d_accuracy * 100).toFixed(1)}%`} />
+              <StatCard label="90d Accuracy" value={`${(data.historical_90d_accuracy * 100).toFixed(1)}%`} />
+              <StatCard label="Stock Acc." value={`${(data.stock_historical_accuracy * 100).toFixed(1)}%`} sub="Historical" />
+            </>
+          ) : null}
+        </div>
+
+        {data && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            {/* ── Reason Breakdown ── */}
+            <div className="bg-[#131820] border border-[#1e2535] rounded-2xl p-6">
+              <h2 className="text-base font-bold text-white mb-4 flex items-center gap-2">
+                <span className="text-[#00d26a]">⚡</span> Why This Signal?
+              </h2>
+              <div>
+                {data.reasons_breakdown.map((r, i) => (
+                  <ReasonRow key={i} r={r} />
+                ))}
+              </div>
+            </div>
+
+            {/* ── Prediction History ── */}
+            <div className="bg-[#131820] border border-[#1e2535] rounded-2xl p-6">
+              <h2 className="text-base font-bold text-white mb-4 flex items-center gap-2">
+                <span className="text-[#00d26a]">📋</span> Prediction History
+              </h2>
+              <div className="overflow-x-auto rounded-xl">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="text-[10px] text-[#6b7280] uppercase tracking-wider border-b border-[#1e2535]">
+                      <th className="text-left py-2.5 px-4 font-semibold">Date</th>
+                      <th className="text-left py-2.5 px-4 font-semibold">Predicted</th>
+                      <th className="text-left py-2.5 px-4 font-semibold">Prob.</th>
+                      <th className="text-left py-2.5 px-4 font-semibold">Actual</th>
+                      <th className="text-left py-2.5 px-4 font-semibold">Result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.prediction_history.map((h, i) => (
+                      <HistoryRow key={i} h={h} />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Hit rate summary */}
+              <div className="mt-4 pt-4 border-t border-[#1e2535] flex gap-6">
+                {(() => {
+                  const hits = data.prediction_history.filter(h => h.result === "HIT").length;
+                  const total = data.prediction_history.length;
+                  return (
+                    <>
+                      <div>
+                        <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-0.5">Recent Hit Rate</p>
+                        <p className="text-lg font-bold text-[#00d26a]">{total ? Math.round((hits / total) * 100) : 0}%</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-0.5">Hits / Misses</p>
+                        <p className="text-lg font-bold text-white">{hits} / {total - hits}</p>
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+            </div>
+
+            {/* ── Model Info ── */}
+            <div className="bg-[#131820] border border-[#1e2535] rounded-2xl p-6 lg:col-span-2">
+              <h2 className="text-base font-bold text-white mb-4 flex items-center gap-2">
+                <span className="text-[#00d26a]">🧠</span> Model Details
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div>
+                  <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">Model Used</p>
+                  <p className="text-sm font-semibold text-white leading-snug">{data.model_used}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">Acc. Benchmark</p>
+                  <p className="text-sm font-bold text-white">{(data.accuracy_benchmark * 100).toFixed(1)}%</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">F1 Benchmark</p>
+                  <p className="text-sm font-bold text-white">{(data.f1_benchmark * 100).toFixed(1)}%</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">OOS ROC-AUC</p>
+                  <p className="text-sm font-bold text-white">{(data.historical_roc_auc * 100).toFixed(1)}%</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">Calibration</p>
+                  <p className="text-sm font-semibold text-[#00d26a] leading-snug">{data.calibration_status}</p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">OOS Accuracy</p>
+                  <p className="text-sm font-bold text-white">{(data.historical_oos_accuracy * 100).toFixed(1)}%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
