@@ -100,12 +100,21 @@ class InferencePipeline:
         conf_level = "HIGH" if is_high_conf else "NEUTRAL"
         conf_score = float(round(abs(raw_prob - 0.50) * 200, 2))
 
-        # Ensure feature vector and sequence window contain only numeric columns
-        num_cols = sub_df.select_dtypes(include=[np.number]).columns
-        num_cols = [c for c in num_cols if c not in ["target", "pred_score"]]
-        
-        feature_vector = latest_row[num_cols].apply(pd.to_numeric, errors="coerce").fillna(0.0)
-        seq_features = sub_df.tail(20)[num_cols].apply(pd.to_numeric, errors="coerce").fillna(0.0).values.astype(np.float32)
+        # Build feature inputs in the exact column order the models were trained on
+        feature_cols = self.model_loader.top_features or [
+            c
+            for c in sub_df.select_dtypes(include=[np.number]).columns
+            if c not in ["target", "pred_score", "actual_return", "target_future_return_t3"]
+        ]
+
+        feature_vector = latest_row.reindex(feature_cols).apply(pd.to_numeric, errors="coerce").fillna(0.0)
+        seq_features = (
+            sub_df.tail(20)
+            .reindex(columns=feature_cols)
+            .apply(pd.to_numeric, errors="coerce")
+            .fillna(0.0)
+            .values.astype(np.float32)
+        )
 
         return self.predictor.predict_next_day_trend(
             symbol=symbol.upper(),
