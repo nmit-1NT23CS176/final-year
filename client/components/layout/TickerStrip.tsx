@@ -29,21 +29,21 @@ export function TickerStrip() {
   const doubled = [...allItems, ...allItems];
 
   return (
-    <div className="w-full bg-[#06090d] border-b border-[#1e2535]/60 overflow-hidden h-9 flex items-center relative z-40">
-      <div className="animate-marquee text-[13px] text-[#8892a4] whitespace-nowrap font-medium flex items-center">
+    <div className="w-full bg-[var(--color-background)] border-b border-[var(--color-border)] overflow-hidden h-9 flex items-center relative z-40">
+      <div className="animate-marquee text-[13px] text-[var(--color-text-secondary)] whitespace-nowrap font-medium flex items-center">
         {doubled.map((item, idx) => (
-          <div key={idx} className="inline-flex items-center gap-2 px-4 border-r border-[#1e2535]/40">
-            <span className="font-bold text-white">{item.label}</span>
+          <div key={idx} className="inline-flex items-center gap-2 px-4 border-r border-[var(--color-border)]">
+            <span className="font-bold text-[var(--color-text-primary)]">{item.label}</span>
             {item.kind === "index" ? (
               <>
-                <span className="tabular-nums text-white text-[12px]">{item.price}</span>
-                <span className={`text-[11px] font-bold ${item.isUp ? "text-[#00d26a]" : "text-[#ef4444]"}`}>
+                <span className="tabular-nums text-[var(--color-text-primary)] text-[12px]">{item.price}</span>
+                <span className={`text-[11px] font-bold flex items-center gap-1 ${item.isUp ? "text-[var(--color-bullish)]" : "text-[var(--color-bearish)]"}`}>
                   {item.change} {item.isUp ? "🟢" : "🔴"}
                 </span>
               </>
             ) : (
               <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-1.5 py-0.5 rounded ${
-                item.isUp ? "bg-[#003d20] text-[#00d26a]" : "bg-[#3d0000] text-[#ef4444]"
+                item.isUp ? "bg-[var(--color-bullish-muted)] text-[var(--color-bullish)]" : "bg-[var(--color-bearish-muted)] text-[var(--color-bearish)]"
               }`}>
                 {item.isUp ? "▲" : "▼"} {item.score}
               </span>

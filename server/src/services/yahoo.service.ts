@@ -1,6 +1,6 @@
-import YahooFinance from 'yahoo-finance2';
-const yahooFinance = new YahooFinance();
-
+// @ts-ignore
+import YahooFinanceRaw from 'yahoo-finance2';
+const yahooFinance = new (YahooFinanceRaw as any)();
 import { StockQuote, StockProfile } from '../../../shared/types/stock';
 
 export class YahooService {
@@ -36,7 +36,8 @@ export class YahooService {
         fiftyTwoWeekHigh: quote.fiftyTwoWeekHigh,
         fiftyTwoWeekLow: quote.fiftyTwoWeekLow
       };
-    } catch (err) {
+    } catch (err: any) {
+      require('fs').appendFileSync('yahoo-debug.log', `Error in getQuote: ${err.message}\n`);
       console.error(`Error fetching Yahoo quote for ${symbol}:`, err);
       return null;
     }
@@ -56,7 +57,8 @@ export class YahooService {
         description: assetProfile.longBusinessSummary,
         employeeCount: assetProfile.fullTimeEmployees,
       };
-    } catch (err) {
+    } catch (err: any) {
+      require('fs').appendFileSync('yahoo-debug.log', `Error in getProfile: ${err.message}\n`);
       console.error(`Error fetching Yahoo profile for ${symbol}:`, err);
       return null;
     }

@@ -7,6 +7,7 @@ import { useAllStocks } from "@/hooks/useSignals";
 import { getSector, fmtProb } from "@/lib/api";
 import type { ForecastData } from "@/lib/api";
 import { FreshnessBadge, ErrorBanner } from "@/components/shared/FeedbackUI";
+import { Activity, TrendingUp, TrendingDown, Minus, Filter, ArrowDownUp } from "lucide-react";
 
 type Tab = "ALL" | "BULLISH" | "BEARISH";
 
@@ -20,85 +21,88 @@ function SignalFeedCard({ stock }: { stock: ForecastData }) {
   })();
 
   return (
-    <div className={`p-5 rounded-xl border transition-all hover:-translate-y-0.5 group ${
-      up ? "border-[#00d26a]/20 bg-[#003d20]/10 hover:border-[#00d26a]/40"
-      : neutral ? "border-[#1e2535] bg-[#131820] hover:border-[#2a3548]"
-      : "border-[#ef4444]/20 bg-[#3d0000]/10 hover:border-[#ef4444]/40"
+    <div className={`bg-white p-5 rounded-2xl border transition-all hover:-translate-y-1 shadow-sm hover:shadow-md group ${
+      up ? "border-[var(--color-border)] hover:border-[var(--color-bullish)]"
+      : neutral ? "border-[var(--color-border)] hover:border-gray-400"
+      : "border-[var(--color-border)] hover:border-[var(--color-bearish)]"
     }`}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1 flex-wrap">
-            <span className="text-[10px] text-[#6b7280] font-medium uppercase tracking-wider">
+          <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+            <span className="text-[11px] text-[var(--color-text-secondary)] font-bold uppercase tracking-wider">
               {getSector(stock.symbol)}
             </span>
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-              up ? "text-[#00d26a] bg-[#003d20] border-[#00d26a]/30"
-              : neutral ? "text-[#6b7280] bg-[#1a1f2c] border-[#6b7280]/30"
-              : "text-[#ef4444] bg-[#3d0000] border-[#ef4444]/30"
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 ${
+              up ? "text-[var(--color-bullish)] bg-[var(--color-bullish-muted)] border border-[var(--color-bullish-muted)]"
+              : neutral ? "text-gray-600 bg-gray-100 border border-gray-200"
+              : "text-[var(--color-bearish)] bg-[var(--color-bearish-muted)] border border-[var(--color-bearish-muted)]"
             }`}>
-              {up ? "▲ BULLISH" : neutral ? "— NO SIGNAL" : "▼ BEARISH"}
+              {up ? <TrendingUp className="w-3 h-3" /> : neutral ? <Minus className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+              {up ? "BULLISH" : neutral ? "NO SIGNAL" : "BEARISH"}
             </span>
           </div>
 
           <Link href={`/stocks/${stock.symbol}`}
-            className="text-xl font-extrabold text-white group-hover:text-[#00d26a] transition-colors">
+            className="text-xl font-extrabold text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors tracking-tight">
             {stock.symbol}
           </Link>
         </div>
 
         {/* Score circle */}
         <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black text-base border-2 shrink-0 ${
-          up ? "border-[#00d26a]/50 text-[#00d26a]"
-          : neutral ? "border-[#2a3548] text-[#6b7280]"
-          : "border-[#ef4444]/50 text-[#ef4444]"
+          up ? "border-[var(--color-bullish-muted)] text-[var(--color-bullish)] bg-[var(--color-bullish-muted)]/30"
+          : neutral ? "border-gray-200 text-gray-500 bg-gray-50"
+          : "border-[var(--color-bearish-muted)] text-[var(--color-bearish)] bg-[var(--color-bearish-muted)]/30"
         }`}>
           {stock.intelligence_score}
         </div>
       </div>
 
       {/* Stats row */}
-      <div className="mt-4 grid grid-cols-3 gap-3 text-xs">
+      <div className="mt-5 grid grid-cols-3 gap-3 text-xs bg-[var(--color-background)] rounded-xl p-3 border border-[var(--color-border)]">
         <div>
-          <p className="text-[#6b7280] mb-0.5">UP Prob.</p>
-          <p className="font-bold text-white">{fmtProb(stock.probability_score)}</p>
+          <p className="text-[var(--color-text-secondary)] font-medium mb-1">UP Prob.</p>
+          <p className="font-bold text-[var(--color-text-primary)] tabular-nums">{fmtProb(stock.probability_score)}</p>
         </div>
         <div>
-          <p className="text-[#6b7280] mb-0.5">Confidence</p>
+          <p className="text-[var(--color-text-secondary)] font-medium mb-1">Confidence</p>
           <p className={`font-bold ${
-            stock.confidence_level === "HIGH" ? "text-[#00d26a]"
-            : stock.confidence_level === "MEDIUM" ? "text-yellow-400"
-            : "text-[#6b7280]"
+            stock.confidence_level === "HIGH" ? "text-[var(--color-bullish)]"
+            : stock.confidence_level === "MEDIUM" ? "text-[var(--color-warning)]"
+            : "text-[var(--color-text-secondary)]"
           }`}>{stock.confidence_level}</p>
         </div>
         <div>
-          <p className="text-[#6b7280] mb-0.5">Recent Hits</p>
-          <p className="font-bold text-white">{hitRate != null ? `${hitRate}%` : "—"}</p>
+          <p className="text-[var(--color-text-secondary)] font-medium mb-1">Recent Hits</p>
+          <p className="font-bold text-[var(--color-text-primary)] tabular-nums">{hitRate != null ? `${hitRate}%` : "—"}</p>
         </div>
       </div>
 
       {/* Progress bar */}
       <div className="mt-4">
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-[10px] text-[#6b7280]">AI Score</span>
-          <span className="text-[10px] text-[#6b7280]">{stock.intelligence_score}/100</span>
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[11px] font-bold text-[var(--color-text-secondary)] uppercase">AI Score</span>
+          <span className="text-[11px] font-bold text-[var(--color-text-primary)] tabular-nums">{stock.intelligence_score}/100</span>
         </div>
-        <div className="h-1 bg-[#0d1117] rounded-full overflow-hidden">
+        <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
           <div className={`h-full rounded-full transition-all duration-700 ${
-            up ? "bg-[#00d26a]" : neutral ? "bg-[#6b7280]" : "bg-[#ef4444]"
+            up ? "bg-[var(--color-bullish)]" : neutral ? "bg-gray-400" : "bg-[var(--color-bearish)]"
           }`} style={{ width: `${stock.intelligence_score}%` }} />
         </div>
       </div>
 
       {/* Signal strength */}
-      <div className="mt-3 pt-3 border-t border-[#1e2535]/50 flex items-center justify-between">
-        <span className="text-[11px] text-[#6b7280]">{stock.signal_strength}</span>
-        <span className="text-[11px] text-[#6b7280]">{stock.volatility_regime} vol</span>
+      <div className="mt-4 pt-4 border-t border-[var(--color-border)] flex items-center justify-between">
+        <span className="text-[11px] font-semibold text-[var(--color-text-secondary)] uppercase tracking-wider">{stock.signal_strength}</span>
+        <span className="text-[11px] font-semibold text-[var(--color-text-secondary)] uppercase tracking-wider">{stock.volatility_regime} vol</span>
       </div>
     </div>
   );
 }
 
-export default function SignalsPage() {
+import { Suspense } from 'react';
+
+function SignalsPageContent() {
   const { forecasts, loading, error, lastFetchedAt, refetch } = useAllStocks(300_000);
   const searchParams = useSearchParams();
   const filterParam = searchParams.get("filter");
@@ -133,14 +137,17 @@ export default function SignalsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0e14] px-4 md:px-8 py-10 max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[var(--color-background)] px-6 py-10 max-w-[1200px] mx-auto w-full">
 
       {/* ── Header ── */}
-      <div className="flex items-center justify-between gap-4 mb-8 flex-wrap">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-white mb-1">Signal Feed</h1>
-          <p className="text-[#8892a4] text-sm">
-            Next-day AI forecasts · Sorted by {sort === "score" ? "Intelligence Score" : "UP Probability"}
+          <h1 className="text-3xl font-extrabold text-[var(--color-text-primary)] mb-1.5 tracking-tight flex items-center gap-2">
+            <Activity className="w-8 h-8 text-[var(--color-accent)]" />
+            AI Signal Feed
+          </h1>
+          <p className="text-[var(--color-text-secondary)] text-[14px] font-medium">
+            Next-day AI forecasts based on deep sequence models.
           </p>
         </div>
         <FreshnessBadge lastFetchedAt={lastFetchedAt} />
@@ -149,17 +156,17 @@ export default function SignalsPage() {
       {error && <ErrorBanner section="signals" onRetry={refetch} />}
 
       {/* ── Tab + sort bar ── */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         {/* Tabs */}
-        <div className="flex bg-[#131820] border border-[#1e2535] rounded-xl overflow-hidden">
+        <div className="flex bg-white border border-[var(--color-border)] rounded-xl overflow-hidden shadow-sm">
           {(["ALL","BULLISH","BEARISH"] as Tab[]).map(t => (
             <button key={t} onClick={() => setTab(t)}
-              className={`px-4 py-2.5 text-xs font-bold transition-colors border-r last:border-r-0 border-[#1e2535] flex items-center gap-1.5 ${
-                tab === t ? "bg-[#00d26a] text-[#06090d]" : "text-[#6b7280] hover:text-white"
+              className={`px-5 py-2.5 text-[13px] font-bold transition-colors border-r last:border-r-0 border-[var(--color-border)] flex items-center gap-2 ${
+                tab === t ? "bg-[var(--color-accent)] text-white" : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-gray-50"
               }`}>
               {t}
-              <span className={`px-1.5 py-0.5 rounded text-[9px] font-black ${
-                tab === t ? "bg-[#06090d]/20" : "bg-[#0d1117]"
+              <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
+                tab === t ? "bg-white/20 text-white" : "bg-gray-100 text-gray-500"
               }`}>
                 {t === "ALL" ? counts.all : t === "BULLISH" ? counts.bullish : counts.bearish}
               </span>
@@ -168,14 +175,17 @@ export default function SignalsPage() {
         </div>
 
         {/* Sort */}
-        <div className="flex items-center gap-2 text-xs">
-          <span className="text-[#6b7280]">Sort:</span>
+        <div className="flex items-center gap-2 bg-white px-1.5 py-1.5 rounded-xl border border-[var(--color-border)] shadow-sm">
+          <div className="pl-3 pr-2 text-[12px] font-semibold text-[var(--color-text-secondary)] flex items-center gap-1.5">
+            <ArrowDownUp className="w-3.5 h-3.5" />
+            Sort by:
+          </div>
           {(["score","prob"] as const).map(s => (
             <button key={s} onClick={() => setSort(s)}
-              className={`px-3 py-1.5 rounded-lg border transition-colors ${
+              className={`px-4 py-1.5 rounded-lg transition-colors text-[13px] font-bold ${
                 sort === s
-                  ? "border-[#00d26a]/50 text-[#00d26a] bg-[#003d20]/20"
-                  : "border-[#1e2535] text-[#6b7280] hover:text-white"
+                  ? "bg-[var(--color-accent)]/10 text-[var(--color-accent)]"
+                  : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-gray-50"
               }`}>
               {s === "score" ? "AI Score" : "UP Prob."}
             </button>
@@ -185,21 +195,31 @@ export default function SignalsPage() {
 
       {/* ── Grid ── */}
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="bg-[#131820] border border-[#1e2535] rounded-xl h-48 animate-pulse" />
+            <div key={i} className="bg-white border border-[var(--color-border)] rounded-2xl h-56 animate-pulse shadow-sm" />
           ))}
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {displayed.map(s => <SignalFeedCard key={s.symbol} stock={s} />)}
           </div>
-          <p className="mt-6 text-xs text-[#3a4258] text-right">
-            Showing {displayed.length} of {forecasts.length} stocks
-          </p>
+          <div className="mt-8 pt-6 border-t border-[var(--color-border)] text-center">
+            <p className="text-[13px] font-medium text-[var(--color-text-secondary)]">
+              Showing {displayed.length} of {forecasts.length} total signals generated for this session.
+            </p>
+          </div>
         </>
       )}
     </div>
+  );
+}
+
+export default function SignalsPage() {
+  return (
+    <Suspense fallback={<div className="p-10 text-center text-[var(--color-text-secondary)] font-medium">Loading AI signals...</div>}>
+      <SignalsPageContent />
+    </Suspense>
   );
 }

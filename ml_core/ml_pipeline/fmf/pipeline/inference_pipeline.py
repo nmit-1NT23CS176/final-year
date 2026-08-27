@@ -48,11 +48,31 @@ class InferencePipeline:
     def get_latest_dataset(self) -> pd.DataFrame:
         """Loads master model dataset."""
         parquet_path = self.base_dir / "Market_Data" / "processed" / "final_model_dataset_with_volatility.parquet"
-        if not parquet_path.exists():
-            parquet_path = self.final_dir / "step34_3_corrected.parquet"
+        if parquet_path.exists():
+            return pd.read_parquet(parquet_path)
+            
+        parquet_path = self.final_dir / "step34_3_corrected.parquet"
         if not parquet_path.exists():
             raise FileNotFoundError(f"Dataset not found at {parquet_path}")
-        return pd.read_parquet(parquet_path)
+            
+        preds = pd.read_parquet(parquet_path)
+        
+        # Merge with raw features so RSI, MACD, etc. are available for scoring
+        features_path = self.base_dir / "Market_Data" / "features" / "stock_with_indicators.csv"
+        if features_path.exists():
+            feats = pd.read_csv(features_path)
+            if "date" in preds.columns and "Date" in feats.columns:
+                feats["date"] = pd.to_datetime(feats["Date"])
+                preds_date_col = "date" if "date" in preds.columns else "Date"
+                preds[preds_date_col] = pd.to_datetime(preds[preds_date_col])
+                
+                ticker_preds = "ticker" if "ticker" in preds.columns else "Ticker"
+                ticker_feats = "Ticker" if "Ticker" in feats.columns else "ticker"
+                
+                merged = pd.merge(preds, feats, left_on=[ticker_preds, preds_date_col], right_on=[ticker_feats, "date"], how="left")
+                return merged
+                
+        return preds
 
     def predict_next_day_trend(self, symbol: str) -> TrendPredictionOutput:
         """Returns Next-Day Stock Market Trend Forecast (UP / DOWN direction & probability)."""

@@ -3,290 +3,249 @@
 import { use } from "react";
 import Link from "next/link";
 import { useForecast } from "@/hooks/useSignals";
+import { useStockPrice } from "@/hooks/useStockPrice";
 import { getSector, getCap, fmtProb, directionIcon } from "@/lib/api";
-import type { PredictionHistory, ReasonBreakdown } from "@/lib/api";
 import { SkeletonStatCard, ErrorBanner } from "@/components/shared/FeedbackUI";
+import { CandlestickChart } from "@/components/charts/CandlestickChart";
+import { Activity, ChevronRight, TrendingUp, TrendingDown, Info, Briefcase, BarChart2 } from "lucide-react";
 
-// ── Confidence ring ─────────────────────────────────────
-function ConfidenceRing({ score }: { score: number }) {
-  const radius = 42;
-  const circ = 2 * Math.PI * radius;
-  const fill = (score / 100) * circ;
-  const color = score >= 60 ? "#00d26a" : score >= 40 ? "#facc15" : "#ef4444";
+// ── Shared UI Helpers ────────────────────────────────────
+function SectionTitle({ icon, title }: { icon: React.ReactNode, title: string }) {
   return (
-    <div className="relative w-28 h-28 flex items-center justify-center">
-      <svg width={112} height={112} className="-rotate-90">
-        <circle cx={56} cy={56} r={radius} fill="none" stroke="#1e2535" strokeWidth={8} />
-        <circle
-          cx={56} cy={56} r={radius} fill="none"
-          stroke={color} strokeWidth={8}
-          strokeLinecap="round"
-          strokeDasharray={`${fill} ${circ}`}
-          style={{ transition: "stroke-dasharray 0.7s ease" }}
-        />
-      </svg>
-      <div className="absolute text-center">
-        <div className="text-2xl font-black" style={{ color }}>{score}</div>
-        <div className="text-[10px] text-[#6b7280]">AI Score</div>
-      </div>
-    </div>
+    <h2 className="text-[17px] font-bold text-[var(--color-text-primary)] mb-5 flex items-center gap-2">
+      <span className="text-[var(--color-accent)]">{icon}</span>
+      {title}
+    </h2>
   );
 }
 
-// ── Reason breakdown row ────────────────────────────────
-function ReasonRow({ r }: { r: ReasonBreakdown }) {
-  return (
-    <div className="flex items-start gap-3 py-3.5 border-b border-[#1e2535]/60 last:border-b-0">
-      <span className="text-lg shrink-0 mt-0.5">{directionIcon(r.direction)}</span>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-baseline justify-between gap-2 mb-0.5">
-          <p className="text-sm font-semibold text-white truncate">{r.category}</p>
-          <span className={`text-[10px] font-bold shrink-0 ${
-            r.direction === "POSITIVE" ? "text-[#00d26a]" : r.direction === "NEGATIVE" ? "text-[#ef4444]" : "text-yellow-400"
-          }`}>{r.status}</span>
-        </div>
-        <p className="text-xs text-[#8892a4]">{r.value}</p>
-        <p className="text-[11px] text-[#6b7280] mt-1">{r.explanation}</p>
-      </div>
-    </div>
-  );
-}
-
-// ── Prediction history row ──────────────────────────────
-function HistoryRow({ h }: { h: PredictionHistory }) {
-  const hit = h.result === "HIT";
-  return (
-    <tr className="border-b border-[#1e2535]/50 text-sm hover:bg-[#0d1117]/30 transition-colors">
-      <td className="py-3 px-4 text-[#8892a4] tabular-nums font-mono">{h.date}</td>
-      <td className="py-3 px-4">
-        <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${
-          h.predicted === "UPTREND" ? "text-[#00d26a]" : "text-[#ef4444]"
-        }`}>
-          {h.predicted === "UPTREND" ? "▲ UPTREND" : "▼ DOWNTREND"}
-        </span>
-      </td>
-      <td className="py-3 px-4 text-white font-medium tabular-nums">{Math.round(h.probability * 100)}%</td>
-      <td className="py-3 px-4">
-        <span className={`text-xs font-semibold ${h.actual === "UP" ? "text-[#00d26a]" : "text-[#ef4444]"}`}>
-          {h.actual === "UP" ? "▲ UP" : "▼ DOWN"}
-        </span>
-      </td>
-      <td className="py-3 px-4">
-        <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
-          hit ? "bg-[#003d20] text-[#00d26a]" : "bg-[#3d0000] text-[#ef4444]"
-        }`}>{h.result}</span>
-      </td>
-    </tr>
-  );
-}
-
-// ── Stat card ───────────────────────────────────────────
-function StatCard({ label, value, sub, color = "text-white" }: {
-  label: string; value: string; sub?: string; color?: string;
-}) {
-  return (
-    <div className="bg-[#0d1117] border border-[#1e2535] rounded-xl p-4">
-      <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">{label}</p>
-      <p className={`text-xl font-bold tabular-nums ${color}`}>{value}</p>
-      {sub && <p className="text-[11px] text-[#6b7280] mt-0.5">{sub}</p>}
-    </div>
-  );
-}
-
-// ── Main page ───────────────────────────────────────────
+// ── Main Page Component ──────────────────────────────────
 export default function StockDetailPage({ params }: { params: Promise<{ symbol: string }> }) {
   const { symbol } = use(params);
   const sym = symbol.toUpperCase();
-  const { data, loading, error } = useForecast(sym);
+  
+  // Real data hooks
+  const { data: forecastData, loading: forecastLoading, error: forecastError } = useForecast(sym);
+  const { price, change, changePercent, isLoading: priceLoading } = useStockPrice(sym);
 
-  const signalColor = data
-    ? data.target_prediction === 1 ? "#00d26a"
-      : data.target_prediction === 0 ? "#ef4444"
-      : "#6b7280"
-    : "#6b7280";
-
-  const signalLabel = data
-    ? data.target_prediction === 1 ? "BULLISH"
-      : data.target_prediction === 0 ? "BEARISH"
-      : "NO SIGNAL"
-    : "LOADING";
+  // Derived state
+  const isUp = change ? change > 0 : true;
+  const isForecastUp = forecastData?.target_prediction === 1;
+  const forecastColor = forecastData
+    ? isForecastUp ? "var(--color-bullish)"
+      : forecastData.target_prediction === 0 ? "var(--color-bearish)"
+      : "var(--color-text-secondary)"
+    : "var(--color-text-disabled)";
 
   return (
-    <div className="min-h-screen bg-[#0a0e14]">
-
-      {/* ── Sticky top bar ── */}
-      <div className="sticky top-0 z-30 bg-[#06090d]/90 backdrop-blur-md border-b border-[#1e2535] px-6 py-3 flex items-center gap-4">
-        <Link href="/stocks" className="text-[#6b7280] hover:text-white text-sm flex items-center gap-1.5 transition-colors">
-          ← Stocks
-        </Link>
-        <span className="text-[#1e2535]">/</span>
-        <span className="text-white font-bold">{sym}</span>
-        {data && (
-          <>
-            <span className="text-[#1e2535]">·</span>
-            <span className="text-[11px] text-[#6b7280]">{getSector(sym)} · {getCap(sym)}</span>
-          </>
-        )}
+    <div className="min-h-screen bg-[var(--color-background)] pb-24">
+      {/* ── Breadcrumb / Sticky Header ── */}
+      <div className="sticky top-16 z-30 bg-white/80 backdrop-blur-md border-b border-[var(--color-border)] px-6 py-2.5 flex items-center gap-2 text-[13px] font-medium text-[var(--color-text-secondary)]">
+        <Link href="/" className="hover:text-[var(--color-text-primary)] transition-colors">Home</Link>
+        <ChevronRight className="w-3.5 h-3.5 opacity-50" />
+        <Link href="/stocks" className="hover:text-[var(--color-text-primary)] transition-colors">Stocks</Link>
+        <ChevronRight className="w-3.5 h-3.5 opacity-50" />
+        <span className="text-[var(--color-text-primary)] font-bold">{sym}</span>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-10">
-
-        {error && <ErrorBanner section={`forecast for ${sym}`} />}
-
-        {/* ── Hero row ── */}
-        <div className="flex flex-col md:flex-row md:items-start gap-8 mb-10">
-          {/* Left: ID block */}
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-2">
-              <span className="text-xs font-medium text-[#6b7280] uppercase tracking-wider">
-                {getSector(sym)} · {getCap(sym)}
+      <div className="max-w-[1200px] mx-auto px-6 py-8">
+        
+        {/* ── 1. Hero Section (Price) ── */}
+        <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <div className="flex items-center gap-3 mb-1.5">
+              <h1 className="text-3xl font-extrabold text-[var(--color-text-primary)] tracking-tight">{sym}</h1>
+              <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-gray-100 text-gray-600 border border-gray-200">
+                NSE
               </span>
-              {loading ? (
-                <div className="h-5 w-20 bg-[#1e2535] rounded-full animate-pulse" />
-              ) : (
-                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full border"
-                  style={{
-                    color: signalColor,
-                    borderColor: `${signalColor}40`,
-                    background: `${signalColor}15`,
-                  }}>
-                  {signalLabel}
-                </span>
-              )}
             </div>
-            <h1 className="text-5xl font-extrabold text-white mb-1">{sym}</h1>
-            {data && (
-              <p className="text-[#8892a4] text-sm">
-                Prediction as of {data.date} · {data.model_used}
-              </p>
-            )}
+            <p className="text-sm font-medium text-[var(--color-text-secondary)] flex items-center gap-2">
+              {getSector(sym)} • {getCap(sym)}
+              <span className="flex items-center gap-1.5 text-xs text-[var(--color-bullish)] bg-[var(--color-bullish-muted)] px-2 py-0.5 rounded-full ml-2">
+                <span className="live-dot" /> Market Open
+              </span>
+            </p>
           </div>
 
-          {/* Right: Confidence ring + trend label */}
-          {loading ? (
-            <SkeletonStatCard />
-          ) : data ? (
-            <div className="flex items-center gap-6">
-              <ConfidenceRing score={data.intelligence_score} />
-              <div>
-                <p className="text-[11px] text-[#6b7280] uppercase tracking-wider mb-1">Signal Strength</p>
-                <p className="text-lg font-bold text-white">{data.signal_strength}</p>
-                <p className="text-[11px] text-[#6b7280] mt-1">{data.calibration_status}</p>
+          <div className="text-left md:text-right">
+            {priceLoading ? (
+              <div className="animate-pulse">
+                <div className="h-10 w-40 bg-gray-200 rounded-lg mb-2 ml-auto" />
+                <div className="h-5 w-24 bg-gray-100 rounded ml-auto" />
+              </div>
+            ) : (
+              <>
+                <p className="text-[42px] font-black tabular-nums leading-none tracking-tight text-[var(--color-text-primary)]">
+                  ₹{price?.toFixed(2) || "---"}
+                </p>
+                <div className={`flex items-center md:justify-end gap-1.5 mt-2 text-[15px] font-bold tabular-nums ${isUp ? 'text-[var(--color-bullish)]' : 'text-[var(--color-bearish)]'}`}>
+                  {isUp ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
+                  {change ? (change > 0 ? "+" : "") + change.toFixed(2) : "0.00"} ({changePercent ? (changePercent > 0 ? "+" : "") + changePercent.toFixed(2) : "0.00"}%)
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* ── 2. Chart Section ── */}
+        <div className="bg-white rounded-2xl border border-[var(--color-border)] shadow-card p-2 sm:p-5 mb-8">
+          <CandlestickChart symbol={sym} className="w-full" />
+        </div>
+
+        {/* ── 3. AI Forecast (The Star Feature) ── */}
+        {forecastError && <ErrorBanner section="AI Forecast" />}
+        
+        {forecastLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <SkeletonStatCard /><SkeletonStatCard /><SkeletonStatCard />
+          </div>
+        ) : forecastData ? (
+          <div className="mb-8">
+            <h2 className="text-[11px] font-bold text-[var(--color-text-secondary)] uppercase tracking-widest mb-3 ml-1">StockVista Intelligence</h2>
+            
+            <div className="bg-gradient-to-br from-[#0B1020] to-[#1a233a] rounded-2xl p-8 shadow-xl text-white relative overflow-hidden group">
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-accent)] opacity-10 blur-[80px] rounded-full group-hover:opacity-20 transition-opacity duration-700" />
+              
+              <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+                <div className="flex-1 w-full">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Activity className="w-5 h-5 text-[var(--color-accent)]" />
+                    <span className="text-sm font-semibold text-gray-300 tracking-wide">AI FORECAST FOR NEXT SESSION</span>
+                  </div>
+                  
+                  <div className="mt-6 flex flex-wrap gap-8 items-end">
+                    <div>
+                      <p className="text-sm text-gray-400 font-medium mb-1">AI Prediction</p>
+                      <div className="flex items-center gap-3">
+                        <span className="text-3xl font-black tracking-tight" style={{ color: forecastColor }}>
+                          {isForecastUp ? "BULLISH" : forecastData.target_prediction === 0 ? "BEARISH" : "NEUTRAL"}
+                        </span>
+                        <div className="px-3 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: `${forecastColor}30`, color: forecastColor, border: `1px solid ${forecastColor}50` }}>
+                          {fmtProb(forecastData.probability_score)} Prob.
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="pl-6 border-l border-white/10">
+                      <p className="text-sm text-gray-400 font-medium mb-1">Signal Strength</p>
+                      <p className="text-xl font-bold text-white">{forecastData.signal_strength}</p>
+                    </div>
+
+                    <div className="pl-6 border-l border-white/10">
+                      <p className="text-sm text-gray-400 font-medium mb-1">Model Used</p>
+                      <p className="text-xl font-bold text-white">{forecastData.model_used}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="shrink-0 flex flex-col items-center justify-center w-32 h-32 relative">
+                  <svg viewBox="0 0 36 36" className="w-full h-full transform -rotate-90">
+                    <path
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3"
+                    />
+                    <path
+                      d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                      fill="none" stroke={forecastColor} strokeWidth="3"
+                      strokeDasharray={`${forecastData.intelligence_score}, 100`}
+                      className="transition-all duration-1000 ease-out"
+                    />
+                  </svg>
+                  <div className="absolute flex flex-col items-center justify-center">
+                    <span className="text-2xl font-black">{forecastData.intelligence_score}</span>
+                    <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Score</span>
+                  </div>
+                </div>
               </div>
             </div>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
 
-        {/* ── Stats grid ── */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-10">
-          {loading ? (
-            Array.from({ length: 6 }).map((_, i) => <SkeletonStatCard key={i} />)
-          ) : data ? (
-            <>
-              <StatCard label="UP Probability" value={fmtProb(data.probability_score)} color={data.target_prediction === 1 ? "text-[#00d26a]" : "text-[#ef4444]"} />
-              <StatCard label="Confidence" value={data.confidence_level} sub={`${data.confidence_score.toFixed(0)}%`} />
-              <StatCard label="Volatility" value={data.volatility_regime} />
-              <StatCard label="30d Accuracy" value={`${(data.historical_30d_accuracy * 100).toFixed(1)}%`} />
-              <StatCard label="90d Accuracy" value={`${(data.historical_90d_accuracy * 100).toFixed(1)}%`} />
-              <StatCard label="Stock Acc." value={`${(data.stock_historical_accuracy * 100).toFixed(1)}%`} sub="Historical" />
-            </>
-          ) : null}
-        </div>
-
-        {data && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-            {/* ── Reason Breakdown ── */}
-            <div className="bg-[#131820] border border-[#1e2535] rounded-2xl p-6">
-              <h2 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-                <span className="text-[#00d26a]">⚡</span> Why This Signal?
-              </h2>
-              <div>
-                {data.reasons_breakdown.map((r, i) => (
-                  <ReasonRow key={i} r={r} />
+        {/* ── 4. Grid Sections ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          {/* Reason Breakdown */}
+          {forecastData && (
+            <div className="bg-white rounded-2xl border border-[var(--color-border)] shadow-sm p-6">
+              <SectionTitle icon={<Info className="w-5 h-5" />} title="Why this prediction?" />
+              <div className="space-y-4 mt-6">
+                {forecastData.reasons_breakdown.map((r, i) => (
+                  <div key={i} className="flex items-start gap-4 pb-4 border-b border-[var(--color-border)] last:border-0 last:pb-0">
+                    <div className="shrink-0 mt-0.5 text-lg">{directionIcon(r.direction)}</div>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-baseline mb-0.5">
+                        <p className="text-[14px] font-bold text-[var(--color-text-primary)]">{r.category}</p>
+                        <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded bg-gray-50 border ${
+                          r.direction === "POSITIVE" ? "text-[var(--color-bullish)] border-[var(--color-bullish-muted)]" 
+                          : r.direction === "NEGATIVE" ? "text-[var(--color-bearish)] border-[var(--color-bearish-muted)]" 
+                          : "text-yellow-600 border-yellow-100"
+                        }`}>
+                          {r.status}
+                        </span>
+                      </div>
+                      <p className="text-[13px] font-medium text-[var(--color-text-secondary)]">{r.value}</p>
+                      <p className="text-[12px] text-[var(--color-text-disabled)] mt-1.5 leading-relaxed">{r.explanation}</p>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
+          )}
 
-            {/* ── Prediction History ── */}
-            <div className="bg-[#131820] border border-[#1e2535] rounded-2xl p-6">
-              <h2 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-                <span className="text-[#00d26a]">📋</span> Prediction History
-              </h2>
-              <div className="overflow-x-auto rounded-xl">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="text-[10px] text-[#6b7280] uppercase tracking-wider border-b border-[#1e2535]">
-                      <th className="text-left py-2.5 px-4 font-semibold">Date</th>
-                      <th className="text-left py-2.5 px-4 font-semibold">Predicted</th>
-                      <th className="text-left py-2.5 px-4 font-semibold">Prob.</th>
-                      <th className="text-left py-2.5 px-4 font-semibold">Actual</th>
-                      <th className="text-left py-2.5 px-4 font-semibold">Result</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.prediction_history.map((h, i) => (
-                      <HistoryRow key={i} h={h} />
-                    ))}
-                  </tbody>
-                </table>
+          {/* Model Intelligence & Technicals */}
+          <div className="space-y-8">
+            
+            {/* Model Analysis Grid */}
+            {forecastData && (
+              <div className="bg-white rounded-2xl border border-[var(--color-border)] shadow-sm p-6">
+                <SectionTitle icon={<BarChart2 className="w-5 h-5" />} title="Model Performance" />
+                <div className="grid grid-cols-2 gap-4 mt-6">
+                  <div className="p-4 bg-[var(--color-background)] rounded-xl border border-[var(--color-border)]">
+                    <p className="text-[11px] font-bold text-[var(--color-text-secondary)] uppercase tracking-wider mb-1">Historical Acc.</p>
+                    <p className="text-xl font-black text-[var(--color-text-primary)]">{(forecastData.historical_oos_accuracy * 100).toFixed(1)}%</p>
+                  </div>
+                  <div className="p-4 bg-[var(--color-background)] rounded-xl border border-[var(--color-border)]">
+                    <p className="text-[11px] font-bold text-[var(--color-text-secondary)] uppercase tracking-wider mb-1">30D Accuracy</p>
+                    <p className="text-xl font-black text-[var(--color-text-primary)]">{(forecastData.historical_30d_accuracy * 100).toFixed(1)}%</p>
+                  </div>
+                  <div className="p-4 bg-[var(--color-background)] rounded-xl border border-[var(--color-border)]">
+                    <p className="text-[11px] font-bold text-[var(--color-text-secondary)] uppercase tracking-wider mb-1">Volatility</p>
+                    <p className="text-lg font-bold text-[var(--color-text-primary)]">{forecastData.volatility_regime}</p>
+                  </div>
+                  <div className="p-4 bg-[var(--color-background)] rounded-xl border border-[var(--color-border)]">
+                    <p className="text-[11px] font-bold text-[var(--color-text-secondary)] uppercase tracking-wider mb-1">Calibration</p>
+                    <p className="text-lg font-bold text-[var(--color-bullish)]">{forecastData.calibration_status}</p>
+                  </div>
+                </div>
               </div>
+            )}
 
-              {/* Hit rate summary */}
-              <div className="mt-4 pt-4 border-t border-[#1e2535] flex gap-6">
-                {(() => {
-                  const hits = data.prediction_history.filter(h => h.result === "HIT").length;
-                  const total = data.prediction_history.length;
-                  return (
-                    <>
-                      <div>
-                        <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-0.5">Recent Hit Rate</p>
-                        <p className="text-lg font-bold text-[#00d26a]">{total ? Math.round((hits / total) * 100) : 0}%</p>
-                      </div>
-                      <div>
-                        <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-0.5">Hits / Misses</p>
-                        <p className="text-lg font-bold text-white">{hits} / {total - hits}</p>
-                      </div>
-                    </>
-                  );
-                })()}
-              </div>
-            </div>
-
-            {/* ── Model Info ── */}
-            <div className="bg-[#131820] border border-[#1e2535] rounded-2xl p-6 lg:col-span-2">
-              <h2 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-                <span className="text-[#00d26a]">🧠</span> Model Details
-              </h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/* Company Information Placeholder */}
+            <div className="bg-white rounded-2xl border border-[var(--color-border)] shadow-sm p-6">
+              <SectionTitle icon={<Briefcase className="w-5 h-5" />} title="Company Information" />
+              <div className="grid grid-cols-2 gap-y-6 mt-6">
                 <div>
-                  <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">Model Used</p>
-                  <p className="text-sm font-semibold text-white leading-snug">{data.model_used}</p>
+                  <p className="text-xs text-[var(--color-text-secondary)] font-medium mb-1">Sector</p>
+                  <p className="text-sm font-bold text-[var(--color-text-primary)]">{getSector(sym)}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">Acc. Benchmark</p>
-                  <p className="text-sm font-bold text-white">{(data.accuracy_benchmark * 100).toFixed(1)}%</p>
+                  <p className="text-xs text-[var(--color-text-secondary)] font-medium mb-1">Market Cap</p>
+                  <p className="text-sm font-bold text-[var(--color-text-primary)]">{getCap(sym)}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">F1 Benchmark</p>
-                  <p className="text-sm font-bold text-white">{(data.f1_benchmark * 100).toFixed(1)}%</p>
+                  <p className="text-xs text-[var(--color-text-secondary)] font-medium mb-1">Exchange</p>
+                  <p className="text-sm font-bold text-[var(--color-text-primary)]">NSE</p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">OOS ROC-AUC</p>
-                  <p className="text-sm font-bold text-white">{(data.historical_roc_auc * 100).toFixed(1)}%</p>
-                </div>
-                <div>
-                  <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">Calibration</p>
-                  <p className="text-sm font-semibold text-[#00d26a] leading-snug">{data.calibration_status}</p>
-                </div>
-                <div>
-                  <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-1">OOS Accuracy</p>
-                  <p className="text-sm font-bold text-white">{(data.historical_oos_accuracy * 100).toFixed(1)}%</p>
+                  <p className="text-xs text-[var(--color-text-secondary)] font-medium mb-1">Type</p>
+                  <p className="text-sm font-bold text-[var(--color-text-primary)]">Equity</p>
                 </div>
               </div>
             </div>
+
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

@@ -45,24 +45,24 @@ export function CandlestickChart({ symbol, data, className }: CandlestickChartPr
     const chart = createChart(containerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
-        textColor: "#8b8f98",
+        textColor: "#6B7280",
         attributionLogo: false,
       },
       grid: {
-        vertLines: { color: "rgba(42, 45, 53, 0.5)" },
-        horzLines: { color: "rgba(42, 45, 53, 0.5)" },
+        vertLines: { color: "rgba(233, 236, 239, 0.8)" },
+        horzLines: { color: "rgba(233, 236, 239, 0.8)" },
       },
       crosshair: {
         mode: CrosshairMode.Normal,
-        vertLine: { color: "rgba(83, 103, 255, 0.3)", labelBackgroundColor: "#22252c" },
-        horzLine: { color: "rgba(83, 103, 255, 0.3)", labelBackgroundColor: "#22252c" },
+        vertLine: { color: "rgba(67, 97, 238, 0.3)", labelBackgroundColor: "#111111" },
+        horzLine: { color: "rgba(67, 97, 238, 0.3)", labelBackgroundColor: "#111111" },
       },
       rightPriceScale: {
-        borderColor: "rgba(42, 45, 53, 0.5)",
+        borderColor: "rgba(233, 236, 239, 1)",
         scaleMargins: { top: 0.1, bottom: 0.25 },
       },
       timeScale: {
-        borderColor: "rgba(42, 45, 53, 0.5)",
+        borderColor: "rgba(233, 236, 239, 1)",
         timeVisible: selectedTf.days <= 7,
         secondsVisible: false,
       },
