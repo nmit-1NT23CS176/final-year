@@ -220,8 +220,29 @@ class NextDayTrendPredictor:
             final_prob = ensemble_prob
             model_used = f"Ensemble {wt:.1f}Trf+{wl:.1f}LSTM+{wx:.1f}XGB"
 
-        # ── 6. Classification & Signal Strength ──
-        target_pred = 1 if final_prob >= self.threshold else 0
+        # ── 6. Composite Market Intelligence Score (0 - 100) ──
+        # Component weights: ML (30%), Technical Momentum (25%), Volatility (15%), Market Context (30%)
+        ml_score = int(final_prob * 100)
+        
+        # Extract features for interpretable reasons
+        rsi_val = float(feature_vector_latest.get("RSI", 50.0))
+        macd_val = float(feature_vector_latest.get("MACD", 0.0))
+        vix_ret = float(feature_vector_latest.get("VIX_RET", 0.0))
+        nifty_ret = float(feature_vector_latest.get("NIFTY_RET", 0.0))
+        sp500_ret = float(feature_vector_latest.get("SP500_RET", 0.0))
+        daily_ret = float(feature_vector_latest.get("Return", 0.0))
+
+        mom_score = int(np.clip(50 + (rsi_val - 50) * 0.8 + (daily_ret * 500), 0, 100))
+        vol_score = 40 if regime_upper == "HIGH" else (70 if regime_upper == "LOW" else 55)
+        mkt_score = int(np.clip(50 + (nifty_ret * 1000) + (sp500_ret * 500), 0, 100))
+
+        intelligence_score = int(round(0.30 * ml_score + 0.25 * mom_score + 0.15 * vol_score + 0.30 * mkt_score))
+        
+        # ── 7. Classification & Signal Strength ──
+        if intelligence_score > 50:
+            target_pred = 1
+        else:
+            target_pred = 0
         
         # Calibrate & map probability difference to signal strength & confidence score
         prob_dist = abs(final_prob - 0.50)
@@ -244,24 +265,6 @@ class NextDayTrendPredictor:
 
         confidence_level = "HIGH" if signal_strength in ["STRONG", "VERY STRONG"] else ("MODERATE" if signal_strength == "MODERATE" else "LOW")
         confidence_score = float(round(min(50.0 + (prob_dist * 200), 99.0), 1))
-
-        # ── 7. Composite Market Intelligence Score (0 - 100) ──
-        # Component weights: ML (30%), Technical Momentum (25%), Volatility (15%), Market Context (30%)
-        ml_score = int(final_prob * 100)
-        
-        # Extract features for interpretable reasons
-        rsi_val = float(feature_vector_latest.get("RSI", 50.0))
-        macd_val = float(feature_vector_latest.get("MACD", 0.0))
-        vix_ret = float(feature_vector_latest.get("VIX_RET", 0.0))
-        nifty_ret = float(feature_vector_latest.get("NIFTY_RET", 0.0))
-        sp500_ret = float(feature_vector_latest.get("SP500_RET", 0.0))
-        daily_ret = float(feature_vector_latest.get("Return", 0.0))
-
-        mom_score = int(np.clip(50 + (rsi_val - 50) * 0.8 + (daily_ret * 500), 0, 100))
-        vol_score = 40 if regime_upper == "HIGH" else (70 if regime_upper == "LOW" else 55)
-        mkt_score = int(np.clip(50 + (nifty_ret * 1000) + (sp500_ret * 500), 0, 100))
-
-        intelligence_score = int(round(0.30 * ml_score + 0.25 * mom_score + 0.15 * vol_score + 0.30 * mkt_score))
 
         # ── 8. Interpretable Evidence Reasons (6 Trader-Friendly Signals) ──
         reasons_breakdown = [

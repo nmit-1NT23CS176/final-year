@@ -31,6 +31,7 @@ class InferencePipeline:
         self.model_loader = ModelLoader(models_dir=self.models_dir)
         self.predictor: Optional[NextDayTrendPredictor] = None
         self.is_initialized = False
+        self._dataset: Optional[pd.DataFrame] = None
 
     def initialize(self):
         """Initializes model loader and next-day trend predictor."""
@@ -42,14 +43,20 @@ class InferencePipeline:
                 uncertain_low=0.48,
                 uncertain_high=0.52,
             )
+            # Pre-load the dataset during initialization so the first request isn't slow
+            self.get_latest_dataset()
             self.is_initialized = True
             logger.info("Next-Day Trend Forecasting Pipeline initialized.")
 
     def get_latest_dataset(self) -> pd.DataFrame:
         """Loads master model dataset."""
+        if self._dataset is not None:
+            return self._dataset
+
         parquet_path = self.base_dir / "Market_Data" / "processed" / "final_model_dataset_with_volatility.parquet"
         if parquet_path.exists():
-            return pd.read_parquet(parquet_path)
+            self._dataset = pd.read_parquet(parquet_path)
+            return self._dataset
             
         parquet_path = self.final_dir / "step34_3_corrected.parquet"
         if not parquet_path.exists():
@@ -70,8 +77,10 @@ class InferencePipeline:
                 ticker_feats = "Ticker" if "Ticker" in feats.columns else "ticker"
                 
                 merged = pd.merge(preds, feats, left_on=[ticker_preds, preds_date_col], right_on=[ticker_feats, "date"], how="left")
+                self._dataset = merged
                 return merged
                 
+        self._dataset = preds
         return preds
 
     def predict_next_day_trend(self, symbol: str) -> TrendPredictionOutput:

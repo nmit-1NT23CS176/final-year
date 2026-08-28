@@ -1,6 +1,7 @@
 // @ts-ignore
-import YahooFinanceRaw from 'yahoo-finance2';
-const yahooFinance = new (YahooFinanceRaw as any)();
+import yahooFinanceRaw from 'yahoo-finance2';
+const YahooFinanceClass = (yahooFinanceRaw as any).default || yahooFinanceRaw;
+const yahooFinance = new YahooFinanceClass({ suppressNotices: ['yahooSurvey'] });
 import { StockQuote, StockProfile } from '../../../shared/types/stock';
 
 export class YahooService {

@@ -41,8 +41,8 @@ export class StockService {
       profile: profile || undefined
     };
 
-    // 4. Save to Cache (TTL 30 seconds to prevent hammering API)
-    await CacheService.set(cacheKey, stockData, 30);
+    // 4. Save to Cache (TTL 1 second for near real-time updates)
+    await CacheService.set(cacheKey, stockData, 1);
 
     return stockData;
   }

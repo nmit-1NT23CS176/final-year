@@ -9,6 +9,7 @@ import { PortfolioSummary } from "@/components/dashboard/PortfolioSummary";
 import { NewsSection } from "@/components/dashboard/NewsSection";
 import { MLPredictionCard } from "@/components/ml-prediction-card";
 import { mlApi, NextDayTrendData, ModelMetricsData } from "@/services/ml-api";
+import { stockApi } from "@/services/stock-api";
 import { useAuthStore } from "@/store/auth-store";
 import { Footer } from "@/components/layout/Footer";
 import { BrainCircuit, BarChart3, Activity, ShieldCheck, TrendingUp, Search, Layers } from "lucide-react";
@@ -32,6 +33,7 @@ const MOCK_PORTFOLIO = {
 export default function DashboardPage() {
   const router = useRouter();
   const { isAuthenticated } = useAuthStore();
+  const [watchlist, setWatchlist] = useState(MOCK_WATCHLIST);
   const [tickers, setTickers] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedSymbol, setSelectedSymbol] = useState<string>("RELIANCE");
@@ -77,6 +79,41 @@ export default function DashboardPage() {
     }
     fetchMLData();
   }, [selectedSymbol]);
+
+  // Fetch real-time prices for watchlist
+  useEffect(() => {
+    let cancelled = false;
+    const fetchWatchlistPrices = async () => {
+      try {
+        const updated = await Promise.all(
+          MOCK_WATCHLIST.map(async (stock) => {
+            const symbolToFetch = stock.symbol.replace(".NS", "");
+            try {
+              const res = await stockApi.getStockDetails(symbolToFetch);
+              if (res?.data?.quote) {
+                return {
+                  ...stock,
+                  price: res.data.quote.currentPrice,
+                  change: res.data.quote.change,
+                  changePercent: res.data.quote.changePercent
+                };
+              }
+            } catch (err) {
+              // Ignore individual fetch errors
+            }
+            return stock;
+          })
+        );
+        if (!cancelled) setWatchlist(updated);
+      } catch (err) {
+        console.error("Failed to fetch watchlist prices", err);
+      }
+    };
+    
+    fetchWatchlistPrices();
+    const t = setInterval(fetchWatchlistPrices, 3000);
+    return () => { cancelled = true; clearInterval(t); };
+  }, []);
 
   const filteredTickers = tickers.filter((t) =>
     t.toLowerCase().includes(searchQuery.toLowerCase())
@@ -268,7 +305,7 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <section className="lg:col-span-2">
               <WatchlistPanel
-                stocks={MOCK_WATCHLIST}
+                stocks={watchlist}
                 onAddStock={handleAddStock}
                 onRemoveStock={handleRemoveStock}
               />

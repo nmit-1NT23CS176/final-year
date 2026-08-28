@@ -1,5 +1,8 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { stockApi } from "@/services/stock-api";
+
 import { Briefcase, ArrowUpRight, ArrowDownRight, Download, PieChart, TrendingUp, ShieldCheck } from "lucide-react";
 
 // Mock Data
@@ -12,8 +15,41 @@ const HOLDINGS = [
 ];
 
 export default function PortfolioPage() {
-  const totalInvested = HOLDINGS.reduce((sum, h) => sum + h.shares * h.avgPrice, 0);
-  const totalCurrent = HOLDINGS.reduce((sum, h) => sum + h.shares * h.currentPrice, 0);
+  const [holdings, setHoldings] = useState(HOLDINGS);
+
+  useEffect(() => {
+    let cancelled = false;
+    const fetchHoldingsPrices = async () => {
+      try {
+        const updated = await Promise.all(
+          HOLDINGS.map(async (stock) => {
+            try {
+              const res = await stockApi.getStockDetails(stock.symbol);
+              if (res?.data?.quote) {
+                return {
+                  ...stock,
+                  currentPrice: res.data.quote.currentPrice,
+                };
+              }
+            } catch (err) {
+              // Ignore individual fetch errors
+            }
+            return stock;
+          })
+        );
+        if (!cancelled) setHoldings(updated);
+      } catch (err) {
+        console.error("Failed to fetch holdings prices", err);
+      }
+    };
+    
+    fetchHoldingsPrices();
+    const t = setInterval(fetchHoldingsPrices, 3000);
+    return () => { cancelled = true; clearInterval(t); };
+  }, []);
+
+  const totalInvested = holdings.reduce((sum, h) => sum + h.shares * h.avgPrice, 0);
+  const totalCurrent = holdings.reduce((sum, h) => sum + h.shares * h.currentPrice, 0);
   const totalPnL = totalCurrent - totalInvested;
   const totalPnLPercent = (totalPnL / totalInvested) * 100;
   const isTotalUp = totalPnL >= 0;
@@ -81,7 +117,7 @@ export default function PortfolioPage() {
       <div className="bg-white border border-[var(--color-border)] rounded-2xl shadow-sm overflow-hidden">
         <div className="px-6 py-5 border-b border-[var(--color-border)] flex items-center justify-between">
           <h2 className="font-extrabold text-[16px] text-[var(--color-text-primary)]">Your Holdings</h2>
-          <span className="text-[13px] font-medium text-[var(--color-text-secondary)]">{HOLDINGS.length} Assets</span>
+          <span className="text-[13px] font-medium text-[var(--color-text-secondary)]">{holdings.length} Assets</span>
         </div>
         
         <div className="overflow-x-auto">
@@ -97,7 +133,7 @@ export default function PortfolioPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--color-border)]">
-              {HOLDINGS.map((holding) => {
+              {holdings.map((holding) => {
                 const pnl = (holding.currentPrice - holding.avgPrice) * holding.shares;
                 const pnlPercent = ((holding.currentPrice - holding.avgPrice) / holding.avgPrice) * 100;
                 const isUp = pnl >= 0;
