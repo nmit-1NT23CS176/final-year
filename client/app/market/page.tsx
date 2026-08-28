@@ -1,7 +1,8 @@
 "use client";
 
 import { useAllStocks } from "@/hooks/useSignals";
-import { MARKET_INDICES, getSector } from "@/lib/api";
+import { getSector } from "@/lib/api";
+import { useMarketIndices } from "@/hooks/useMarketIndices";
 import type { ForecastData } from "@/lib/api";
 import { FreshnessBadge, ErrorBanner } from "@/components/shared/FeedbackUI";
 import { BarChart3, PieChart, TrendingUp, TrendingDown } from "lucide-react";
@@ -151,6 +152,7 @@ function TopMovers({ stocks }: { stocks: ForecastData[] }) {
 }
 
 export default function MarketPage() {
+  const marketIndices = useMarketIndices();
   const { forecasts, loading, error, lastFetchedAt, refetch } = useAllStocks(300_000);
 
   const bullish = forecasts.filter(f => f.target_prediction === 1).length;
@@ -172,7 +174,7 @@ export default function MarketPage() {
 
       {/* ── Index strip ── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {MARKET_INDICES.map(idx => <IndexCard key={idx.label} {...idx} />)}
+        {marketIndices.map((idx: any) => <IndexCard key={idx.label} {...idx} />)}
       </div>
 
       {/* ── Breadth + sector ── */}

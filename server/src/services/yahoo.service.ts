@@ -10,6 +10,10 @@ export class YahooService {
    * to default to NSE (National Stock Exchange of India).
    */
   private static formatSymbol(symbol: string): string {
+    // Do not append .NS for indices (start with ^) or crypto/currency (contain -)
+    if (symbol.startsWith('^') || symbol.includes('-')) {
+      return symbol;
+    }
     if (!symbol.includes('.')) {
       return `${symbol}.NS`;
     }
@@ -61,6 +65,22 @@ export class YahooService {
     } catch (err: any) {
       require('fs').appendFileSync('yahoo-debug.log', `Error in getProfile: ${err.message}\n`);
       console.error(`Error fetching Yahoo profile for ${symbol}:`, err);
+      return null;
+    }
+  }
+
+  static async getHistorical(symbol: string, period1: string): Promise<any[] | null> {
+    try {
+      const formattedSymbol = this.formatSymbol(symbol);
+      const queryOptions = { period1 };
+      
+      const result = await yahooFinance.historical(formattedSymbol, queryOptions);
+      if (!result || result.length === 0) return null;
+      
+      return result;
+    } catch (err: any) {
+      require('fs').appendFileSync('yahoo-debug.log', `Error in getHistorical: ${err.message}\n`);
+      console.error(`Error fetching Yahoo historical data for ${symbol}:`, err);
       return null;
     }
   }

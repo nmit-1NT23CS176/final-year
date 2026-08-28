@@ -1,7 +1,7 @@
 "use client";
 
 import { useTickerStocks } from "@/hooks/useSignals";
-import { MARKET_INDICES } from "@/lib/api";
+import { useMarketIndices } from "@/hooks/useMarketIndices";
 
 type IndexItem = { kind: "index"; label: string; price: string; change: string; isUp: boolean };
 type StockItem = { kind: "stock"; label: string; score: string; isUp: boolean };
@@ -9,8 +9,9 @@ type TickerItem = IndexItem | StockItem;
 
 export function TickerStrip() {
   const { stocks } = useTickerStocks(60_000);
+  const marketIndices = useMarketIndices();
 
-  const indexItems: TickerItem[] = MARKET_INDICES.map(idx => ({
+  const indexItems: TickerItem[] = marketIndices.map((idx: any) => ({
     kind: "index" as const,
     label: idx.label,
     price: idx.price,

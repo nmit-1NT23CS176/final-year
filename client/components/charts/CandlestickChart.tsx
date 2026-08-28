@@ -107,19 +107,28 @@ export function CandlestickChart({ symbol, data, className }: CandlestickChartPr
       scaleMargins: { top: 0.85, bottom: 0 },
     });
 
-    // Use provided data or generate mock
-    const candleData = data || generateMockCandles(selectedTf.days);
+    // Filter data based on selected timeframe if data is provided
+    let candleData = data ? [...data] : generateMockCandles(selectedTf.days);
+    if (data) {
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - selectedTf.days);
+      const cutoffTimeStr = cutoffDate.toISOString().split("T")[0];
+      candleData = candleData.filter((d: any) => d.time >= cutoffTimeStr);
+    }
 
     candleSeries.setData(candleData as unknown as CandlestickData[]);
 
-    const volumeData = candleData.map((d) => ({
+    const volumeData = candleData.map((d: any) => ({
       time: d.time,
-      value: Math.floor(Math.random() * 10000000) + 1000000,
+      value: d.volume !== undefined ? d.volume : Math.floor(Math.random() * 10000000) + 1000000,
       color: d.close >= d.open ? "rgba(0, 208, 156, 0.4)" : "rgba(255, 82, 82, 0.4)",
     }));
     volumeSeries.setData(volumeData as unknown as HistogramData[]);
 
-    chart.timeScale().fitContent();
+    // We can delay fitContent slightly to ensure rendering, but usually immediate is fine
+    setTimeout(() => {
+      chart.timeScale().fitContent();
+    }, 10);
     chartRef.current = chart;
 
     // Responsive resize

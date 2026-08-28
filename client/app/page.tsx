@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { Search } from "lucide-react";
 import { useSignalsSummary } from "@/hooks/useSignals";
-import { MARKET_INDICES, fmtProb, getSector, signalLabel } from "@/lib/api";
+import { fmtProb, getSector, signalLabel } from "@/lib/api";
+import { useMarketIndices } from "@/hooks/useMarketIndices";
 import { SkeletonSignalCard, ErrorBanner, FreshnessBadge } from "@/components/shared/FeedbackUI";
 import { SearchBar } from "@/components/stocks/SearchBar";
 
@@ -52,7 +53,7 @@ function MiniSparkline({ up }: { up: boolean }) {
 }
 
 // ── Market snapshot card ─────────────────────────────────
-function IndexCard({ label, price, change, changePct, isUp }: typeof MARKET_INDICES[0]) {
+function IndexCard({ label, price, change, changePct, isUp }: any) {
   return (
     <div className="flex-1 min-w-[220px] bg-white border border-[var(--color-border)] rounded-2xl p-5 flex flex-col gap-3 shadow-card hover:shadow-soft transition-all cursor-pointer">
       <div className="flex justify-between items-start">
@@ -133,6 +134,7 @@ function SignalCard({ stock }: { stock: import("@/lib/api").ForecastData }) {
 // ── Homepage ─────────────────────────────────────────────
 export default function HomePage() {
   const { data, loading, error, refetch } = useSignalsSummary(300_000);
+  const marketIndices = useMarketIndices();
 
   return (
     <div className="flex flex-col min-h-screen bg-[var(--color-background)]">
@@ -173,7 +175,7 @@ export default function HomePage() {
       {/* ── Market Snapshot ── */}
       <section className="px-6 py-12 max-w-[1440px] mx-auto w-full">
         <div className="flex flex-wrap gap-4">
-          {MARKET_INDICES.map(idx => (
+          {marketIndices.map((idx: any) => (
             <IndexCard key={idx.label} {...idx} />
           ))}
         </div>

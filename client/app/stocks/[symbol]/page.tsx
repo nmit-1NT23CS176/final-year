@@ -6,7 +6,6 @@ import { useForecast } from "@/hooks/useSignals";
 import { useStockPrice } from "@/hooks/useStockPrice";
 import { getSector, getCap, fmtProb, directionIcon } from "@/lib/api";
 import { SkeletonStatCard, ErrorBanner } from "@/components/shared/FeedbackUI";
-import { CandlestickChart } from "@/components/charts/CandlestickChart";
 import { Activity, ChevronRight, TrendingUp, TrendingDown, Info, Briefcase, BarChart2 } from "lucide-react";
 
 // ── Shared UI Helpers ────────────────────────────────────
@@ -87,12 +86,7 @@ export default function StockDetailPage({ params }: { params: Promise<{ symbol: 
           </div>
         </div>
 
-        {/* ── 2. Chart Section ── */}
-        <div className="bg-white rounded-2xl border border-[var(--color-border)] shadow-card p-2 sm:p-5 mb-8">
-          <CandlestickChart symbol={sym} className="w-full" />
-        </div>
-
-        {/* ── 3. AI Forecast (The Star Feature) ── */}
+        {/* ── 2. AI Forecast (The Star Feature) ── */}
         {forecastError && <ErrorBanner section="AI Forecast" />}
         
         {forecastLoading ? (
@@ -132,10 +126,6 @@ export default function StockDetailPage({ params }: { params: Promise<{ symbol: 
                       <p className="text-xl font-bold text-white">{forecastData.signal_strength}</p>
                     </div>
 
-                    <div className="pl-6 border-l border-white/10">
-                      <p className="text-sm text-gray-400 font-medium mb-1">Model Used</p>
-                      <p className="text-xl font-bold text-white">{forecastData.model_used}</p>
-                    </div>
                   </div>
                 </div>
 
@@ -162,7 +152,7 @@ export default function StockDetailPage({ params }: { params: Promise<{ symbol: 
           </div>
         ) : null}
 
-        {/* ── 4. Grid Sections ── */}
+        {/* ── 3. Grid Sections ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           
           {/* Reason Breakdown */}

@@ -46,4 +46,22 @@ export class StockService {
 
     return stockData;
   }
+
+  static async getHistoricalData(symbol: string, period1: string): Promise<any[] | null> {
+    const symbolUpper = symbol.toUpperCase();
+    const cacheKey = `history:${symbolUpper}:${period1}`;
+
+    const cachedHistory = await CacheService.get<any[]>(cacheKey);
+    if (cachedHistory) {
+      return cachedHistory;
+    }
+
+    const history = await YahooService.getHistorical(symbolUpper, period1);
+    if (history) {
+      // Cache historical data for 30 minutes
+      await CacheService.set(cacheKey, history, 1800);
+    }
+    
+    return history;
+  }
 }

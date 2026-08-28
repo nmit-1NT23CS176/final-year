@@ -61,4 +61,31 @@ export class StocksController {
       res.status(500).json({ success: false, error: 'Internal server error' });
     }
   }
+
+  static async getHistorical(req: Request, res: Response) {
+    try {
+      const symbol = req.params.symbol as string;
+      const period1 = req.query.period1 as string;
+      
+      if (!period1) {
+        res.status(400).json({ success: false, error: 'Query parameter "period1" is required' });
+        return;
+      }
+
+      const history = await StockService.getHistoricalData(symbol, period1);
+
+      if (!history) {
+        res.status(404).json({ success: false, error: 'Historical data not found' });
+        return;
+      }
+
+      res.status(200).json({
+        success: true,
+        data: history
+      });
+    } catch (err) {
+      console.error('Get historical data error:', err);
+      res.status(500).json({ success: false, error: 'Internal server error' });
+    }
+  }
 }

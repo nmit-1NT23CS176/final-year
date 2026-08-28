@@ -16,4 +16,9 @@ export const stockApi = {
     const { data } = await api.get('/stocks/trending');
     return data;
   },
+
+  async getHistorical(symbol: string, period1: string): Promise<{ data: any[] }> {
+    const { data } = await api.get(`/stocks/${encodeURIComponent(symbol)}/history`, { params: { period1 } });
+    return data;
+  },
 };
