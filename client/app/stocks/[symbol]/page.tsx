@@ -126,6 +126,10 @@ export default function StockDetailPage({ params }: { params: Promise<{ symbol: 
                       <p className="text-xl font-bold text-white">{forecastData.signal_strength}</p>
                     </div>
 
+                    <div className="pl-6 border-l border-white/10">
+                      <p className="text-sm text-gray-400 font-medium mb-1">Model Used</p>
+                      <p className="text-xl font-bold text-white">{forecastData.model_used}</p>
+                    </div>
                   </div>
                 </div>
 
