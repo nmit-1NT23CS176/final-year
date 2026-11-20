@@ -128,7 +128,7 @@ export async function fetchForecastBatch(
   for (let i = 0; i < symbols.length; i += limit) {
     const chunk = symbols.slice(i, i + limit)
     const settled = await Promise.allSettled(
-      chunk.map((s) => apiFetch<ForecastResponse>(`/api/v1/forecast/${s}`)),
+      chunk.map((s) => apiFetch<ForecastResponse>(`/api/ml/forecast/${s}`)),
     )
     settled.forEach((r) => {
       if (r.status === 'fulfilled' && r.value.success) results.push(r.value.data)

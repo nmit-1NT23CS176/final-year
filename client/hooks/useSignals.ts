@@ -100,18 +100,20 @@ export function useAllStocks(intervalMs = 300_000) {
   }, [])
 
   useEffect(() => {
-    apiFetch<TickersResponse>('/api/v1/tickers').then(r => {
-      setTickers(r.data)
+    apiFetch<TickersResponse>('/api/ml/tickers').then(r => {
+      const list = r?.data && r.data.length > 0 ? r.data : FEATURED_SYMBOLS
+      setTickers(list)
       // Fetch top 24 immediately for fast rendering, then background load the rest
-      const initial = r.data.slice(0, 24)
+      const initial = list.slice(0, 24)
       doFetch(initial).then(() => {
-        if (r.data.length > 24) {
-          fetchForecastBatch(r.data.slice(24), 8).then(rest => {
+        if (list.length > 24) {
+          fetchForecastBatch(list.slice(24), 8).then(rest => {
             setForecasts(prev => [...prev, ...rest])
           })
         }
       })
     }).catch(() => {
+      setTickers(FEATURED_SYMBOLS)
       doFetch(FEATURED_SYMBOLS)
     })
   }, [doFetch])
@@ -134,7 +136,7 @@ export function useForecast(symbol: string) {
   useEffect(() => {
     if (!symbol) return
     setLoading(true)
-    apiFetch<{ success: boolean; data: ForecastData }>(`/api/v1/forecast/${symbol}`)
+    apiFetch<{ success: boolean; data: ForecastData }>(`/api/ml/forecast/${symbol}`)
       .then(r => { setData(r.data); setError(null) })
       .catch(e => setError(e.message))
       .finally(() => setLoading(false))
