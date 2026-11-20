@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useAllStocks } from "@/hooks/useSignals";
 import { getSector, getCap, fmtProb } from "@/lib/api";
@@ -13,13 +13,20 @@ type SortDir = "asc" | "desc";
 type SignalFilter = "ALL" | "BULLISH" | "BEARISH" | "NO SIGNAL";
 type VolFilter = "ALL" | "LOW" | "MEDIUM" | "HIGH";
 
+interface StockQuoteItem {
+  price: number;
+  change: number;
+  changePercent: number;
+  isUp: boolean;
+}
+
 function SignalPill({ pred }: { pred: -1 | 0 | 1 }) {
   const styles = {
     1:  "bg-[var(--color-bullish-muted)] text-[var(--color-bullish)] border-[var(--color-bullish-muted)]",
     0:  "bg-[var(--color-bearish-muted)] text-[var(--color-bearish)] border-[var(--color-bearish-muted)]",
     "-1": "bg-gray-100 text-gray-600 border-gray-200",
-  } as Record<string, string>
-  const labels = { 1: "BULLISH", 0: "BEARISH", "-1": "NO SIGNAL" } as Record<string, string>
+  } as Record<string, string>;
+  const labels = { 1: "BULLISH", 0: "BEARISH", "-1": "NO SIGNAL" } as Record<string, string>;
   return (
     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide border flex items-center justify-center gap-1 w-fit ${styles[String(pred)]}`}>
       {pred === 1 ? <TrendingUp className="w-3 h-3" /> : pred === 0 ? <TrendingDown className="w-3 h-3" /> : <Minus className="w-3 h-3" />}
@@ -40,12 +47,41 @@ function ScoreBar({ value, max = 100 }: { value: number; max?: number }) {
 
 export default function StocksPage() {
   const { forecasts, loading, error, lastFetchedAt, refetch } = useAllStocks(300_000);
+  const [liveQuotes, setLiveQuotes] = useState<Record<string, StockQuoteItem>>({});
 
   const [search, setSearch] = useState("");
   const [signalFilter, setSignalFilter] = useState<SignalFilter>("ALL");
   const [volFilter, setVolFilter] = useState<VolFilter>("ALL");
   const [sortKey, setSortKey] = useState<SortKey>("intelligence_score");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
+
+  // Fetch live prices for all displayed symbols
+  useEffect(() => {
+    if (!forecasts.length) return;
+    let cancelled = false;
+
+    const fetchLivePrices = async () => {
+      try {
+        const symbols = forecasts.map(f => f.symbol).join(',');
+        const res = await fetch(`/api/stocks/batch?symbols=${encodeURIComponent(symbols)}`);
+        if (res.ok) {
+          const json = await res.json();
+          if (!cancelled && json.data) {
+            setLiveQuotes(prev => ({ ...prev, ...json.data }));
+          }
+        }
+      } catch {
+        // Silent catch for resilience
+      }
+    };
+
+    fetchLivePrices();
+    const timer = setInterval(fetchLivePrices, 4000);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+  }, [forecasts]);
 
   const filtered = useMemo(() => {
     let data = [...forecasts];
@@ -98,7 +134,7 @@ export default function StocksPage() {
               All Stocks Directory
             </h1>
             <p className="text-[var(--color-text-secondary)] text-[14px] font-medium">
-              Browse and filter {forecasts.length} NSE stocks analyzed by AI.
+              Browse and filter {forecasts.length} NSE stocks analyzed with live real-time pricing and AI signals.
             </p>
           </div>
           <FreshnessBadge lastFetchedAt={lastFetchedAt} />
@@ -168,11 +204,12 @@ export default function StocksPage() {
       {/* ── Table ── */}
       <div className="bg-white border border-[var(--color-border)] rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[1000px] text-sm text-left">
+          <table className="w-full min-w-[1050px] text-sm text-left">
             <thead className="bg-[var(--color-background)]/50">
               <tr className="border-b border-[var(--color-border)]">
                 <th className="py-4 px-5 font-bold text-[11px] text-[var(--color-text-disabled)] uppercase tracking-widest">Symbol</th>
                 <th className="py-4 px-5 font-bold text-[11px] text-[var(--color-text-disabled)] uppercase tracking-widest">Sector</th>
+                <th className="py-4 px-5 font-bold text-[11px] text-[var(--color-text-disabled)] uppercase tracking-widest">Live Price</th>
                 <th className="py-4 px-5 font-bold text-[11px] text-[var(--color-text-disabled)] uppercase tracking-widest">AI Signal</th>
                 <th className="py-4 px-5 font-bold text-[11px] text-[var(--color-text-disabled)] uppercase tracking-widest cursor-pointer hover:text-[var(--color-text-primary)] transition-colors"
                   onClick={() => toggleSort("intelligence_score")}>
@@ -200,65 +237,82 @@ export default function StocksPage() {
                 : filtered.length === 0
                 ? (
                   <tr>
-                    <td colSpan={9} className="py-20 text-center text-[var(--color-text-secondary)]">
+                    <td colSpan={10} className="py-20 text-center text-[var(--color-text-secondary)]">
                       <Search className="w-8 h-8 text-gray-300 mx-auto mb-3" />
                       <p className="font-bold text-[15px] text-[var(--color-text-primary)]">No stocks match your filters.</p>
                       <p className="text-[13px]">Try adjusting your search criteria.</p>
                     </td>
                   </tr>
                 )
-                : filtered.map(stock => (
-                  <tr key={stock.symbol}
-                    className="hover:bg-gray-50 transition-colors group">
-                    <td className="py-4 px-5">
-                      <Link href={`/stocks/${stock.symbol}`}
-                        className="font-extrabold text-[15px] text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors">
-                        {stock.symbol}
-                      </Link>
-                      <div className="text-[11px] font-medium text-[var(--color-text-disabled)] mt-0.5">{getCap(stock.symbol)}</div>
-                    </td>
-                    <td className="py-4 px-5 text-[var(--color-text-secondary)] font-medium text-[13px]">{getSector(stock.symbol)}</td>
-                    <td className="py-4 px-5">
-                      <SignalPill pred={stock.target_prediction} />
-                    </td>
-                    <td className="py-4 px-5">
-                      <div className="flex flex-col gap-2 min-w-[90px]">
-                        <span className={`text-[14px] font-black tabular-nums ${
-                          stock.intelligence_score >= 60 ? "text-[var(--color-bullish)]"
-                          : stock.intelligence_score >= 40 ? "text-[var(--color-warning)]"
-                          : "text-[var(--color-bearish)]"
-                        }`}>{stock.intelligence_score}</span>
-                        <ScoreBar value={stock.intelligence_score} />
-                      </div>
-                    </td>
-                    <td className="py-4 px-5 text-[var(--color-text-primary)] tabular-nums font-bold text-[14px]">
-                      {fmtProb(stock.probability_score)}
-                    </td>
-                    <td className="py-4 px-5">
-                      <span className={`text-[11px] font-extrabold px-2 py-1 rounded-md ${
-                        stock.confidence_level === "HIGH" ? "text-[var(--color-bullish)] bg-[var(--color-bullish-muted)]"
-                        : stock.confidence_level === "MEDIUM" ? "text-[var(--color-warning)] bg-yellow-100"
-                        : "text-[var(--color-text-secondary)] bg-gray-100"
-                      }`}>{stock.confidence_level}</span>
-                    </td>
-                    <td className="py-4 px-5 text-[var(--color-text-primary)] tabular-nums font-bold text-[14px]">
-                      {(stock.stock_historical_accuracy * 100).toFixed(1)}%
-                    </td>
-                    <td className="py-4 px-5">
-                      <span className={`text-[12px] font-bold ${
-                        stock.volatility_regime === "HIGH" ? "text-[var(--color-bearish)]"
-                        : stock.volatility_regime === "MEDIUM" ? "text-[var(--color-warning)]"
-                        : "text-[var(--color-bullish)]"
-                      }`}>{stock.volatility_regime}</span>
-                    </td>
-                    <td className="py-4 px-5 text-right">
-                      <Link href={`/stocks/${stock.symbol}`}
-                        className="text-[12px] bg-white border border-[var(--color-border)] px-3 py-1.5 rounded-lg text-[var(--color-text-secondary)] font-bold hover:text-[var(--color-text-primary)] hover:border-gray-400 shadow-sm whitespace-nowrap transition-all">
-                        Analyse
-                      </Link>
-                    </td>
-                  </tr>
-                ))
+                : filtered.map(stock => {
+                  const quote = liveQuotes[stock.symbol];
+                  return (
+                    <tr key={stock.symbol}
+                      className="hover:bg-gray-50 transition-colors group">
+                      <td className="py-4 px-5">
+                        <Link href={`/stocks/${stock.symbol}`}
+                          className="font-extrabold text-[15px] text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors">
+                          {stock.symbol}
+                        </Link>
+                        <div className="text-[11px] font-medium text-[var(--color-text-disabled)] mt-0.5">{getCap(stock.symbol)}</div>
+                      </td>
+                      <td className="py-4 px-5 text-[var(--color-text-secondary)] font-medium text-[13px]">{getSector(stock.symbol)}</td>
+                      <td className="py-4 px-5">
+                        {quote ? (
+                          <div>
+                            <p className="text-[14px] font-bold text-[var(--color-text-primary)] tabular-nums">
+                              ₹{quote.price.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            </p>
+                            <p className={`text-[11px] font-semibold flex items-center gap-0.5 tabular-nums ${quote.isUp ? 'text-[var(--color-bullish)]' : 'text-[var(--color-bearish)]'}`}>
+                              {quote.isUp ? '+' : ''}{quote.change.toFixed(2)} ({quote.isUp ? '+' : ''}{quote.changePercent.toFixed(2)}%)
+                            </p>
+                          </div>
+                        ) : (
+                          <span className="text-[12px] text-gray-400 font-medium">Fetching…</span>
+                        )}
+                      </td>
+                      <td className="py-4 px-5">
+                        <SignalPill pred={stock.target_prediction} />
+                      </td>
+                      <td className="py-4 px-5">
+                        <div className="flex flex-col gap-2 min-w-[90px]">
+                          <span className={`text-[14px] font-black tabular-nums ${
+                            stock.intelligence_score >= 60 ? "text-[var(--color-bullish)]"
+                            : stock.intelligence_score >= 40 ? "text-[var(--color-warning)]"
+                            : "text-[var(--color-bearish)]"
+                          }`}>{stock.intelligence_score}</span>
+                          <ScoreBar value={stock.intelligence_score} />
+                        </div>
+                      </td>
+                      <td className="py-4 px-5 text-[var(--color-text-primary)] tabular-nums font-bold text-[14px]">
+                        {fmtProb(stock.probability_score)}
+                      </td>
+                      <td className="py-4 px-5">
+                        <span className={`text-[11px] font-extrabold px-2 py-1 rounded-md ${
+                          stock.confidence_level === "HIGH" ? "text-[var(--color-bullish)] bg-[var(--color-bullish-muted)]"
+                          : stock.confidence_level === "MEDIUM" ? "text-[var(--color-warning)] bg-yellow-100"
+                          : "text-[var(--color-text-secondary)] bg-gray-100"
+                        }`}>{stock.confidence_level}</span>
+                      </td>
+                      <td className="py-4 px-5 text-[var(--color-text-primary)] tabular-nums font-bold text-[14px]">
+                        {(stock.stock_historical_accuracy * 100).toFixed(1)}%
+                      </td>
+                      <td className="py-4 px-5">
+                        <span className={`text-[12px] font-bold ${
+                          stock.volatility_regime === "HIGH" ? "text-[var(--color-bearish)]"
+                          : stock.volatility_regime === "MEDIUM" ? "text-[var(--color-warning)]"
+                          : "text-[var(--color-bullish)]"
+                        }`}>{stock.volatility_regime}</span>
+                      </td>
+                      <td className="py-4 px-5 text-right">
+                        <Link href={`/stocks/${stock.symbol}`}
+                          className="text-[12px] bg-white border border-[var(--color-border)] px-3 py-1.5 rounded-lg text-[var(--color-text-secondary)] font-bold hover:text-[var(--color-text-primary)] hover:border-gray-400 shadow-sm whitespace-nowrap transition-all">
+                          Analyse
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })
               }
             </tbody>
           </table>

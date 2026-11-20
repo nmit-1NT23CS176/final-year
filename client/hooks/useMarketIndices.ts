@@ -1,60 +1,57 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MARKET_INDICES } from "@/lib/api";
-import { stockApi } from "@/services/stock-api";
 
-export const INDEX_SYMBOLS: Record<string, string> = {
-  'NIFTY 50': '^NSEI',
-  'SENSEX': '^BSESN',
-  'BANK NIFTY': '^NSEBANK',
-  'INDIA VIX': '^INDIAVIX',
-  'NASDAQ': '^IXIC',
-  'S&P 500': '^GSPC',
-  'Bitcoin': 'BTC-USD'
+export type MarketIndex = {
+  label: string;
+  price: string;
+  change: string;
+  changePct: string;
+  isUp: boolean;
+  live?: boolean;
 };
 
+async function fetchLiveIndices(): Promise<MarketIndex[]> {
+  const res = await fetch("/api/indices");
+  if (!res.ok) throw new Error(`/api/indices HTTP ${res.status}`);
+  const json = await res.json();
+  return json.data;
+}
+
 export function useMarketIndices() {
-  const [indices, setIndices] = useState(MARKET_INDICES);
+  const [indices, setIndices] = useState<MarketIndex[]>(MARKET_INDICES);
+  const cancelledRef = useRef(false);
 
   useEffect(() => {
-    let cancelled = false;
+    cancelledRef.current = false;
 
-    const fetchIndices = async () => {
+    const refresh = async () => {
       try {
-        const updated = await Promise.all(
-          MARKET_INDICES.map(async (idx) => {
-            const symbol = INDEX_SYMBOLS[idx.label];
-            if (!symbol) return idx;
+        const liveData = await fetchLiveIndices();
 
-            try {
-              const res = await stockApi.getStockDetails(symbol);
-              if (res?.data?.quote) {
-                const quote = res.data.quote;
-                return {
-                  ...idx,
-                  price: quote.currentPrice.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
-                  change: (quote.change > 0 ? "+" : "") + quote.change.toFixed(2),
-                  changePct: (quote.changePercent > 0 ? "+" : "") + quote.changePercent.toFixed(2) + "%",
-                  isUp: quote.change >= 0
-                };
-              }
-            } catch (err) {
-              // Ignore single failure
-            }
-            return idx;
+        // Merge live data over the static defaults — skip nulls (fetch failed for that symbol)
+        setIndices((prev) =>
+          prev.map((existing, i) => {
+            const live = liveData[i];
+            if (!live) return existing; // keep prior value if Yahoo failed
+            return live;
           })
         );
-        if (!cancelled) setIndices(updated);
-      } catch (err) {
-        // Overall failure
+      } catch (_err) {
+        // Network/API failure — silently keep previous values
       }
     };
 
-    fetchIndices();
-    const t = setInterval(fetchIndices, 5000);
+    // Initial fetch immediately
+    refresh();
+
+    // Poll every 15 seconds (Yahoo Finance's free tier is generous enough)
+    const interval = setInterval(() => {
+      if (!cancelledRef.current) refresh();
+    }, 15_000);
 
     return () => {
-      cancelled = true;
-      clearInterval(t);
+      cancelledRef.current = true;
+      clearInterval(interval);
     };
   }, []);
 

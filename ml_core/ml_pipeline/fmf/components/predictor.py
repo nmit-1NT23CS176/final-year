@@ -221,9 +221,7 @@ class NextDayTrendPredictor:
             model_used = f"Ensemble {wt:.1f}Trf+{wl:.1f}LSTM+{wx:.1f}XGB"
 
         # ── 6. Composite Market Intelligence Score (0 - 100) ──
-        # Component weights: ML (30%), Technical Momentum (25%), Volatility (15%), Market Context (30%)
-        ml_score = int(final_prob * 100)
-        
+        # Multi-factor weights: ML Model (35%), Technical Momentum (30%), Volatility Regime (15%), Macro Context (20%)
         # Extract features for interpretable reasons
         rsi_val = float(feature_vector_latest.get("RSI", 50.0))
         macd_val = float(feature_vector_latest.get("MACD", 0.0))
@@ -232,24 +230,49 @@ class NextDayTrendPredictor:
         sp500_ret = float(feature_vector_latest.get("SP500_RET", 0.0))
         daily_ret = float(feature_vector_latest.get("Return", 0.0))
 
-        mom_score = int(np.clip(50 + (rsi_val - 50) * 0.8 + (daily_ret * 500), 0, 100))
-        vol_score = 40 if regime_upper == "HIGH" else (70 if regime_upper == "LOW" else 55)
-        mkt_score = int(np.clip(50 + (nifty_ret * 1000) + (sp500_ret * 500), 0, 100))
+        # Model score: centered at 50, scaled dynamically across the full spectrum
+        ml_score = int(np.clip(50 + (final_prob - 0.50) * 120, 0, 100))
 
-        intelligence_score = int(round(0.30 * ml_score + 0.25 * mom_score + 0.15 * vol_score + 0.30 * mkt_score))
-        
+        # Technical Momentum Score (RSI 14 + MACD + 1-Day Return):
+        # RSI 50 is neutral, >60 is strong buy, <40 is strong sell
+        rsi_component = (rsi_val - 50.0) * 1.8
+        macd_component = 14.0 if macd_val > 0.0005 else (-14.0 if macd_val < -0.0005 else 0.0)
+        ret_component = np.clip(daily_ret * 850, -25.0, 25.0)
+        mom_score = int(np.clip(50 + rsi_component + macd_component + ret_component, 10, 90))
+
+        # Volatility factor
+        vol_score = 38 if regime_upper == "HIGH" else (65 if regime_upper == "LOW" else 50)
+
+        # Macro market sentiment (NIFTY 50 and global S&P 500 drift)
+        mkt_score = int(np.clip(50 + (nifty_ret * 1200) + (sp500_ret * 600) - (vix_ret * 300), 20, 80))
+
+        # Weighted composite score
+        composite = 0.35 * ml_score + 0.30 * mom_score + 0.15 * vol_score + 0.20 * mkt_score
+
+        # Distinct spread: expand separation around 50 so top bullish stocks reach ~60-72 and bearish ~34-44
+        spread = composite - 50.0
+        expanded_score = 50.0 + (spread * 1.35)
+        intelligence_score = int(np.clip(round(expanded_score), 20, 88))
+
         # ── 7. Classification & Signal Strength ──
-        if intelligence_score > 50:
+        # Distinct separation:
+        # Score >= 53: Bullish (reaches 58-74)
+        # Score <= 47: Bearish (reaches 32-44)
+        # 48-52: Neutral / Sideways
+        if intelligence_score >= 53:
             target_pred = 1
-        else:
+        elif intelligence_score <= 47:
             target_pred = 0
+        else:
+            target_pred = -1
+
+
         
         # Calibrate & map probability difference to signal strength & confidence score
         prob_dist = abs(final_prob - 0.50)
-        if prob_dist < 0.02:
-            signal_strength = "VERY WEAK"
-            trend_label = "NO CLEAR SIGNAL"
-            target_pred = -1
+        if target_pred == -1:
+            signal_strength = "NEUTRAL"
+            trend_label = "SIDEWAYS / NO SIGNAL"
         elif prob_dist < 0.05:
             signal_strength = "WEAK"
             trend_label = "SLIGHT UPTREND" if target_pred == 1 else "SLIGHT DOWNTREND"
