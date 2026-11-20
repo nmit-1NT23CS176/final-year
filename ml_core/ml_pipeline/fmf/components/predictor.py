@@ -220,34 +220,36 @@ class NextDayTrendPredictor:
             final_prob = ensemble_prob
             model_used = f"Ensemble {wt:.1f}Trf+{wl:.1f}LSTM+{wx:.1f}XGB"
 
-        # ── 6. Classification & Signal Strength ──
-        target_pred = 1 if final_prob >= self.threshold else 0
-        
-        # Calibrate & map probability difference to signal strength & confidence score
-        prob_dist = abs(final_prob - 0.50)
-        if prob_dist < 0.02:
-            signal_strength = "VERY WEAK"
-            trend_label = "NO CLEAR SIGNAL"
-            target_pred = -1
-        elif prob_dist < 0.05:
-            signal_strength = "WEAK"
-            trend_label = "SLIGHT UPTREND" if target_pred == 1 else "SLIGHT DOWNTREND"
-        elif prob_dist < 0.10:
-            signal_strength = "MODERATE"
-            trend_label = "UPTREND" if target_pred == 1 else "DOWNTREND"
-        elif prob_dist < 0.18:
-            signal_strength = "STRONG"
-            trend_label = "STRONG UPTREND" if target_pred == 1 else "STRONG DOWNTREND"
-        else:
-            signal_strength = "VERY STRONG"
-            trend_label = "STRONG UPTREND" if target_pred == 1 else "STRONG DOWNTREND"
+        # ── 6. Classification & Probability Calibration ──
+        # Due to equity positive drift and uncalibrated cross-entropy loss, raw sequence
+        # probabilities are centered around ~0.618. Calibrate relative to empirical market baseline.
+        market_baseline = 0.6182
+        calibrated_prob = float(np.clip(0.50 + (final_prob - market_baseline) * 3.0, 0.20, 0.80))
 
-        confidence_level = "HIGH" if signal_strength in ["STRONG", "VERY STRONG"] else ("MODERATE" if signal_strength == "MODERATE" else "LOW")
+        # 3-Tier Classification:
+        # High Relative Momentum / Edge (>= 0.625 raw) => BULLISH (1)
+        # Low Relative Momentum / Lagging (< 0.610 raw) => BEARISH (0)
+        # Neutral / Market-performing (0.610 <= raw < 0.625) => NO CLEAR SIGNAL (-1)
+        if final_prob >= 0.625:
+            target_pred = 1
+            signal_strength = "STRONG" if final_prob >= 0.635 else "MODERATE"
+            trend_label = "STRONG UPTREND" if final_prob >= 0.635 else "UPTREND"
+        elif final_prob < 0.610:
+            target_pred = 0
+            signal_strength = "STRONG" if final_prob <= 0.600 else "MODERATE"
+            trend_label = "STRONG DOWNTREND" if final_prob <= 0.600 else "DOWNTREND"
+        else:
+            target_pred = -1
+            signal_strength = "WEAK"
+            trend_label = "NO CLEAR SIGNAL"
+
+        prob_dist = abs(calibrated_prob - 0.50)
+        confidence_level = "HIGH" if signal_strength == "STRONG" else ("MODERATE" if signal_strength == "MODERATE" else "LOW")
         confidence_score = float(round(min(50.0 + (prob_dist * 200), 99.0), 1))
 
         # ── 7. Composite Market Intelligence Score (0 - 100) ──
         # Component weights: ML (30%), Technical Momentum (25%), Volatility (15%), Market Context (30%)
-        ml_score = int(final_prob * 100)
+        ml_score = int(calibrated_prob * 100)
         
         # Extract features for interpretable reasons
         rsi_val = float(feature_vector_latest.get("RSI", 50.0))
@@ -346,7 +348,7 @@ class NextDayTrendPredictor:
             date=date_str,
             target_prediction=target_pred,
             trend_label=trend_label,
-            probability_score=float(round(final_prob, 4)),
+            probability_score=float(round(calibrated_prob, 4)),
             confidence_level=confidence_level,
             confidence_score=confidence_score,
             volatility_regime=regime_upper,
