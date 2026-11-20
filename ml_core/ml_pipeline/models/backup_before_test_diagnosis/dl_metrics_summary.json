@@ -1,0 +1,130 @@
+{
+  "LSTM": {
+    "Accuracy": 0.5019,
+    "Precision": 0.5017,
+    "Recall": 0.7316,
+    "F1": 0.5953,
+    "ROC_AUC": 0.4997
+  },
+  "Transformer": {
+    "Accuracy": 0.4978,
+    "Precision": 0.4988,
+    "Recall": 0.6687,
+    "F1": 0.5714,
+    "ROC_AUC": 0.4977
+  },
+  "Ensemble": {
+    "accuracy": 0.4978,
+    "balanced_accuracy": 0.4976,
+    "precision": 0.4988,
+    "recall": 0.6687,
+    "f1_score": 0.5714,
+    "roc_auc": 0.4977
+  },
+  "Thresholds": {
+    "xgb": 0.53,
+    "rf": 0.59,
+    "lstm": 0.51,
+    "trf": 0.49
+  },
+  "EnsembleWeights": {
+    "trf": 1.0,
+    "lstm": 0.0
+  },
+  "LeakageChecks": {
+    "train_max_date_lt_val_min_date": true,
+    "val_max_date_lt_test_min_date": true,
+    "scaler_fit_only_on_train": true,
+    "threshold_selected_on_val_only": true,
+    "ensemble_weights_selected_on_val_only": true,
+    "sequence_window": 20,
+    "sequences_built_per_ticker": true
+  },
+  "TrainingHistory": {
+    "LSTM": {
+      "train_loss": [
+        0.6886,
+        0.6812,
+        0.6721,
+        0.6647,
+        0.6578,
+        0.651
+      ],
+      "val_loss": [
+        0.6988,
+        0.7016,
+        0.7094,
+        0.7168,
+        0.7209,
+        0.7275
+      ],
+      "val_bacc": [
+        0.5055,
+        0.4897,
+        0.5004,
+        0.4957,
+        0.4976,
+        0.4989
+      ]
+    },
+    "Transformer": {
+      "train_loss": [
+        0.7182,
+        0.7007,
+        0.6934,
+        0.6877,
+        0.6843,
+        0.6807,
+        0.6769,
+        0.6745,
+        0.669,
+        0.6683,
+        0.6664,
+        0.6635,
+        0.6599,
+        0.6595,
+        0.6568,
+        0.6537,
+        0.6522
+      ],
+      "val_loss": [
+        0.713,
+        0.7148,
+        0.7132,
+        0.7158,
+        0.7143,
+        0.712,
+        0.7178,
+        0.7218,
+        0.7229,
+        0.722,
+        0.7256,
+        0.7247,
+        0.7261,
+        0.7249,
+        0.727,
+        0.7281,
+        0.7266
+      ],
+      "val_bacc": [
+        0.5029,
+        0.5023,
+        0.5033,
+        0.5097,
+        0.5116,
+        0.519,
+        0.5255,
+        0.5314,
+        0.5307,
+        0.5356,
+        0.5347,
+        0.5382,
+        0.5381,
+        0.5361,
+        0.5294,
+        0.5264,
+        0.5246
+      ]
+    }
+  }
+}

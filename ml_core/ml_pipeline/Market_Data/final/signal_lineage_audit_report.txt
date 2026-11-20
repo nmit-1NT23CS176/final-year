@@ -1,0 +1,27 @@
+Signal Lineage Audit — Final Report
+=====================================
+Ground truth IC (Step-33 published) : 0.026841
+Step-28 best IC pair                : pred_final vs target_future_return_t3 = 0.0005
+Step-33 direct IC                   : 0.026841  (expected: 0.0268)
+Step-34.3 current IC                : -0.2030
+
+Transition break point              : BOTH
+  - Signal sign agreement broke at  : Step-28→33 (corr 0.218)
+  - Target agreement broke at       : Step-33→34 (corr -0.021)
+Horizon mismatch confirmed          : YES (diff = 0.0286)
+
+Root cause:
+  [x] Sign flip in pred_score at Step-[xx] -> Actually overwritten with something else entirely
+  [x] Wrong target horizon (actual_return ≠ target_future_return_t3)
+  [x] Both
+  [ ] Different signal source
+
+Corrected IC after fix              : 0.0005 (target_future_return_t3)
+
+Conditions met:
+  1. Ground truth pair identified   : NO (Step 28 best IC was 0.0005 not 0.0268, but Step-33 was 0.0268)
+  2. Step-33 IC reproduced          : YES
+  3. Break point localized          : YES
+  4. Corrected IC reproduced        : NO (Original Step-28 did not have 0.0268)
+
+Safe to proceed to Step-34.4        : NO

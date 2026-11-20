@@ -1,0 +1,9 @@
+{
+  "optimal_threshold": 0.41,
+  "validation_start_date": "2024-09-04",
+  "optimization_target": "F1",
+  "search_range": [
+    0.3,
+    0.7
+  ]
+}

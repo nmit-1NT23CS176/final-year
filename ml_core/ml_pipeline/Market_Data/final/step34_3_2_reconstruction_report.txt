@@ -1,0 +1,21 @@
+Target Reconstruction — Final Report
+======================================
+actual_return in Step-34.3 represents : Likely 1-day forward return / daily return (lower std, lag -1 peak)
+actual_return in Step-33 represents   : target_future_return_t3 (3-day forward return)
+target_future_return_t3 source        : Step-28 ensemble_alpha_results.parquet
+Join null count                       : 0
+
+IC before reconstruction              : -0.202964
+IC after reconstruction               : 0.026841  (target: 0.026841)
+IC match                              : YES
+
+Corrected file                        : step34_3_corrected.parquet
+
+Component Status:
+  Step-28 Alpha         : ✅ Valid
+  Step-33 Alpha         : ✅ Valid
+  Signal lineage        : ✅ Preserved
+  Step-34.3 target      : ✅ Reconstructed
+  Step-34.4 re-enabled  : ✅ YES
+
+Safe to proceed to Step-34.4          : YES

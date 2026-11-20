@@ -1,0 +1,13 @@
+{
+  "weights": {
+    "trf": 1.0,
+    "lstm": 0.0
+  },
+  "threshold": 0.49,
+  "routing": "routing",
+  "transformer_weight": 1.0,
+  "xgb_weight": 0.0,
+  "lstm_weight": 0.0,
+  "feature_dim": 60,
+  "top_features_file": "top_features.json"
+}
