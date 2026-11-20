@@ -52,16 +52,21 @@ export class WebSocketServer {
     }, 30000);
 
     // Subscribe to Redis pub/sub for cross-instance broadcasts
-    const subscriber = redisClient.duplicate();
-    subscriber.connect().then(() => {
-      subscriber.subscribe('stock_prices', (message) => {
-        const data = JSON.parse(message);
-        this.broadcastToRoom(`stock:${data.symbol}`, JSON.stringify({
-          event: 'price_update',
-          data
-        }));
-      });
-    });
+        if (redisClient) {
+          const subscriber = redisClient.duplicate();
+          subscriber.on('error', (err) => console.error('Redis Subscriber Error', err));
+          subscriber.connect().then(() => {
+            subscriber.subscribe('stock_prices', (message) => {
+              const data = JSON.parse(message);
+              this.broadcastToRoom(`stock:${data.symbol}`, JSON.stringify({
+                event: 'price_update',
+                data
+              }));
+            });
+          }).catch((err) => {
+            console.warn('Redis Subscriber connection unavailable, running without Redis pub/sub:', err.message);
+          });
+    }
   }
 
   private handleMessage(ws: ExtWebSocket, message: any) {

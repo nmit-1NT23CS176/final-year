@@ -17,43 +17,66 @@ const app = express();
 const port = process.env.PORT || 5000;
 const server = createServer(app);
 
-// Initialize WebSocket Server
-new WebSocketServer(server);
+  // Initialize WebSocket Server only when not in serverless environment
+  if (!process.env.VERCEL) {
+    new WebSocketServer(server);
+  }
 
-if (!process.env.CORS_ORIGIN) {
-  throw new Error('CORS_ORIGIN environment variable is missing');
-}
+  // CORS Origin configuration
+  const allowedOrigins = process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim())
+    : ['http://localhost:3000'];
 
-// Middlewares
-app.use(helmet());
-app.use(cors({
-  origin: process.env.CORS_ORIGIN,
-  credentials: true,
-}));
-app.use(express.json());
+  // Middlewares
+  app.use(helmet());
+  app.use(cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
+    credentials: true,
+  }));
+  app.use(express.json());
 
-// Rate limiting
-const globalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-});
-app.use('/api', globalLimiter);
+  // Health check endpoints
+  app.get('/health', (req, res) => {
+    res.json({ status: 'healthy', service: 'AlphaPulse Express Server' });
+  });
+  app.get('/api/health', (req, res) => {
+    res.json({ status: 'healthy', service: 'AlphaPulse Express Server' });
+  });
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/stocks', stocksRoutes);
-app.use('/api/watchlist', watchlistRoutes);
-app.use('/api/ml', mlRoutes);
+  // Rate limiting
+  const globalLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+  });
+  app.use('/api', globalLimiter);
 
-// Error handling middleware
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.error(err.stack);
-  const status = err.status || 500;
-  const message = err.message || 'Internal server error';
-  const code = err.code || 'INTERNAL_ERROR';
-  res.status(status).json({ success: false, error: message, code });
-});
+  // Routes
+  app.use('/api/auth', authRoutes);
+  app.use('/api/stocks', stocksRoutes);
+  app.use('/api/watchlist', watchlistRoutes);
+  app.use('/api/ml', mlRoutes);
 
-server.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+  // Error handling middleware
+  app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    console.error(err.stack);
+    const status = err.status || 500;
+    const message = err.message || 'Internal server error';
+    const code = err.code || 'INTERNAL_ERROR';
+    res.status(status).json({ success: false, error: message, code });
+  });
+
+  // Server listen only in standalone / local mode
+  if (!process.env.VERCEL) {
+    server.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
+  }
+
+  export default app;
+  export { app, server };

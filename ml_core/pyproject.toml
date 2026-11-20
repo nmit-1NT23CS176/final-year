@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alphapulse-ml-core"
+version = "1.0.0"
+description = "AlphaPulse Financial Market Trend Forecasting ML Core API"
+authors = [
+    { name = "Priyanshu Kumar", email = "priyanshu.kumar7500@gmail.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "scikit-learn>=1.3.0",
+    "xgboost>=2.0.0",
+    "torch>=2.0.0",
+    "yfinance>=0.2.0",
+    "ta>=0.11.0",
+    "python-dotenv>=1.0.0",
+    "joblib>=1.3.0",
+    "scipy>=1.11.0",
+]
+
+[project.scripts]
+api = "ml_pipeline.app:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ml_pipeline*"]
+
+[tool.vercel]
+entrypoint = "ml_pipeline.app:app"

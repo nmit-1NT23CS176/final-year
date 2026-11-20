@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -16,11 +17,14 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# CORS setup
+# CORS setup — configurable via ALLOWED_ORIGINS (e.g., https://alphapulse.vercel.app,http://localhost:3000)
+allowed_origins_env = os.getenv("ALLOWED_ORIGINS", "*")
+allowed_origins = [o.strip() for o in allowed_origins_env.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=allowed_origins,
+    allow_credentials=True if allowed_origins != ["*"] else False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -36,6 +40,7 @@ def startup_event():
         logger.error(f"Error during pipeline startup: {e}")
 
 @app.get("/health")
+@app.get("/api/health")
 def health_check():
     return {
         "status": "healthy",

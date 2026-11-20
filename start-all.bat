@@ -21,18 +21,18 @@ echo.
 
 REM ── 1. ML Core (FastAPI on port 8000) ──────────────────────────
 echo [1/3] Starting ML Core (FastAPI) on port 8000...
-start "ML Core - FastAPI :8000" cmd /k "cd /d %~dp0ml_core\ml_pipeline && call C:\fmf-venv\Scripts\activate && python app.py"
+start "ML Core - FastAPI :8000" /D "%~dp0ml_core\ml_pipeline" cmd /k ""%~dp0venv\python.exe" app.py"
 
 REM Give ML Core a moment to initialize
-timeout /t 3 /nobreak > nul
+ping 127.0.0.1 -n 4 > nul
 
 REM ── 2. Server (Express on port 5000) ───────────────────────────
 echo [2/3] Starting Server (Express) on port 5000...
-start "Server - Express :5000" cmd /k "cd /d %~dp0server && npm run dev"
+start "Server - Express :5000" /D "%~dp0server" cmd /k npm run dev
 
 REM ── 3. Client (Next.js on port 3000) ───────────────────────────
 echo [3/3] Starting Client (Next.js) on port 3000...
-start "Client - Next.js :3000" cmd /k "cd /d %~dp0client && npm run dev"
+start "Client - Next.js :3000" /D "%~dp0client" cmd /k npm run dev
 
 echo.
 echo  ✅ All services launched!
