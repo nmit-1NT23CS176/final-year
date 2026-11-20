@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # ── 0. Redis Cache ─────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: alphapulse-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # ── 1. ML Core (FastAPI + PyTorch) ─────────────────────
+  ml_core:
+    build:
+      context: ./ml_core
+      dockerfile: Dockerfile
+    container_name: alphapulse-ml-core
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - ALLOWED_ORIGINS=*
+
+  # ── 2. Express Backend API ─────────────────────────────
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    container_name: alphapulse-server
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - CORS_ORIGIN=http://localhost:3000
+      - REDIS_URL=redis://redis:6379
+      - ML_SERVICE_URL=http://ml_core:8000
+      - JWT_SECRET=${JWT_SECRET:-alphapulse_secret_key_2026}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:postgres@db:5432/fmf}
+    depends_on:
+      - redis
+      - ml_core
+
+  # ── 3. Next.js Frontend UI ─────────────────────────────
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    container_name: alphapulse-client
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:5000/api
+      - NEXT_PUBLIC_WS_URL=ws://localhost:5000/ws
+      - BACKEND_URL=http://ml_core:8000
+      - ML_SERVICE_URL=http://ml_core:8000
+    depends_on:
+      - server
+      - ml_core
+
+volumes:
+  redis_data:
