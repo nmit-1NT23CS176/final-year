@@ -1,0 +1,47 @@
+services:
+  # ── 1. Redis Cache Service ─────────────────────────────
+  - type: redis
+    name: alphapulse-redis
+    ipAllowList: [] # only accessible by your backend services
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+
+  # ── 2. ML Core (FastAPI + PyTorch) ─────────────────────
+  - type: web
+    name: alphapulse-ml-core
+    runtime: docker
+    dockerContext: ./ml_core
+    dockerfilePath: ./ml_core/Dockerfile
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: ALLOWED_ORIGINS
+        value: "*"
+
+  # ── 3. Express Backend API (Node + WebSockets) ─────────
+  - type: web
+    name: alphapulse-server
+    runtime: docker
+    dockerContext: .
+    dockerfilePath: ./server/Dockerfile
+    plan: free
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: alphapulse-redis
+          property: connectionString
+      - key: ML_SERVICE_URL
+        fromService:
+          type: web
+          name: alphapulse-ml-core
+          property: host
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
