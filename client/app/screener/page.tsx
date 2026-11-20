@@ -6,6 +6,7 @@ import { useAllStocks } from "@/hooks/useSignals";
 import { getSector, getCap, fmtProb } from "@/lib/api";
 import type { ForecastData } from "@/lib/api";
 import { FreshnessBadge, ErrorBanner } from "@/components/shared/FeedbackUI";
+import { Filter, Search, SlidersHorizontal, TrendingUp, TrendingDown, Minus } from "lucide-react";
 
 type SignalFilter  = "ALL" | "BULLISH" | "BEARISH" | "NO SIGNAL";
 type VolFilter     = "ALL" | "LOW" | "MEDIUM" | "HIGH";
@@ -17,10 +18,10 @@ const SECTOR_OPTIONS = ["ALL","IT","Financials","Energy","Auto","Pharma","FMCG",
 function FilterChip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
     <button onClick={onClick}
-      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
+      className={`px-4 py-1.5 rounded-full text-[12px] font-bold transition-all border ${
         active
-          ? "bg-[#00d26a] text-[#06090d] border-[#00d26a]"
-          : "bg-[#131820] text-[#6b7280] border-[#1e2535] hover:text-white hover:border-[#2a3548]"
+          ? "bg-[var(--color-accent)] text-white border-[var(--color-accent)] shadow-sm"
+          : "bg-white text-[var(--color-text-secondary)] border-[var(--color-border)] hover:text-[var(--color-text-primary)] hover:border-gray-400"
       }`}>
       {label}
     </button>
@@ -31,49 +32,50 @@ function ResultCard({ stock }: { stock: ForecastData }) {
   const up = stock.target_prediction === 1;
   const neutral = stock.target_prediction === -1;
   return (
-    <div className={`p-4 rounded-xl border transition-all hover:-translate-y-0.5 group ${
-      up ? "border-[#00d26a]/20 bg-[#003d20]/10" : neutral ? "border-[#1e2535] bg-[#131820]" : "border-[#ef4444]/20 bg-[#3d0000]/10"
+    <div className={`bg-white p-5 rounded-2xl border transition-all hover:-translate-y-1 shadow-sm hover:shadow-md group flex flex-col ${
+      up ? "border-[var(--color-border)] hover:border-[var(--color-bullish)]" : neutral ? "border-[var(--color-border)] hover:border-gray-400" : "border-[var(--color-border)] hover:border-[var(--color-bearish)]"
     }`}>
-      <div className="flex items-start justify-between gap-2 mb-3">
+      <div className="flex items-start justify-between gap-2 mb-4">
         <div>
-          <div className="text-[10px] text-[#6b7280] mb-0.5">{getSector(stock.symbol)} · {getCap(stock.symbol)}</div>
+          <div className="text-[11px] font-bold text-[var(--color-text-secondary)] mb-1 uppercase tracking-wider">{getSector(stock.symbol)}</div>
           <Link href={`/stocks/${stock.symbol}`}
-            className="text-lg font-extrabold text-white group-hover:text-[#00d26a] transition-colors">
+            className="text-[18px] font-extrabold text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors tracking-tight">
             {stock.symbol}
           </Link>
         </div>
-        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border shrink-0 mt-0.5 ${
-          up ? "text-[#00d26a] bg-[#003d20] border-[#00d26a]/30"
-          : neutral ? "text-[#6b7280] bg-[#1a1f2c] border-[#6b7280]/30"
-          : "text-[#ef4444] bg-[#3d0000] border-[#ef4444]/30"
+        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shrink-0 ${
+          up ? "text-[var(--color-bullish)] bg-[var(--color-bullish-muted)]"
+          : neutral ? "text-gray-600 bg-gray-100"
+          : "text-[var(--color-bearish)] bg-[var(--color-bearish-muted)]"
         }`}>
+          {up ? <TrendingUp className="w-3 h-3" /> : neutral ? <Minus className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
           {up ? "BULLISH" : neutral ? "NO SIG" : "BEARISH"}
         </span>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 text-xs mt-auto">
+      <div className="grid grid-cols-3 gap-3 text-[12px] mt-auto bg-[var(--color-background)] rounded-xl p-3 border border-[var(--color-border)]">
         <div>
-          <p className="text-[#6b7280] mb-0.5">AI Score</p>
-          <p className={`font-bold ${up ? "text-[#00d26a]" : neutral ? "text-[#6b7280]" : "text-[#ef4444]"}`}>
+          <p className="text-[var(--color-text-secondary)] font-medium mb-1">AI Score</p>
+          <p className={`font-black tabular-nums text-[15px] ${up ? "text-[var(--color-bullish)]" : neutral ? "text-[var(--color-text-secondary)]" : "text-[var(--color-bearish)]"}`}>
             {stock.intelligence_score}
           </p>
         </div>
         <div>
-          <p className="text-[#6b7280] mb-0.5">UP Prob.</p>
-          <p className="font-bold text-white">{fmtProb(stock.probability_score)}</p>
+          <p className="text-[var(--color-text-secondary)] font-medium mb-1">UP Prob.</p>
+          <p className="font-bold tabular-nums text-[var(--color-text-primary)]">{fmtProb(stock.probability_score)}</p>
         </div>
         <div>
-          <p className="text-[#6b7280] mb-0.5">Vol.</p>
+          <p className="text-[var(--color-text-secondary)] font-medium mb-1">Vol.</p>
           <p className={`font-bold ${
-            stock.volatility_regime === "HIGH" ? "text-[#ef4444]"
-            : stock.volatility_regime === "MEDIUM" ? "text-yellow-400"
-            : "text-[#00d26a]"
+            stock.volatility_regime === "HIGH" ? "text-[var(--color-bearish)]"
+            : stock.volatility_regime === "MEDIUM" ? "text-[var(--color-warning)]"
+            : "text-[var(--color-bullish)]"
           }`}>{stock.volatility_regime}</p>
         </div>
       </div>
 
       <Link href={`/stocks/${stock.symbol}`}
-        className="mt-3 pt-3 border-t border-[#1e2535]/50 flex w-full text-xs font-semibold text-[#00d26a] hover:underline">
+        className="mt-4 pt-3 border-t border-[var(--color-border)] flex w-full text-[13px] font-bold text-[var(--color-accent)] hover:underline">
         Full Analysis →
       </Link>
     </div>
@@ -109,126 +111,142 @@ export default function ScreenerPage() {
   }, [forecasts, signal, vol, conf, sector, sortKey, minScore, search]);
 
   return (
-    <div className="min-h-screen bg-[#0a0e14] px-4 md:px-8 py-10 max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[var(--color-background)] px-6 py-10 max-w-[1200px] mx-auto w-full">
 
       {/* ── Header ── */}
-      <div className="flex items-center justify-between gap-4 mb-8 flex-wrap">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-white mb-1">Stock Screener</h1>
-          <p className="text-[#8892a4] text-sm">Filter all {forecasts.length} NSE stocks by AI signal criteria</p>
+          <h1 className="text-3xl font-extrabold text-[var(--color-text-primary)] mb-1.5 tracking-tight flex items-center gap-2">
+            <Filter className="w-8 h-8 text-[var(--color-accent)]" />
+            AI Stock Screener
+          </h1>
+          <p className="text-[var(--color-text-secondary)] text-[14px] font-medium">Filter all {forecasts.length} NSE stocks by machine learning criteria.</p>
         </div>
         <FreshnessBadge lastFetchedAt={lastFetchedAt} />
       </div>
 
       {error && <ErrorBanner section="screener" onRetry={refetch} />}
 
-      {/* ── Filter panel ── */}
-      <div className="bg-[#131820] border border-[#1e2535] rounded-2xl p-6 mb-6 flex flex-col gap-5">
+      <div className="flex flex-col lg:flex-row gap-8">
+        
+        {/* ── Filter panel (Left) ── */}
+        <div className="w-full lg:w-[320px] shrink-0 h-fit sticky top-24 bg-white border border-[var(--color-border)] rounded-2xl p-6 shadow-sm flex flex-col gap-6">
+          <div className="flex items-center gap-2 border-b border-[var(--color-border)] pb-4 mb-1">
+            <SlidersHorizontal className="w-5 h-5 text-[var(--color-text-primary)]" />
+            <h2 className="font-extrabold text-[16px]">Screening Criteria</h2>
+          </div>
 
-        {/* Search */}
-        <input value={search} onChange={e => setSearch(e.target.value)}
-          placeholder="Search by symbol…"
-          className="w-full px-4 py-3 bg-[#0d1117] border border-[#1e2535] rounded-xl text-sm
-            text-white placeholder:text-[#3a4258] focus:outline-none focus:border-[#00d26a]/60 transition-colors" />
+          {/* Search */}
+          <div className="relative">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-disabled)]" />
+            <input value={search} onChange={e => setSearch(e.target.value)}
+              placeholder="Search symbol…"
+              className="w-full pl-9 pr-4 py-2.5 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl text-[13px] font-semibold
+                text-[var(--color-text-primary)] placeholder:text-[var(--color-text-disabled)] focus:outline-none focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)] transition-all" />
+          </div>
 
-        {/* Signal */}
-        <div>
-          <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-2">Signal</p>
-          <div className="flex flex-wrap gap-2">
-            {(["ALL","BULLISH","BEARISH","NO SIGNAL"] as SignalFilter[]).map(f => (
-              <FilterChip key={f} label={f} active={signal === f} onClick={() => setSignal(f)} />
-            ))}
+          {/* Signal */}
+          <div>
+            <p className="text-[11px] font-bold text-[var(--color-text-secondary)] uppercase tracking-wider mb-2.5">AI Signal</p>
+            <div className="flex flex-wrap gap-2">
+              {(["ALL","BULLISH","BEARISH","NO SIGNAL"] as SignalFilter[]).map(f => (
+                <FilterChip key={f} label={f} active={signal === f} onClick={() => setSignal(f)} />
+              ))}
+            </div>
+          </div>
+
+          {/* Volatility */}
+          <div>
+            <p className="text-[11px] font-bold text-[var(--color-text-secondary)] uppercase tracking-wider mb-2.5">Volatility Regime</p>
+            <div className="flex flex-wrap gap-2">
+              {(["ALL","LOW","MEDIUM","HIGH"] as VolFilter[]).map(f => (
+                <FilterChip key={f} label={f} active={vol === f} onClick={() => setVol(f)} />
+              ))}
+            </div>
+          </div>
+
+          {/* Confidence */}
+          <div>
+            <p className="text-[11px] font-bold text-[var(--color-text-secondary)] uppercase tracking-wider mb-2.5">Model Confidence</p>
+            <div className="flex flex-wrap gap-2">
+              {(["ALL","HIGH","MEDIUM","LOW"] as ConfFilter[]).map(f => (
+                <FilterChip key={f} label={f} active={conf === f} onClick={() => setConf(f)} />
+              ))}
+            </div>
+          </div>
+
+          {/* Sector */}
+          <div>
+            <p className="text-[11px] font-bold text-[var(--color-text-secondary)] uppercase tracking-wider mb-2.5">Sector</p>
+            <div className="flex flex-wrap gap-2">
+              {SECTOR_OPTIONS.map(s => (
+                <FilterChip key={s} label={s} active={sector === s} onClick={() => setSector(s)} />
+              ))}
+            </div>
+          </div>
+
+          {/* Min Score */}
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-[11px] font-bold text-[var(--color-text-secondary)] uppercase tracking-wider">Min AI Score</p>
+              <span className="text-[14px] font-black tabular-nums text-[var(--color-text-primary)]">{minScore}</span>
+            </div>
+            <input type="range" min={0} max={100} step={5} value={minScore}
+              onChange={e => setMinScore(Number(e.target.value))}
+              className="w-full accent-[var(--color-accent)] cursor-pointer" />
+            <div className="flex justify-between text-[10px] font-bold text-[var(--color-text-disabled)] mt-1 tabular-nums">
+              <span>0</span><span>50</span><span>100</span>
+            </div>
+          </div>
+
+          {/* Sort + Reset */}
+          <div className="flex flex-col gap-4 pt-4 border-t border-[var(--color-border)]">
+            <div>
+              <p className="text-[11px] font-bold text-[var(--color-text-secondary)] uppercase tracking-wider mb-2.5">Sort Results By</p>
+              <div className="flex flex-wrap gap-2">
+                {(["intelligence_score","probability_score","stock_historical_accuracy"] as SortKey[]).map(k => (
+                  <FilterChip key={k} label={k === "intelligence_score" ? "AI Score" : k === "probability_score" ? "UP Prob." : "Stock Acc."} active={sortKey === k} onClick={() => setSortKey(k)} />
+                ))}
+              </div>
+            </div>
+            <button onClick={() => { setSignal("ALL"); setVol("ALL"); setConf("ALL"); setSector("ALL"); setMinScore(0); setSearch(""); }}
+              className="w-full py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl text-[13px] font-bold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-gray-50 transition-colors">
+              Reset Filters
+            </button>
           </div>
         </div>
 
-        {/* Volatility */}
-        <div>
-          <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-2">Volatility Regime</p>
-          <div className="flex flex-wrap gap-2">
-            {(["ALL","LOW","MEDIUM","HIGH"] as VolFilter[]).map(f => (
-              <FilterChip key={f} label={f} active={vol === f} onClick={() => setVol(f)} />
-            ))}
+        {/* ── Results (Right) ── */}
+        <div className="flex-1">
+          <div className="flex items-center justify-between mb-4 bg-white border border-[var(--color-border)] px-5 py-3 rounded-xl shadow-sm">
+            <span className="text-[14px] font-bold text-[var(--color-text-primary)]">
+              {loading ? "Searching…" : `${results.length} Stocks Found`}
+            </span>
           </div>
-        </div>
 
-        {/* Confidence */}
-        <div>
-          <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-2">Confidence</p>
-          <div className="flex flex-wrap gap-2">
-            {(["ALL","HIGH","MEDIUM","LOW"] as ConfFilter[]).map(f => (
-              <FilterChip key={f} label={f} active={conf === f} onClick={() => setConf(f)} />
-            ))}
-          </div>
-        </div>
-
-        {/* Sector */}
-        <div>
-          <p className="text-[10px] text-[#6b7280] uppercase tracking-wider mb-2">Sector</p>
-          <div className="flex flex-wrap gap-2">
-            {SECTOR_OPTIONS.map(s => (
-              <FilterChip key={s} label={s} active={sector === s} onClick={() => setSector(s)} />
-            ))}
-          </div>
-        </div>
-
-        {/* Min Score */}
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-[10px] text-[#6b7280] uppercase tracking-wider">Min AI Score</p>
-            <span className="text-xs font-bold text-[#00d26a]">{minScore}</span>
-          </div>
-          <input type="range" min={0} max={100} step={5} value={minScore}
-            onChange={e => setMinScore(Number(e.target.value))}
-            className="w-full accent-[#00d26a]" />
-          <div className="flex justify-between text-[10px] text-[#3a4258] mt-1">
-            <span>0</span><span>50</span><span>100</span>
-          </div>
-        </div>
-
-        {/* Sort + Reset */}
-        <div className="flex items-center justify-between flex-wrap gap-3 pt-2 border-t border-[#1e2535]">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] text-[#6b7280] uppercase tracking-wider">Sort by:</span>
-            {(["intelligence_score","probability_score","stock_historical_accuracy"] as SortKey[]).map(k => (
-              <button key={k} onClick={() => setSortKey(k)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
-                  sortKey === k ? "bg-[#00d26a] text-[#06090d] border-[#00d26a]" : "bg-[#0d1117] text-[#6b7280] border-[#1e2535] hover:text-white"
-                }`}>
-                {k === "intelligence_score" ? "AI Score" : k === "probability_score" ? "UP Prob." : "Stock Acc."}
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+              {Array.from({ length: 9 }).map((_, i) => (
+                <div key={i} className="bg-white border border-[var(--color-border)] rounded-2xl h-48 animate-pulse shadow-sm" />
+              ))}
+            </div>
+          ) : results.length === 0 ? (
+            <div className="text-center py-20 bg-white border border-[var(--color-border)] rounded-2xl shadow-sm">
+              <Search className="w-12 h-12 text-[var(--color-text-disabled)] mx-auto mb-4" />
+              <p className="text-lg font-bold text-[var(--color-text-primary)] mb-1">No stocks match your criteria</p>
+              <p className="text-sm font-medium text-[var(--color-text-secondary)]">Try adjusting or resetting your filters.</p>
+              <button onClick={() => { setSignal("ALL"); setVol("ALL"); setConf("ALL"); setSector("ALL"); setMinScore(0); setSearch(""); }}
+                className="mt-6 px-6 py-2 bg-[var(--color-accent)] text-white rounded-xl text-[13px] font-bold shadow-sm hover:opacity-90 transition-opacity">
+                Clear All Filters
               </button>
-            ))}
-          </div>
-          <button onClick={() => { setSignal("ALL"); setVol("ALL"); setConf("ALL"); setSector("ALL"); setMinScore(0); setSearch(""); }}
-            className="text-xs text-[#6b7280] hover:text-white transition-colors underline">
-            Reset filters
-          </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+              {results.map(s => <ResultCard key={s.symbol} stock={s} />)}
+            </div>
+          )}
         </div>
       </div>
-
-      {/* ── Results ── */}
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-sm text-[#8892a4]">
-          {loading ? "Loading…" : `${results.length} result${results.length !== 1 ? "s" : ""}`}
-        </span>
-      </div>
-
-      {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="bg-[#131820] border border-[#1e2535] rounded-xl h-44 animate-pulse" />
-          ))}
-        </div>
-      ) : results.length === 0 ? (
-        <div className="text-center py-20 text-[#6b7280]">
-          <p className="text-4xl mb-3">🔍</p>
-          <p className="text-lg font-semibold text-white mb-1">No stocks match</p>
-          <p className="text-sm">Adjust your filters to see results.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {results.map(s => <ResultCard key={s.symbol} stock={s} />)}
-        </div>
-      )}
     </div>
   );
 }

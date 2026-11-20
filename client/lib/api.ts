@@ -144,27 +144,48 @@ export const MARKET_INDICES = [
   { label: 'SENSEX',      price: '83,241.15', change: '+588.10', changePct: '+0.71%', isUp: true },
   { label: 'BANK NIFTY',  price: '56,182.40', change: '-118.60', changePct: '-0.21%', isUp: false },
   { label: 'INDIA VIX',   price: '13.80',     change: '-0.34',   changePct: '-2.40%', isUp: true },
-]
+];
 
-// Sector mapping for stocks
+
+// Comprehensive sector mapping for all tracked stocks
 export const SECTOR_MAP: Record<string, string> = {
-  RELIANCE: 'Energy', TCS: 'IT', HDFCBANK: 'Financials', INFY: 'IT', ICICIBANK: 'Financials',
-  BHARTIARTL: 'Telecom', BAJFINANCE: 'Financials', KOTAKBANK: 'Financials', AXISBANK: 'Financials',
-  SBIN: 'Financials', LT: 'Capital Goods', HINDUNILVR: 'FMCG', ITC: 'FMCG', SUNPHARMA: 'Pharma',
-  WIPRO: 'IT', HCLTECH: 'IT', TATASTEEL: 'Metals', JSWSTEEL: 'Metals', NTPC: 'Power',
-  POWERGRID: 'Power', ONGC: 'Energy', BPCL: 'Energy', COALINDIA: 'Energy', GAIL: 'Energy',
-  TITAN: 'Consumer', MARUTI: 'Auto', TATAMOTORS: 'Auto', 'BAJAJ-AUTO': 'Auto',
-  M$M: 'Auto', DRREDDY: 'Pharma', CIPLA: 'Pharma', DIVISLAB: 'Pharma', APOLLOHOSP: 'Healthcare',
-  ASIANPAINT: 'Consumer', BRITANNIA: 'FMCG', NESTLEIND: 'FMCG', DMART: 'Retail',
-  ADANIPORTS: 'Infrastructure', DLF: 'Real Estate',
-}
+  // IT & Tech
+  TCS: 'IT', INFY: 'IT', WIPRO: 'IT', HCLTECH: 'IT', TECHM: 'IT', LTIM: 'IT', LTI: 'IT',
+  // Financials & Banking
+  HDFCBANK: 'Financials', ICICIBANK: 'Financials', SBIN: 'Financials', KOTAKBANK: 'Financials',
+  AXISBANK: 'Financials', BAJFINANCE: 'Financials', BAJAJFINSV: 'Financials', BAJAJHLDNG: 'Financials',
+  BANKBARODA: 'Financials', INDIANB: 'Financials', SHRIRAMFIN: 'Financials', HDFCLIFE: 'Financials',
+  SBILIFE: 'Financials', ICICIGI: 'Financials', ICICIPRULI: 'Financials',
+  // Energy & Oil & Gas
+  RELIANCE: 'Energy', ONGC: 'Energy', BPCL: 'Energy', COALINDIA: 'Energy', GAIL: 'Energy', IOC: 'Energy',
+  // Auto & Mobility
+  MARUTI: 'Auto', TATAMOTORS: 'Auto', 'BAJAJ-AUTO': 'Auto', EICHERMOT: 'Auto', HEROMOTOCO: 'Auto',
+  BOSCHLTD: 'Auto', 'M&M': 'Auto',
+  // Pharma & Healthcare
+  SUNPHARMA: 'Pharma', DRREDDY: 'Pharma', CIPLA: 'Pharma', DIVISLAB: 'Pharma', APOLLOHOSP: 'Healthcare',
+  TORNTPHARM: 'Pharma',
+  // FMCG & Consumer Goods
+  HINDUNILVR: 'FMCG', ITC: 'FMCG', BRITANNIA: 'FMCG', NESTLEIND: 'FMCG', COLPAL: 'FMCG',
+  TATACONSUM: 'FMCG', UNITDSPR: 'FMCG', VBL: 'FMCG', PIDILITIND: 'Consumer', TITAN: 'Consumer',
+  ASIANPAINT: 'Consumer', DMART: 'Consumer', TRENT: 'Consumer', ZOMATO: 'Consumer',
+  // Metals & Mining
+  TATASTEEL: 'Metals', JSWSTEEL: 'Metals', HINDALCO: 'Metals', JINDALSTEL: 'Metals',
+  // Power & Utilities
+  NTPC: 'Power', POWERGRID: 'Power', TATAPOWER: 'Power', ADANIPOWER: 'Power', ADANIGREEN: 'Power', ADANIENSOL: 'Power',
+  // Infrastructure & Capital Goods & Real Estate
+  LT: 'Capital Goods', ABB: 'Capital Goods', SIEMENS: 'Capital Goods', BEL: 'Capital Goods',
+  ULTRACEMCO: 'Infrastructure', AMBUJACEM: 'Infrastructure', GRASIM: 'Infrastructure',
+  ADANIENT: 'Infrastructure', ADANIPORTS: 'Infrastructure', IRCTC: 'Infrastructure',
+  DLF: 'Real Estate',
+  BHARTIARTL: 'Telecom',
+};
 
 export function getSector(symbol: string): string {
-  return SECTOR_MAP[symbol] ?? 'Diversified'
+  return SECTOR_MAP[symbol] ?? 'Diversified';
 }
 
 export function getCap(symbol: string): string {
-  const large = [
+const large = [
     'RELIANCE','TCS','HDFCBANK','INFY','ICICIBANK','BHARTIARTL','BAJFINANCE',
     'KOTAKBANK','AXISBANK','SBIN','LT','HINDUNILVR','ITC','SUNPHARMA','WIPRO',
     'HCLTECH','NTPC','ONGC','COALINDIA','TITAN','MARUTI','ADANIPORTS',

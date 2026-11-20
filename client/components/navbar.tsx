@@ -49,15 +49,15 @@ export function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-[var(--color-background)]/90 backdrop-blur-2xl border-b border-[var(--color-border)] shadow-sm transition-all duration-300">
+    <nav className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-xl border-b border-[var(--color-border)] shadow-sm transition-all duration-300">
       <div className="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
         {/* Left: Logo + Nav Links */}
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2 group shrink-0">
-            <div className="w-8 h-8 rounded-full bg-[var(--color-bullish-muted)] flex items-center justify-center group-hover:scale-105 transition-transform">
-              <Activity className="h-5 w-5 text-[var(--color-bullish)]" />
+            <div className="w-8 h-8 rounded-lg bg-[var(--color-bullish)] flex items-center justify-center group-hover:scale-105 transition-transform shadow-md shadow-[var(--color-bullish-muted)]">
+              <Activity className="h-5 w-5 text-white" />
             </div>
-            <span className="font-extrabold text-[17px] tracking-tight text-[var(--color-text-primary)]">
+            <span className="font-extrabold text-[19px] tracking-tight text-[var(--color-text-primary)]">
               StockVista
             </span>
           </Link>
@@ -72,7 +72,7 @@ export function Navbar() {
                   <div key={link.label} className="relative group/nav flex items-center h-16">
                     <Link
                       href={link.href}
-                      className={`flex items-center gap-1.5 text-[12px] uppercase tracking-wider font-bold transition-colors duration-200 ${
+                      className={`flex items-center gap-1.5 text-[13px] tracking-wide font-semibold transition-colors duration-200 ${
                         isActive
                           ? "text-[var(--color-text-primary)]"
                           : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
@@ -82,16 +82,16 @@ export function Navbar() {
                       <ChevronDown className="w-3.5 h-3.5 opacity-60 group-hover/nav:rotate-180 transition-transform" />
                     </Link>
                     {isActive && (
-                      <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--color-bullish)] shadow-[0_0_12px_rgba(0,230,118,0.8)] rounded-t-md" />
+                      <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[var(--color-bullish)] rounded-t-md" />
                     )}
 
                     {/* Dropdown Menu */}
-                    <div className="absolute top-14 left-0 hidden group-hover/nav:block w-48 py-2 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl shadow-2xl backdrop-blur-xl animate-slide-down">
+                    <div className="absolute top-14 left-0 hidden group-hover/nav:block w-56 py-2 bg-white border border-[var(--color-border)] rounded-xl shadow-xl animate-slide-down">
                       {link.dropdown.map((subItem) => (
                         <Link
                           key={subItem.href}
                           href={subItem.href}
-                          className="block px-4 py-2.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-elevated)] transition-colors font-medium"
+                          className="block px-4 py-2.5 text-[13px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-gray-50 transition-colors font-medium"
                         >
                           {subItem.label}
                         </Link>
@@ -105,7 +105,7 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative flex items-center h-16 text-[12px] uppercase tracking-wider font-bold transition-colors duration-200 ${
+                  className={`relative flex items-center h-16 text-[13px] tracking-wide font-semibold transition-colors duration-200 ${
                     isActive
                       ? "text-[var(--color-text-primary)]"
                       : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
@@ -113,7 +113,7 @@ export function Navbar() {
                 >
                   {link.label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--color-bullish)] shadow-[0_0_12px_rgba(0,230,118,0.8)] rounded-t-md" />
+                    <span className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[var(--color-bullish)] rounded-t-md" />
                   )}
                 </Link>
               );
@@ -167,7 +167,7 @@ export function Navbar() {
           ) : (
             <div className="flex items-center gap-2">
               <Link href="/auth/login" className="hidden sm:block">
-                <Button variant="ghost" size="sm" className="text-[var(--color-text-secondary)] hover:text-white rounded-full px-4 text-xs font-semibold">
+                <Button variant="ghost" size="sm" className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] rounded-full px-4 text-sm font-semibold">
                   Sign In
                 </Button>
               </Link>
@@ -175,7 +175,7 @@ export function Navbar() {
                 <Button
                   variant="primary"
                   size="sm"
-                  className="rounded-full shadow-green-glow px-5 text-xs font-bold"
+                  className="rounded-full bg-[var(--color-bullish)] hover:bg-[var(--color-bullish-hover)] text-white px-5 py-1.5 text-sm font-bold border-0 shadow-sm"
                 >
                   Get Started
                 </Button>

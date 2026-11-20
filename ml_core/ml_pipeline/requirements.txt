@@ -1,13 +1,13 @@
+# ── Core Data ──
 pandas
 numpy
 scipy
-ipykernel
 
+# ── Data Sources (ingestion / training) ──
 yfinance
 requests
 
-pymongo
-dnspython
+# ── Config & Serialization ──
 python-dotenv
 pyyaml
 joblib
@@ -15,34 +15,44 @@ dill
 tqdm
 openpyxl
 
+# ── ML Models ──
 scikit-learn
 xgboost
 lightgbm
 
-tensorflow
+# ── Deep Learning (PyTorch only — TensorFlow not used) ──
 torch
 
+# ── Technical Analysis ──
 ta
+
+# ── NLP / Sentiment ──
 nltk
 textblob
 vaderSentiment
-fredapi
-alphavantage
-gdelt
 
+# ── External Data APIs ──
+fredapi
+## alphavantage — disabled: its 'foil' dep fails on Python 3.14
+## gdelt        — disabled: optional, not needed for inference
+
+# ── Visualization ──
 matplotlib
 seaborn
 plotly
 mplfinance
 
-streamlit
+# ── API Server ──
 fastapi
 uvicorn
-flask
 python-multipart
 
+# ── Monitoring (optional) ──
 mlflow
 evidently
+
+# ── Notebooks ──
+ipykernel
 
 ## After the project is completed then at last, Use it only once to install the package in editable mode and then comment it out 
 #-e .

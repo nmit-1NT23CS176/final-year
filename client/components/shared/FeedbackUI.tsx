@@ -5,31 +5,37 @@ import { cn } from "@/lib/utils"
 // ── Skeleton shimmer block ─────────────────────────────
 export function Skeleton({ className }: { className?: string }) {
   return (
-    <div className={cn("animate-shimmer rounded-lg bg-[var(--color-elevated)]", className)} />
+    <div className={cn("animate-shimmer rounded-lg bg-[var(--color-elevated)] border border-[var(--color-border)] shadow-sm", className)} />
   )
 }
 
 // ── Skeleton signal card ────────────────────────────────
 export function SkeletonSignalCard() {
   return (
-    <div className="p-6 rounded-xl border border-[#1e2535] bg-[#161c28] flex flex-col gap-4">
-      <div className="flex gap-2">
-        <Skeleton className="h-4 w-10 rounded" />
-        <Skeleton className="h-4 w-16 rounded" />
+    <div className="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] flex flex-col gap-4 shadow-card">
+      <div className="flex justify-between items-start">
+        <div>
+          <Skeleton className="h-6 w-24 rounded-md mb-1.5" />
+          <Skeleton className="h-4 w-16 rounded-md" />
+        </div>
+        <Skeleton className="h-6 w-20 rounded-md" />
       </div>
-      <Skeleton className="h-6 w-28" />
-      <Skeleton className="h-4 w-40" />
-      <Skeleton className="h-8 w-32" />
-      <div className="pt-4 border-t border-[#1e2535] flex flex-col gap-3">
-        <div className="flex justify-between">
-          <Skeleton className="h-6 w-20" />
-          <Skeleton className="h-6 w-16" />
+      <div className="grid grid-cols-2 gap-4 mt-2">
+        <div>
+          <Skeleton className="h-3 w-16 mb-1.5 rounded-md" />
+          <Skeleton className="h-8 w-20 rounded-md" />
         </div>
-        <div className="flex justify-between">
-          <Skeleton className="h-4 w-24" />
-          <Skeleton className="h-4 w-10" />
+        <div>
+          <Skeleton className="h-3 w-20 mb-1.5 rounded-md" />
+          <Skeleton className="h-5 w-16 rounded-md" />
         </div>
-        <Skeleton className="h-8 w-full rounded" />
+      </div>
+      <div className="mt-2">
+        <div className="flex justify-between mb-1.5">
+          <Skeleton className="h-3 w-24 rounded-md" />
+          <Skeleton className="h-3 w-8 rounded-md" />
+        </div>
+        <Skeleton className="h-1.5 w-full rounded-full" />
       </div>
     </div>
   )
@@ -38,7 +44,7 @@ export function SkeletonSignalCard() {
 // ── Skeleton table row ──────────────────────────────────
 export function SkeletonTableRow() {
   return (
-    <tr className="border-b border-[#1e2535]">
+    <tr className="border-b border-[var(--color-border)]">
       {[48, 24, 20, 16, 20, 16, 16, 16].map((w, i) => (
         <td key={i} className="py-4 px-4">
           <Skeleton className={`h-4 w-${w}`} />
@@ -51,10 +57,10 @@ export function SkeletonTableRow() {
 // ── Skeleton stat card ──────────────────────────────────
 export function SkeletonStatCard() {
   return (
-    <div className="p-4 rounded-xl border border-[#1e2535] bg-[#161c28]">
-      <Skeleton className="h-3 w-20 mb-2" />
-      <Skeleton className="h-8 w-24 mb-1" />
-      <Skeleton className="h-3 w-16" />
+    <div className="p-5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-card">
+      <Skeleton className="h-3 w-20 mb-3 rounded-md" />
+      <Skeleton className="h-8 w-28 mb-2 rounded-md" />
+      <Skeleton className="h-3 w-16 rounded-md" />
     </div>
   )
 }
@@ -68,14 +74,17 @@ interface ErrorBannerProps {
 
 export function ErrorBanner({ section, onRetry, countdown }: ErrorBannerProps) {
   return (
-    <div className="flex items-center justify-between px-4 py-3 rounded-xl border border-[#3d0000] bg-[var(--color-elevated)] text-[#ef4444] text-xs font-medium gap-4">
-      <span>⚠ Could not load {section}.{countdown ? ` Retrying in ${countdown}s.` : ''}</span>
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 mb-4 rounded-xl border border-[var(--color-bearish-muted)] bg-red-50 text-[var(--color-bearish)] text-sm font-medium gap-3 shadow-sm">
+      <div className="flex items-center gap-2">
+        <span className="shrink-0 bg-[var(--color-bearish)] text-white w-5 h-5 rounded-full flex items-center justify-center font-bold text-xs">!</span>
+        <span>Could not load {section}.{countdown ? ` Retrying in ${countdown}s.` : ''}</span>
+      </div>
       {onRetry && (
         <button
           onClick={onRetry}
-          className="text-[#ef4444] underline hover:text-white transition-colors shrink-0"
+          className="bg-white border border-[var(--color-border)] px-4 py-1.5 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors shadow-sm shrink-0 font-semibold"
         >
-          Retry now
+          Retry Now
         </button>
       )}
     </div>
@@ -88,22 +97,25 @@ export function FreshnessBadge({ lastFetchedAt }: { lastFetchedAt: Date | null }
   const ageMs = Date.now() - lastFetchedAt.getTime()
   const ageMin = Math.floor(ageMs / 60_000)
 
-  let color = 'text-[#00d26a]'
+  let color = 'text-[var(--color-bullish)]'
+  let bg = 'bg-[var(--color-bullish-muted)]'
   let icon = '●'
   let label = ageMin === 0 ? 'Updated just now' : `Updated ${ageMin} min ago`
 
   if (ageMin >= 15) {
-    color = 'text-[#ef4444]'
+    color = 'text-[var(--color-bearish)]'
+    bg = 'bg-[var(--color-bearish-muted)]'
     icon = '✕'
     label = 'Data may be stale'
   } else if (ageMin >= 5) {
-    color = 'text-yellow-400'
+    color = 'text-yellow-600'
+    bg = 'bg-yellow-100'
     icon = '⚠'
     label = `Updated ${ageMin} min ago`
   }
 
   return (
-    <span className={`inline-flex items-center gap-1.5 text-[11px] font-medium ${color}`}>
+    <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2 py-0.5 rounded-full ${color} ${bg}`}>
       {icon} {label}
     </span>
   )

@@ -28,29 +28,32 @@ export function useStockPrice(symbol: string | null): UseStockPriceResult {
     if (!symbol) return;
 
     let cancelled = false;
-    const t = setTimeout(() => {
-      setIsLoading(true);
-      setError(null);
-    }, 0);
+    const fetchPrice = () => {
+      stockApi.getStockDetails(symbol)
+        .then((res) => {
+          if (cancelled) return;
+          if (res.data.quote) {
+            setQuote(res.data.quote);
+            prevPrice.current = res.data.quote.currentPrice;
+          }
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          if (cancelled) return;
+          setError(err.message);
+          setIsLoading(false);
+        });
+    };
 
-    stockApi.getStockDetails(symbol)
-      .then((res) => {
-        if (cancelled) return;
-        if (res.data.quote) {
-          setQuote(res.data.quote);
-          prevPrice.current = res.data.quote.currentPrice;
-        }
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        if (cancelled) return;
-        setError(err.message);
-        setIsLoading(false);
-      });
+    setIsLoading(true);
+    fetchPrice(); // Initial fetch
+    
+    // Poll every 3 seconds for real-time updates
+    const t = setInterval(fetchPrice, 3000);
 
     return () => { 
       cancelled = true; 
-      clearTimeout(t);
+      clearInterval(t);
     };
   }, [symbol]);
 

@@ -45,26 +45,43 @@ export function CandlestickChart({ symbol, data, className }: CandlestickChartPr
     const chart = createChart(containerRef.current, {
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
-        textColor: "#8b8f98",
+        textColor: "#64748b", // slate-500
         attributionLogo: false,
+        fontFamily: "'Inter', sans-serif",
       },
       grid: {
-        vertLines: { color: "rgba(42, 45, 53, 0.5)" },
-        horzLines: { color: "rgba(42, 45, 53, 0.5)" },
+        vertLines: { color: "rgba(241, 245, 249, 0.8)" }, // slate-100
+        horzLines: { color: "rgba(241, 245, 249, 0.8)" }, // slate-100
       },
       crosshair: {
         mode: CrosshairMode.Normal,
-        vertLine: { color: "rgba(83, 103, 255, 0.3)", labelBackgroundColor: "#22252c" },
-        horzLine: { color: "rgba(83, 103, 255, 0.3)", labelBackgroundColor: "#22252c" },
+        vertLine: { 
+          color: "rgba(100, 116, 139, 0.4)", 
+          width: 1, 
+          style: 3, // Dashed
+          labelBackgroundColor: "#1e293b" 
+        },
+        horzLine: { 
+          color: "rgba(100, 116, 139, 0.4)", 
+          width: 1, 
+          style: 3, // Dashed
+          labelBackgroundColor: "#1e293b" 
+        },
       },
       rightPriceScale: {
-        borderColor: "rgba(42, 45, 53, 0.5)",
+        borderColor: "rgba(226, 232, 240, 1)", // slate-200
         scaleMargins: { top: 0.1, bottom: 0.25 },
+        borderVisible: false,
       },
       timeScale: {
-        borderColor: "rgba(42, 45, 53, 0.5)",
+        borderColor: "rgba(226, 232, 240, 1)", // slate-200
         timeVisible: selectedTf.days <= 7,
         secondsVisible: false,
+        borderVisible: false,
+        tickMarkFormatter: (time: number) => {
+          const d = new Date(time * 1000);
+          return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
       },
       width: containerRef.current.clientWidth,
       height: 480,
@@ -87,22 +104,31 @@ export function CandlestickChart({ symbol, data, className }: CandlestickChartPr
     });
 
     chart.priceScale("volume").applyOptions({
-      scaleMargins: { top: 0.8, bottom: 0 },
+      scaleMargins: { top: 0.85, bottom: 0 },
     });
 
-    // Use provided data or generate mock
-    const candleData = data || generateMockCandles(selectedTf.days);
+    // Filter data based on selected timeframe if data is provided
+    let candleData = data ? [...data] : generateMockCandles(selectedTf.days);
+    if (data) {
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - selectedTf.days);
+      const cutoffTimeStr = cutoffDate.toISOString().split("T")[0];
+      candleData = candleData.filter((d: any) => d.time >= cutoffTimeStr);
+    }
 
     candleSeries.setData(candleData as unknown as CandlestickData[]);
 
-    const volumeData = candleData.map((d) => ({
+    const volumeData = candleData.map((d: any) => ({
       time: d.time,
-      value: Math.floor(Math.random() * 10000000) + 1000000,
-      color: d.close >= d.open ? "rgba(0, 208, 156, 0.2)" : "rgba(255, 82, 82, 0.2)",
+      value: d.volume !== undefined ? d.volume : Math.floor(Math.random() * 10000000) + 1000000,
+      color: d.close >= d.open ? "rgba(0, 208, 156, 0.4)" : "rgba(255, 82, 82, 0.4)",
     }));
     volumeSeries.setData(volumeData as unknown as HistogramData[]);
 
-    chart.timeScale().fitContent();
+    // We can delay fitContent slightly to ensure rendering, but usually immediate is fine
+    setTimeout(() => {
+      chart.timeScale().fitContent();
+    }, 10);
     chartRef.current = chart;
 
     // Responsive resize
@@ -123,22 +149,24 @@ export function CandlestickChart({ symbol, data, className }: CandlestickChartPr
   return (
     <div className={className}>
       {/* Timeframe selectors */}
-      <div className="flex items-center gap-0.5 mb-3 px-1">
+      <div className="flex items-center gap-1.5 mb-4 px-1 border-b border-[var(--color-border)] pb-3">
         {TIMEFRAMES.map((tf) => (
           <button
             key={tf.label}
             onClick={() => setActiveTimeframe(tf.label)}
-            className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors duration-150 ${
+            className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 ${
               activeTimeframe === tf.label
-                ? "bg-[var(--color-accent)] text-white"
-                : "text-[var(--color-text-secondary)] hover:bg-[var(--color-elevated)] hover:text-[var(--color-text-primary)]"
+                ? "bg-[var(--color-accent)] text-white shadow-md"
+                : "text-[var(--color-text-secondary)] hover:bg-gray-100 hover:text-[var(--color-text-primary)]"
             }`}
           >
             {tf.label}
           </button>
         ))}
       </div>
-      <div ref={containerRef} className="w-full" />
+      <div className="w-full rounded-xl overflow-hidden bg-white">
+        <div ref={containerRef} className="w-full" />
+      </div>
     </div>
   );
 }

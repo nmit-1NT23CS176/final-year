@@ -1,0 +1,5 @@
+metric,value
+avg_rank_corr_raw_vs_smooth,0.6206413994169095
+mean_ic_raw,0.02684106488582747
+mean_ic_smoothed,0.014242940202781917
+ic_delta_smoothed_minus_raw,-0.012598124683045555
